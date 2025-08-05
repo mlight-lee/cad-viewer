@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "autocad",
+    "cad",
+    "dwg",
+    "dwg-renderer",
+    "dxf",
+    "dxf-renderer",
+    "mlight",
+    "mlightcad"
+  ],
   "files": [
     "dist",
     "lib"

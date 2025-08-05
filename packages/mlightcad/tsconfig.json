@@ -1,17 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es2020",
-    "module": "es2020",
     "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": "./src",
     "lib": [
       "ESNext",
       "DOM"
-    ],
-    "types": [
-      "vite/client"
     ]
   },
   "vueCompilerOptions": {

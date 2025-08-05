@@ -15,24 +15,21 @@
     "analyze": "nx run-many -t analyze",
     "build": "nx run-many -t build",
     "clean": "nx run-many -t clean",
-    "dev": "nx run @mlightcad/mlightcad:dev",
+    "dev": "nx run @mlightcad/cad-viewer-example:dev",
     "doc": "typedoc",
     "format": "prettier --config ./.prettierrc.js --write packages/**/*.{ts,js,vue,json}",
     "lint": "nx run-many -t lint",
     "lint:fix": "nx run-many -t lint:fix",
-    "preview": "nx run @mlightcad/mlightcad:preview",
+    "preview": "nx run @mlightcad/cad-viewer-example:preview",
     "test": "jest"
   },
   "engines": {
     "pnpm": ">=8"
   },
-  "private": true,
   "dependencies": {
-    "@mlightcad/common": "1.0.1",
-    "@mlightcad/data-model": "1.0.3",
-    "@mlightcad/geometry-engine": "1.0.1",
-    "@mlightcad/graphic-interface": "1.0.1",
-    "lodash-es": "4.17.21"
+    "@mlightcad/common": "1.1.0",
+    "@mlightcad/geometry-engine": "2.0.1",
+    "@mlightcad/graphic-interface": "2.0.1"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^3.0.0",

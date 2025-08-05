@@ -1,3 +1,16 @@
-import { main } from './app'
+// Main component
+export { default as MlApp } from './component/MlApp.vue'
 
-main()
+export * from './app'
+
+// Commands
+export * from './command'
+
+// Components
+export * from './component'
+
+// Composables
+export * from './composable'
+
+// Locale
+export * from './locale'

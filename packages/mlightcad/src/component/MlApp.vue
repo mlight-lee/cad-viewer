@@ -4,7 +4,7 @@ import { AcApDocManager, eventBus } from '@mlightcad/viewer'
 import { ElMessage } from 'element-plus'
 import en from 'element-plus/es/locale/lang/en'
 import zh from 'element-plus/es/locale/lang/zh-cn'
-import { computed } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { store } from '../app'
@@ -19,9 +19,26 @@ import {
 } from './layout'
 import { MlStatusBar } from './statusBar'
 
-const { locale, t } = useI18n()
+// Define props
+interface Props {
+  locale?: 'en' | 'zh' | 'default'
+  url?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  locale: 'default',
+  url: undefined
+})
+
+const { locale: i18nLocale, t } = useI18n()
+
+// Use prop locale if provided, otherwise use i18n locale
+const currentLocale = computed(() => {
+  return props.locale === 'default' ? i18nLocale.value : props.locale
+})
+
 const elLocale = computed(() => {
-  return locale.value === 'en' ? en : zh
+  return currentLocale.value === 'en' ? en : zh
 })
 
 const handleFileRead = async (
@@ -32,6 +49,46 @@ const handleFileRead = async (
   await AcApDocManager.instance.openDocument(fileName, fileContent, options)
   store.fileName = fileName
 }
+
+// Function to fetch and open file from URL
+const openFileFromUrl = async (url: string) => {
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const fileName = url.split('/').pop() || 'file.dwg'
+    const fileContent = await response.arrayBuffer()
+
+    await handleFileRead(fileName, fileContent)
+  } catch (error) {
+    console.error('Failed to open file from URL:', error)
+    ElMessage({
+      message: t('main.message.failedToOpenFile', { fileName: url }),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  }
+}
+
+// Watch for URL changes and open file
+watch(
+  () => props.url,
+  newUrl => {
+    if (newUrl) {
+      openFileFromUrl(newUrl)
+    }
+  }
+)
+
+// Open file from URL on mount if provided
+onMounted(() => {
+  if (props.url) {
+    openFileFromUrl(props.url)
+  }
+})
 
 eventBus.on('message', params => {
   ElMessage({

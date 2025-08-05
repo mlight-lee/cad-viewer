@@ -9,20 +9,14 @@ importers:
   .:
     dependencies:
       '@mlightcad/common':
-        specifier: 1.0.1
-        version: 1.0.1(lodash-es@4.17.21)
-      '@mlightcad/data-model':
-        specifier: 1.0.3
-        version: 1.0.3(@mlightcad/common@1.0.1(lodash-es@4.17.21))(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21))(@mlightcad/graphic-interface@1.0.1(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)))(lodash-es@4.17.21)
+        specifier: 1.1.0
+        version: 1.1.0
       '@mlightcad/geometry-engine':
-        specifier: 1.0.1
-        version: 1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)
+        specifier: 2.0.1
+        version: 2.0.1(@mlightcad/common@1.1.0)
       '@mlightcad/graphic-interface':
-        specifier: 1.0.1
-        version: 1.0.1(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21))
-      lodash-es:
-        specifier: 4.17.21
-        version: 4.17.21
+        specifier: 2.0.1
+        version: 2.0.1(@mlightcad/geometry-engine@2.0.1(@mlightcad/common@1.1.0))
     devDependencies:
       '@intlify/eslint-plugin-vue-i18n':
         specifier: ^3.0.0
@@ -100,11 +94,14 @@ importers:
         specifier: ^5.2.10
         version: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
 
-  packages/mlightcad:
+  packages/example:
     dependencies:
       '@element-plus/icons-vue':
         specifier: ^2.3.1
         version: 2.3.1(vue@3.5.18(typescript@5.8.3))
+      '@mlightcad/cad-viewer':
+        specifier: workspace:*
+        version: link:../mlightcad
       '@mlightcad/data-model':
         specifier: 1.1.1
         version: 1.1.1
@@ -114,21 +111,6 @@ importers:
       '@mlightcad/libredwg-web':
         specifier: 0.1.5
         version: 0.1.5
-      '@mlightcad/svg-renderer':
-        specifier: workspace:*
-        version: link:../svg-renderer
-      '@mlightcad/three-renderer':
-        specifier: workspace:*
-        version: link:../three-renderer
-      '@mlightcad/three-viewcube':
-        specifier: 0.0.9
-        version: 0.0.9(three@0.172.0)
-      '@mlightcad/ui-components':
-        specifier: 0.0.16
-        version: 0.0.16(element-plus@2.10.4(vue@3.5.18(typescript@5.8.3)))(vue@3.5.18(typescript@5.8.3))
-      '@mlightcad/viewer':
-        specifier: workspace:*
-        version: link:../viewer
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.3.0(vue@3.5.18(typescript@5.8.3))
@@ -136,7 +118,7 @@ importers:
         specifier: ^2.9.1
         version: 2.10.4(vue@3.5.18(typescript@5.8.3))
       lodash-es:
-        specifier: '*'
+        specifier: 4.17.21
         version: 4.17.21
       three:
         specifier: ^0.172.0
@@ -169,6 +151,73 @@ importers:
       vite-plugin-css-injected-by-js:
         specifier: ^3.5.1
         version: 3.5.2(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1))
+      vite-svg-loader:
+        specifier: ^5.1.0
+        version: 5.1.0(vue@3.5.18(typescript@5.8.3))
+      vue-eslint-parser:
+        specifier: ^9.4.3
+        version: 9.4.3(eslint@9.31.0(jiti@1.21.7))
+      vue-tsc:
+        specifier: ^2.1.6
+        version: 2.2.12(typescript@5.8.3)
+
+  packages/mlightcad:
+    dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.18(typescript@5.8.3))
+      '@mlightcad/data-model':
+        specifier: 1.1.1
+        version: 1.1.1
+      '@mlightcad/svg-renderer':
+        specifier: workspace:*
+        version: link:../svg-renderer
+      '@mlightcad/three-renderer':
+        specifier: workspace:*
+        version: link:../three-renderer
+      '@mlightcad/three-viewcube':
+        specifier: 0.0.9
+        version: 0.0.9(three@0.172.0)
+      '@mlightcad/ui-components':
+        specifier: 0.0.16
+        version: 0.0.16(element-plus@2.10.4(vue@3.5.18(typescript@5.8.3)))(vue@3.5.18(typescript@5.8.3))
+      '@mlightcad/viewer':
+        specifier: workspace:*
+        version: link:../viewer
+      '@vueuse/core':
+        specifier: ^11.1.0
+        version: 11.3.0(vue@3.5.18(typescript@5.8.3))
+      element-plus:
+        specifier: ^2.9.1
+        version: 2.10.4(vue@3.5.18(typescript@5.8.3))
+      lodash-es:
+        specifier: 4.17.21
+        version: 4.17.21
+      three:
+        specifier: ^0.172.0
+        version: 0.172.0
+      vue:
+        specifier: ^3.4.21
+        version: 3.5.18(typescript@5.8.3)
+      vue-i18n:
+        specifier: ^10.0.1
+        version: 10.0.8(vue@3.5.18(typescript@5.8.3))
+    devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@vitejs/plugin-vue':
+        specifier: ^5.1.3
+        version: 5.2.4(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1))(vue@3.5.18(typescript@5.8.3))
+      sass:
+        specifier: ^1.80.6
+        version: 1.89.2
+      vite-plugin-dts:
+        specifier: ^4.0.0
+        version: 4.5.4(@types/node@20.19.9)(rollup@4.45.1)(typescript@5.8.3)(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1))
+      vite-plugin-lib-inject-css:
+        specifier: ^1.0.0
+        version: 1.3.0(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1))
       vite-svg-loader:
         specifier: ^5.1.0
         version: 5.1.0(vue@3.5.18(typescript@5.8.3))
@@ -225,7 +274,7 @@ importers:
         specifier: 0.0.9
         version: 0.0.9(three@0.172.0)
       lodash-es:
-        specifier: '*'
+        specifier: 4.17.21
         version: 4.17.21
       mitt:
         specifier: ^3.0.1
@@ -1244,18 +1293,21 @@ packages:
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
     engines: {node: '>=8'}
 
-  '@mlightcad/common@1.0.1':
-    resolution: {integrity: sha512-IjgUbFaO1dPG2vmAGQ/PzIXSHROSZNeYo5PuGuGcI/AetjVF2FO8H0j36OMTENlc5tRyTi9BlaetWVMso7f+Ug==}
-    peerDependencies:
-      lodash-es: '*'
+  '@microsoft/api-extractor-model@7.30.7':
+    resolution: {integrity: sha512-TBbmSI2/BHpfR9YhQA7nH0nqVmGgJ0xH0Ex4D99/qBDAUpnhA2oikGmdXanbw9AWWY/ExBYIpkmY8dBHdla3YQ==}
 
-  '@mlightcad/data-model@1.0.3':
-    resolution: {integrity: sha512-4J4WRMlGqtiNjTupa++9q+gVWEdmtdMWRR52AruOkC6Fmt00Tar/83EfdB9vZgpQHZ5msbpRTKccV8+1dVKbiQ==}
-    peerDependencies:
-      '@mlightcad/common': 1.0.1
-      '@mlightcad/geometry-engine': 1.0.1
-      '@mlightcad/graphic-interface': 1.0.1
-      lodash-es: '*'
+  '@microsoft/api-extractor@7.52.10':
+    resolution: {integrity: sha512-LhKytJM5ZJkbHQVfW/3o747rZUNs/MGg6j/wt/9qwwqEOfvUDTYXXxIBuMgrRXhJ528p41iyz4zjBVHZU74Odg==}
+    hasBin: true
+
+  '@microsoft/tsdoc-config@0.17.1':
+    resolution: {integrity: sha512-UtjIFe0C6oYgTnad4q1QP4qXwLhe6tIpNTRStJ2RZEPIkqQPREAwE5spzVxsdn9UaEMUqhh0AqSx3X4nWAKXWw==}
+
+  '@microsoft/tsdoc@0.15.1':
+    resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
+
+  '@mlightcad/common@1.1.0':
+    resolution: {integrity: sha512-+U9zEFlVjiNGj5JPiSoTuAEm4BBQFTwOe3VdSMUGAKpGH01sepXcaFNv7U1P2tqH3G2SE7lXJ5tv2gjUJE6sxg==}
 
   '@mlightcad/data-model@1.1.1':
     resolution: {integrity: sha512-9wLtTznlvAA8jKG48M7SgPV4TskrBHfQ2878WKhBkUkZLVtofnTVkPJTaeuH/HESPWOOwtD/ktCtEdZbTa7Omw==}
@@ -1263,16 +1315,15 @@ packages:
   '@mlightcad/dxf-json@1.0.8':
     resolution: {integrity: sha512-NOLt3LcyOti+Ero9PMbvZaYWvn2IwVL7ysty0aYxTdeYc3gs1+Xnj+VjaCEL6ACMXLlmQd8pFQjMdRsuIIUd2A==}
 
-  '@mlightcad/geometry-engine@1.0.1':
-    resolution: {integrity: sha512-GWdhsD0u7j34egAMkbj8wOrbf/3RWYeELvoF9VsSHkBQAFry5J1Ws+MYjHxJY5jZ8XSjFdLIaQ7aKgwfuRRnBw==}
+  '@mlightcad/geometry-engine@2.0.1':
+    resolution: {integrity: sha512-wSBSkG5fjytCNmZVKHgSakXn+rzxx4M+t/vLYutqdHtVsY15X3k1bMep4QpjpuSNhPSQs0WGlrDfxcxYUtK7cA==}
     peerDependencies:
-      '@mlightcad/common': 1.0.1
-      lodash-es: '*'
+      '@mlightcad/common': 1.1.0
 
-  '@mlightcad/graphic-interface@1.0.1':
-    resolution: {integrity: sha512-eE0E/4CUNDSOo8ZdOGUgPAWHlL/6y/qZfv1uyXOVjWY4XeimbDsb7GmvMQ/Cupf2eB/YjEnj0G1ZDcQ62k3rhg==}
+  '@mlightcad/graphic-interface@2.0.1':
+    resolution: {integrity: sha512-AcfDN/hvuRZN8FM8g1splluc94lHHa7HdlJZ4VuOyrkQgbZwN/SVX9Mv41trkv22/qZGIHl0cOsr3ZaOdgIKQA==}
     peerDependencies:
-      '@mlightcad/geometry-engine': 1.0.1
+      '@mlightcad/geometry-engine': 2.0.1
 
   '@mlightcad/libredwg-converter@2.0.1':
     resolution: {integrity: sha512-GFPQDFuLmVgozHjjPbiicy8IBvpEgIWBTJClIP92cf9ka/EYS4hzKIEFsV15Vn7U9EJY47tUiESGPsWqz8XU2w==}
@@ -1612,6 +1663,28 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rushstack/node-core-library@5.14.0':
+    resolution: {integrity: sha512-eRong84/rwQUlATGFW3TMTYVyqL1vfW9Lf10PH+mVGfIb9HzU3h5AASNIw+axnBLjnD0n3rT5uQBwu9fvzATrg==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
+  '@rushstack/rig-package@0.5.3':
+    resolution: {integrity: sha512-olzSSjYrvCNxUFZowevC3uz8gvKr3WTpHQ7BkpjtRpA3wK+T0ybep/SRUMfr195gBzJm5gaXw0ZMgjIyHqJUow==}
+
+  '@rushstack/terminal@0.15.4':
+    resolution: {integrity: sha512-OQSThV0itlwVNHV6thoXiAYZlQh4Fgvie2CzxFABsbO2MWQsI4zOh3LRNigYSTrmS+ba2j0B3EObakPzf/x6Zg==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
+  '@rushstack/ts-command-line@5.0.2':
+    resolution: {integrity: sha512-+AkJDbu1GFMPIU8Sb7TLVXDv/Q7Mkvx+wAjEl8XiXVVq+p1FmWW6M3LYpJMmoHNckSofeMecgWg5lfMwNAAsEQ==}
+
   '@shikijs/engine-oniguruma@1.29.2':
     resolution: {integrity: sha512-7iiOx3SG8+g1MnlzZVDYiaeHe7Ez2Kf2HrJzdmGwkRisT7r4rak0e655AcM/tF9JG/kg5fMNYlLLKglbN7gBqA==}
 
@@ -1651,6 +1724,9 @@ packages:
 
   '@tweenjs/tween.js@23.1.3':
     resolution: {integrity: sha512-vJmvvwFxYuGnF2axRtPYocag6Clbb5YS7kLL+SO/TeVFzHqDIWrNKYtcsPMibjDx9O+bu+psAy9NKfWklassUA==}
+
+  '@types/argparse@1.0.38':
+    resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -1922,6 +1998,14 @@ packages:
   '@vue/devtools-api@6.6.4':
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
 
+  '@vue/language-core@2.2.0':
+    resolution: {integrity: sha512-O1ZZFaaBGkKbsRfnVH1ifOK1/1BUkyK+3SQsfnh6PmMmD4qJcTU8godCeA96jjDRTL6zgnK7YzCHfaUlH2r0Mw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   '@vue/language-core@2.2.12':
     resolution: {integrity: sha512-IsGljWbKGU1MZpBPN+BvPAdr55YPkj2nB/TBNGNC32Vy2qLG25DYu/NBN2vNtZqdRbTRjaoYrahLrToim2NanA==}
     peerDependencies:
@@ -1997,8 +2081,33 @@ packages:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
     engines: {node: '>= 10.0.0'}
 
+  ajv-draft-04@1.0.0:
+    resolution: {integrity: sha512-mv00Te6nmYbRp5DCwclxtt7yV/joXJPGS7nM+97GdxvuttCOfgI3K4U25zboyeX0O+myI8ERluxQe5wljMmVIw==}
+    peerDependencies:
+      ajv: ^8.5.0
+    peerDependenciesMeta:
+      ajv:
+        optional: true
+
+  ajv-formats@3.0.1:
+    resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
+    peerDependencies:
+      ajv: ^8.0.0
+    peerDependenciesMeta:
+      ajv:
+        optional: true
+
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
+
+  ajv@8.12.0:
+    resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
+
+  ajv@8.13.0:
+    resolution: {integrity: sha512-PRA911Blj99jR5RMeTunVbNXMF6Lp4vZXnk5GQjcnUWUTsrXtekg/pnmFFI2u/I36Y/2bITGS30GZCXei6uNkA==}
+
+  alien-signals@0.4.14:
+    resolution: {integrity: sha512-itUAVzhczTmP2U5yX67xVpsbbOiquusbWVyA9N+sy6+r6YVbFkahXvNCeEPWEOMhwDYwbVbGHFkVL03N9I5g+Q==}
 
   alien-signals@1.0.13:
     resolution: {integrity: sha512-OGj9yyTnJEttvzhTUWuscOvtqxq5vrhF7vL9oS0xJ2mK0ItPYP1/y+vCFebfxoEyAz0++1AIwJ5CMr+Fk3nDmg==}
@@ -2126,9 +2235,6 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
-
-  bindings@1.5.0:
-    resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
 
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
@@ -2284,6 +2390,9 @@ packages:
   commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
+
+  compare-versions@6.1.1:
+    resolution: {integrity: sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -2699,9 +2808,6 @@ packages:
     resolution: {integrity: sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==}
     engines: {node: '>=16.0.0'}
 
-  file-uri-to-path@1.0.0:
-    resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
-
   filelist@1.0.4:
     resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
 
@@ -2904,6 +3010,10 @@ packages:
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
+
+  import-lazy@4.0.0:
+    resolution: {integrity: sha512-rKtvo6a868b5Hu3heneU+L4yEQ4jYKLtjpnPeUdK7h0yzXGmyBTypknlkCvHFBqfX9YlorEiMM6Dnq/5atfHkw==}
+    engines: {node: '>=8'}
 
   import-local@3.2.0:
     resolution: {integrity: sha512-2SPlun1JUPWoM6t3F0dw0FkCF/jWY8kttcY4f599GLTSjh2OCuuhdTkJQsEcZzBqbXZGKMK2OqW1oZsjtf/gQA==}
@@ -3160,6 +3270,9 @@ packages:
     resolution: {integrity: sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==}
     hasBin: true
 
+  jju@1.4.0:
+    resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -3192,6 +3305,9 @@ packages:
 
   json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+
+  json-schema-traverse@1.0.0:
+    resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
@@ -3316,6 +3432,10 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  lru-cache@6.0.0:
+    resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
+    engines: {node: '>=10'}
+
   lunr@2.3.9:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
 
@@ -3431,9 +3551,6 @@ packages:
 
   muggle-string@0.4.1:
     resolution: {integrity: sha512-VNTrAak/KhO2i8dqqnqnAHOa3cYBwXEZe9h+D5h/1ZqFSTEFHdM65lR7RoIqq3tBBYavsOXV84NoHXZ0AkPyqQ==}
-
-  nan@2.23.0:
-    resolution: {integrity: sha512-1UxuyYGdoQHcGg87Lkqm3FzefucTa0NAiOcuRsDmysep3c1LVCRK2krrUDafMWtjSG04htvAmvg96+SDknOmgQ==}
 
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
@@ -3736,6 +3853,10 @@ packages:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
 
+  require-from-string@2.0.2:
+    resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
+    engines: {node: '>=0.10.0'}
+
   resolve-cwd@3.0.0:
     resolution: {integrity: sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg==}
     engines: {node: '>=8'}
@@ -3816,6 +3937,11 @@ packages:
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
+    hasBin: true
+
+  semver@7.5.4:
+    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
+    engines: {node: '>=10'}
     hasBin: true
 
   semver@7.7.2:
@@ -4103,6 +4229,11 @@ packages:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
 
+  typescript@5.8.2:
+    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
@@ -4211,13 +4342,24 @@ packages:
     resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  verb-nurbs-web@2.1.3:
-    resolution: {integrity: sha512-2PvI2bx7dn0r3kWtk+JuDIDZ+p7I5Piu8y6/ZNhUVpilOyHKK1nNzLHtgown+dFOmBnKnuAKIMh1xn/5kzrxZA==}
-
   vite-plugin-css-injected-by-js@3.5.2:
     resolution: {integrity: sha512-2MpU/Y+SCZyWUB6ua3HbJCrgnF0KACAsmzOQt1UvRVJCGF6S8xdA3ZUhWcWdM9ivG4I5az8PnQmwwrkC2CAQrQ==}
     peerDependencies:
       vite: '>2.0.0-0'
+
+  vite-plugin-dts@4.5.4:
+    resolution: {integrity: sha512-d4sOM8M/8z7vRXHHq/ebbblfaxENjogAAekcfcDCCwAyvGqnPrc7f4NZbvItS+g4WTgerW0xDwSz5qz11JT3vg==}
+    peerDependencies:
+      typescript: '*'
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
+  vite-plugin-lib-inject-css@1.3.0:
+    resolution: {integrity: sha512-Rldq36U9TDlpDom3yoLybfJtzn897+oMKdX0+fxbVYnYjRGnTtaFfnMmfOckH8GQ3cvGAKv9Ai1PWyE0amIbjg==}
+    peerDependencies:
+      vite: '*'
 
   vite-svg-loader@5.1.0:
     resolution: {integrity: sha512-M/wqwtOEjgb956/+m5ZrYT/Iq6Hax0OakWbokj8+9PXOnB7b/4AxESHieEtnNEy7ZpjsjYW1/5nK8fATQMmRxw==}
@@ -4304,10 +4446,6 @@ packages:
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
-  webworker-threads@0.7.17:
-    resolution: {integrity: sha512-Y2w2aXBbDLk9IzTEb9u+MsODC3s4YlGI7g4h0t+1OAwIO8yBI9rQL35ZYlyayiCuWu1dZMH/P7kGU8OwW7YsyA==}
-    engines: {node: '>= 0.10.16'}
-
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
@@ -4346,6 +4484,9 @@ packages:
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
+
+  yallist@4.0.0:
+    resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
   yaml-eslint-parser@1.3.0:
     resolution: {integrity: sha512-E/+VitOorXSLiAqtTd7Yqax0/pAS3xaYMP+AUUJGOK1OZG3rhcj9fcJOM5HJ2VrP1FrStVCWr1muTfQCdj4tAA==}
@@ -5610,19 +5751,44 @@ snapshots:
 
   '@lukeed/csprng@1.1.0': {}
 
-  '@mlightcad/common@1.0.1(lodash-es@4.17.21)':
+  '@microsoft/api-extractor-model@7.30.7(@types/node@20.19.9)':
     dependencies:
-      lodash-es: 4.17.21
-      loglevel: 1.9.2
+      '@microsoft/tsdoc': 0.15.1
+      '@microsoft/tsdoc-config': 0.17.1
+      '@rushstack/node-core-library': 5.14.0(@types/node@20.19.9)
+    transitivePeerDependencies:
+      - '@types/node'
 
-  '@mlightcad/data-model@1.0.3(@mlightcad/common@1.0.1(lodash-es@4.17.21))(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21))(@mlightcad/graphic-interface@1.0.1(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)))(lodash-es@4.17.21)':
+  '@microsoft/api-extractor@7.52.10(@types/node@20.19.9)':
     dependencies:
-      '@mlightcad/common': 1.0.1(lodash-es@4.17.21)
-      '@mlightcad/dxf-json': 1.0.8
-      '@mlightcad/geometry-engine': 1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)
-      '@mlightcad/graphic-interface': 1.0.1(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21))
-      lodash-es: 4.17.21
-      uid: 2.0.2
+      '@microsoft/api-extractor-model': 7.30.7(@types/node@20.19.9)
+      '@microsoft/tsdoc': 0.15.1
+      '@microsoft/tsdoc-config': 0.17.1
+      '@rushstack/node-core-library': 5.14.0(@types/node@20.19.9)
+      '@rushstack/rig-package': 0.5.3
+      '@rushstack/terminal': 0.15.4(@types/node@20.19.9)
+      '@rushstack/ts-command-line': 5.0.2(@types/node@20.19.9)
+      lodash: 4.17.21
+      minimatch: 10.0.3
+      resolve: 1.22.10
+      semver: 7.5.4
+      source-map: 0.6.1
+      typescript: 5.8.2
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@microsoft/tsdoc-config@0.17.1':
+    dependencies:
+      '@microsoft/tsdoc': 0.15.1
+      ajv: 8.12.0
+      jju: 1.4.0
+      resolve: 1.22.10
+
+  '@microsoft/tsdoc@0.15.1': {}
+
+  '@mlightcad/common@1.1.0':
+    dependencies:
+      loglevel: 1.9.2
 
   '@mlightcad/data-model@1.1.1':
     dependencies:
@@ -5633,15 +5799,13 @@ snapshots:
     dependencies:
       '@fxts/core': 1.15.0
 
-  '@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)':
+  '@mlightcad/geometry-engine@2.0.1(@mlightcad/common@1.1.0)':
     dependencies:
-      '@mlightcad/common': 1.0.1(lodash-es@4.17.21)
-      lodash-es: 4.17.21
-      verb-nurbs-web: 2.1.3
+      '@mlightcad/common': 1.1.0
 
-  '@mlightcad/graphic-interface@1.0.1(@mlightcad/geometry-engine@1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21))':
+  '@mlightcad/graphic-interface@2.0.1(@mlightcad/geometry-engine@2.0.1(@mlightcad/common@1.1.0))':
     dependencies:
-      '@mlightcad/geometry-engine': 1.0.1(@mlightcad/common@1.0.1(lodash-es@4.17.21))(lodash-es@4.17.21)
+      '@mlightcad/geometry-engine': 2.0.1(@mlightcad/common@1.1.0)
 
   '@mlightcad/libredwg-converter@2.0.1(@mlightcad/data-model@1.1.1)(@mlightcad/libredwg-web@0.1.5)':
     dependencies:
@@ -5958,6 +6122,40 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.45.1':
     optional: true
 
+  '@rushstack/node-core-library@5.14.0(@types/node@20.19.9)':
+    dependencies:
+      ajv: 8.13.0
+      ajv-draft-04: 1.0.0(ajv@8.13.0)
+      ajv-formats: 3.0.1(ajv@8.13.0)
+      fs-extra: 11.3.0
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.10
+      semver: 7.5.4
+    optionalDependencies:
+      '@types/node': 20.19.9
+
+  '@rushstack/rig-package@0.5.3':
+    dependencies:
+      resolve: 1.22.10
+      strip-json-comments: 3.1.1
+
+  '@rushstack/terminal@0.15.4(@types/node@20.19.9)':
+    dependencies:
+      '@rushstack/node-core-library': 5.14.0(@types/node@20.19.9)
+      supports-color: 8.1.1
+    optionalDependencies:
+      '@types/node': 20.19.9
+
+  '@rushstack/ts-command-line@5.0.2(@types/node@20.19.9)':
+    dependencies:
+      '@rushstack/terminal': 0.15.4(@types/node@20.19.9)
+      '@types/argparse': 1.0.38
+      argparse: 1.0.10
+      string-argv: 0.3.2
+    transitivePeerDependencies:
+      - '@types/node'
+
   '@shikijs/engine-oniguruma@1.29.2':
     dependencies:
       '@shikijs/types': 1.29.2
@@ -5993,6 +6191,8 @@ snapshots:
   '@tsconfig/node16@1.0.4': {}
 
   '@tweenjs/tween.js@23.1.3': {}
+
+  '@types/argparse@1.0.38': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -6404,6 +6604,19 @@ snapshots:
 
   '@vue/devtools-api@6.6.4': {}
 
+  '@vue/language-core@2.2.0(typescript@5.8.3)':
+    dependencies:
+      '@volar/language-core': 2.4.15
+      '@vue/compiler-dom': 3.5.18
+      '@vue/compiler-vue2': 2.7.16
+      '@vue/shared': 3.5.18
+      alien-signals: 0.4.14
+      minimatch: 9.0.5
+      muggle-string: 0.4.1
+      path-browserify: 1.0.1
+    optionalDependencies:
+      typescript: 5.8.3
+
   '@vue/language-core@2.2.12(typescript@5.8.3)':
     dependencies:
       '@volar/language-core': 2.4.15
@@ -6504,12 +6717,36 @@ snapshots:
 
   address@1.2.2: {}
 
+  ajv-draft-04@1.0.0(ajv@8.13.0):
+    optionalDependencies:
+      ajv: 8.13.0
+
+  ajv-formats@3.0.1(ajv@8.13.0):
+    optionalDependencies:
+      ajv: 8.13.0
+
   ajv@6.12.6:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  ajv@8.12.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js: 4.4.1
+
+  ajv@8.13.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js: 4.4.1
+
+  alien-signals@0.4.14: {}
 
   alien-signals@1.0.13: {}
 
@@ -6669,11 +6906,6 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
-  bindings@1.5.0:
-    dependencies:
-      file-uri-to-path: 1.0.0
-    optional: true
-
   bl@4.1.0:
     dependencies:
       buffer: 5.7.1
@@ -6817,6 +7049,8 @@ snapshots:
   commander@2.20.3: {}
 
   commander@7.2.0: {}
+
+  compare-versions@6.1.1: {}
 
   concat-map@0.0.1: {}
 
@@ -7277,9 +7511,6 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-uri-to-path@1.0.0:
-    optional: true
-
   filelist@1.0.4:
     dependencies:
       minimatch: 5.1.6
@@ -7464,6 +7695,8 @@ snapshots:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
+
+  import-lazy@4.0.0: {}
 
   import-local@3.2.0:
     dependencies:
@@ -7896,6 +8129,8 @@ snapshots:
 
   jiti@1.21.7: {}
 
+  jju@1.4.0: {}
+
   js-tokens@4.0.0: {}
 
   js-tokens@9.0.1: {}
@@ -7918,6 +8153,8 @@ snapshots:
   json-parse-even-better-errors@2.3.1: {}
 
   json-schema-traverse@0.4.1: {}
+
+  json-schema-traverse@1.0.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
@@ -8047,6 +8284,10 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  lru-cache@6.0.0:
+    dependencies:
+      yallist: 4.0.0
+
   lunr@2.3.9: {}
 
   magic-string@0.30.17:
@@ -8145,9 +8386,6 @@ snapshots:
   ms@2.1.3: {}
 
   muggle-string@0.4.1: {}
-
-  nan@2.23.0:
-    optional: true
 
   nanoid@3.3.11: {}
 
@@ -8472,6 +8710,8 @@ snapshots:
 
   require-directory@2.1.1: {}
 
+  require-from-string@2.0.2: {}
+
   resolve-cwd@3.0.0:
     dependencies:
       resolve-from: 5.0.0
@@ -8563,6 +8803,10 @@ snapshots:
   scule@1.3.0: {}
 
   semver@6.3.1: {}
+
+  semver@7.5.4:
+    dependencies:
+      lru-cache: 6.0.0
 
   semver@7.7.2: {}
 
@@ -8834,6 +9078,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  typescript@5.8.2: {}
+
   typescript@5.8.3: {}
 
   uc.micro@2.1.0: {}
@@ -8974,12 +9220,33 @@ snapshots:
 
   validate-npm-package-name@5.0.1: {}
 
-  verb-nurbs-web@2.1.3:
-    optionalDependencies:
-      webworker-threads: 0.7.17
-
   vite-plugin-css-injected-by-js@3.5.2(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)):
     dependencies:
+      vite: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
+
+  vite-plugin-dts@4.5.4(@types/node@20.19.9)(rollup@4.45.1)(typescript@5.8.3)(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)):
+    dependencies:
+      '@microsoft/api-extractor': 7.52.10(@types/node@20.19.9)
+      '@rollup/pluginutils': 5.2.0(rollup@4.45.1)
+      '@volar/typescript': 2.4.15
+      '@vue/language-core': 2.2.0(typescript@5.8.3)
+      compare-versions: 6.1.1
+      debug: 4.4.1
+      kolorist: 1.8.0
+      local-pkg: 1.1.1
+      magic-string: 0.30.17
+      typescript: 5.8.3
+    optionalDependencies:
+      vite: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - rollup
+      - supports-color
+
+  vite-plugin-lib-inject-css@1.3.0(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)):
+    dependencies:
+      magic-string: 0.30.17
+      picocolors: 1.1.1
       vite: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
 
   vite-svg-loader@5.1.0(vue@3.5.18(typescript@5.8.3)):
@@ -9050,12 +9317,6 @@ snapshots:
 
   webpack-virtual-modules@0.6.2: {}
 
-  webworker-threads@0.7.17:
-    dependencies:
-      bindings: 1.5.0
-      nan: 2.23.0
-    optional: true
-
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
@@ -9092,6 +9353,8 @@ snapshots:
   y18n@5.0.8: {}
 
   yallist@3.1.1: {}
+
+  yallist@4.0.0: {}
 
   yaml-eslint-parser@1.3.0:
     dependencies:

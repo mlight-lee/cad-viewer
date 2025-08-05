@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "autocad",
+    "cad",
+    "cad-viewer",
+    "dwg",
+    "dwg-viewer",
+    "dxf",
+    "dxf-viewer",
+    "mlight",
+    "mlightcad"
+  ],
   "files": [
     "dist",
     "lib"
@@ -36,6 +47,6 @@
     "@mlightcad/three-renderer": "workspace:*",
     "@mlightcad/three-viewcube": "0.0.9",
     "three": "^0.172.0",
-    "lodash-es": "*"
+    "lodash-es": "4.17.21"
   }
 }
