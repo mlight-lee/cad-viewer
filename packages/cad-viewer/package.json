@@ -1,0 +1,85 @@
+{
+  "name": "@mlightcad/cad-viewer",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "autocad",
+    "cad",
+    "cad-viewer",
+    "dwg",
+    "dwg-viewer",
+    "dxf",
+    "dxf-viewer",
+    "mlight",
+    "mlightcad"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./command": {
+      "import": "./dist/command/index.js",
+      "types": "./dist/command/index.d.ts"
+    },
+    "./component": {
+      "import": "./dist/component/index.js",
+      "types": "./dist/component/index.d.ts"
+    },
+    "./composable": {
+      "import": "./dist/composable/index.js",
+      "types": "./dist/composable/index.d.ts"
+    },
+    "./locale": {
+      "import": "./dist/locale/index.js",
+      "types": "./dist/locale/index.d.ts"
+    },
+    "./style": {
+      "import": "./dist/style/index.js",
+      "types": "./dist/style/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "analyze": "vite build --mode analyze",
+    "dev": "vite",
+    "clean": "rimraf dist lib tsconfig.tsbuildinfo",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix --quiet src/"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@vitejs/plugin-vue": "^5.1.3",
+    "sass": "^1.80.6",
+    "vite-plugin-dts": "^4.0.0",
+    "vite-plugin-lib-inject-css": "^1.0.0",
+    "vite-svg-loader": "^5.1.0",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.1.6"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@mlightcad/svg-renderer": "workspace:*",
+    "@mlightcad/three-renderer": "workspace:*",
+    "@mlightcad/three-viewcube": "0.0.9",
+    "@mlightcad/ui-components": "0.0.16",
+    "three": "^0.172.0"
+  },
+  "peerDependencies": {
+    "@mlightcad/cad-simple-viewer": "workspace:*",
+    "@mlightcad/data-model": "1.1.1",
+    "@vueuse/core": "^11.1.0",
+    "element-plus": "^2.9.1",
+    "lodash-es": "4.17.21",
+    "vue": "^3.4.21",
+    "vue-i18n": "^10.0.1"
+  }
+}
