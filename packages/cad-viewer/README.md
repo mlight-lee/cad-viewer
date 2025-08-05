@@ -27,86 +27,112 @@ npm install @mlightcad/cad-viewer
 
 ## Usage
 
+Please refer to sub-package `cad-viewer-example` as one example.
+
 ### Basic Usage
 
 ```vue
 <template>
   <div>
-    <MlApp />
+    <MlCADViewer />
   </div>
 </template>
 
 <script setup lang="ts">
-import { MlApp } from '@mlightcad/cad-viewer'
-import '@mlightcad/cad-viewer/style'
+import 'uno.css'
+import 'element-plus/dist/index.css'
+import 'element-plus/dist/index.css'
+
+import {
+  i18n,
+  initializeCadViewer,
+  MlCadViewer,
+  registerCommponents
+} from '@mlightcad/cad-viewer'
+import ElementPlus from 'element-plus'
+import { createApp } from 'vue'
+
+const initApp = () => {
+  initializeCadViewer('canvas')
+
+  const app = createApp(MlCadViewer)
+  app.use(i18n)
+  app.use(ElementPlus)
+  app.mount('#app')
+
+  registerCommponents()
+}
+
+initApp()
 </script>
 ```
 
 ### Advanced Usage
 
-```vue
-<template>
-  <div>
-    <MlApp />
-  </div>
-</template>
+By default, cad viewer registers DXF converter only and can view DXF file only. If you want to view DWG file, you need to register DWG converter. The following example code shows how to register DWG converter.
 
-<script setup lang="ts">
-import { createApp } from 'vue'
-import { MlApp } from '@mlightcad/cad-viewer'
-import { i18n } from '@mlightcad/cad-viewer/locale'
-import { useDialogManager } from '@mlightcad/cad-viewer/composable'
-import { markRaw } from 'vue'
-
-// Import components and commands
-import {
-  AcApLayerStateCmd,
-  AcApLogCmd,
-  AcApMissedDataCmd,
-  AcApPointStyleCmd
-} from '@mlightcad/cad-viewer/command'
-import { MlPointStyleDlg, MlReplacementDlg } from '@mlightcad/cad-viewer/component'
-
-// Import required dependencies
+```typescript
 import {
   AcDbDatabaseConverterManager,
   AcDbFileType
 } from '@mlightcad/data-model'
 import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
-import { AcApDocManager, AcEdCommandStack } from '@mlightcad/viewer'
 
-const { registerDialog } = useDialogManager()
 
-// Register commands
-const registerCmds = () => {
-  AcEdCommandStack.instance.addCommand(
-    AcEdCommandStack.SYSTEMT_COMMAND_GROUP_NAME,
-    'log',
-    'log',
-    new AcApLogCmd()
-  )
-  // ... register other commands
+const registerConverters = async () => {
+  try {
+    const isDev = import.meta.env.DEV
+    if (!isDev) {
+      // Production mode - use dynamic import with explicit chunk name
+      const instance = await import(
+        /* webpackChunkName: "libredwg-web" */ '@mlightcad/libredwg-web'
+      )
+      const converter = new AcDbLibreDwgConverter(await instance.createModule())
+      AcDbDatabaseConverterManager.instance.register(
+        AcDbFileType.DWG,
+        converter
+      )
+    }
+  } catch (error) {
+    console.error('Failed to load libredwg-web: ', error)
+  }
 }
+```
 
-// Register dialogs
-const registerDialogs = () => {
-  registerDialog({
-    name: 'ReplacementDlg',
-    component: markRaw(MlReplacementDlg),
-    props: {}
-  })
-  // ... register other dialogs
-}
+In order to make it work in Vite dev mode, you need to add the following code.
 
-// Initialize the application
-const initApp = () => {
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement
-  AcApDocManager.createInstance(canvas)
-  registerCmds()
-  registerDialogs()
-}
+```typescript
+// This is for development mode only. In production mode, the library is bundled
+window.addEventListener('libredwg-ready', event => {
+  // @ts-expect-error this is one custom event and you can get details in index.html
+  const instance = event.detail as LibreDwgEx
+  const converter = new AcDbLibreDwgConverter(instance)
+  AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
+})
+```
 
-initApp()
+Copy `libredwg-web.js` to folder `public/assets` and update `index.html` by adding the following code.
+
+```html
+<script type="module" defer>
+  if (import.meta.env.DEV) {
+    (async () => {
+      // Create a script element to load the module
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "/assets/libredwg-web.js";
+      script.async = true;
+      
+      script.onload = async () => {
+        // Import dynamically after script is loaded
+        const actualModule = await import(/* @vite-ignore */script.src);
+        const libredwg = await actualModule.createModule();
+        window.dispatchEvent(new CustomEvent("libredwg-ready", { detail: libredwg }));
+      };
+  
+      document.body.appendChild(script);
+    })();
+  }
 </script>
 ```
 
@@ -114,7 +140,7 @@ initApp()
 
 ### Main Component
 
-- `MlApp` - The main CAD viewer component
+- `MlCADViewer` - The main CAD viewer component
 
 ### Commands
 
@@ -163,7 +189,7 @@ This component library requires the following peer dependencies:
 - `@mlightcad/libredwg-web`
 - `@mlightcad/svg-renderer`
 - `@mlightcad/three-renderer`
-- `@mlightcad/viewer`
+- `@mlightcad/cad-simple-viewer`
 - `element-plus`
 - `vue-i18n`
 - And others as specified in package.json

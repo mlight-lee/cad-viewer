@@ -43,7 +43,7 @@ window.addEventListener('libredwg-ready', event => {
   AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
 })
 
-const main = () => {
+const initApp = () => {
   initializeCadViewer('canvas')
 
   const app = createApp(MlCadViewer)
@@ -68,4 +68,4 @@ const main = () => {
   }
 }
 
-main()
+initApp()
