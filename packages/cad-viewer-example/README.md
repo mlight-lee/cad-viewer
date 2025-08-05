@@ -1,6 +1,6 @@
 # CAD Viewer Example
 
-This is an example application that demonstrates how to use the `@mlightcad/cad-viewer` component library.
+This is an example application that demonstrates how to use the `@mlightcad/cad-viewer` component.
 
 ## Features
 

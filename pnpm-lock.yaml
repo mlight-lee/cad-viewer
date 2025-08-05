@@ -198,7 +198,7 @@ importers:
         specifier: ^2.1.6
         version: 2.2.12(typescript@5.8.3)
 
-  packages/example:
+  packages/cad-viewer-example:
     dependencies:
       '@element-plus/icons-vue':
         specifier: ^2.3.1
