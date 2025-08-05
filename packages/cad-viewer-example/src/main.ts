@@ -5,7 +5,7 @@ import 'element-plus/dist/index.css'
 import {
   i18n,
   initializeCadViewer,
-  MlApp,
+  MlCadViewer,
   registerCommponents
 } from '@mlightcad/cad-viewer'
 import {
@@ -46,7 +46,7 @@ window.addEventListener('libredwg-ready', event => {
 const main = () => {
   initializeCadViewer('canvas')
 
-  const app = createApp(MlApp)
+  const app = createApp(MlCadViewer)
   app.use(i18n)
   app.use(ElementPlus)
   app.mount('#app')
