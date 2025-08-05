@@ -79,7 +79,7 @@ export default defineConfig(({ command, mode }) => {
   const aliases: Alias[] = []
   if (command === 'serve') {
     aliases.push({
-      find: /^@mlightcad\/(svg-renderer|three-renderer|viewer)$/,
+      find: /^@mlightcad\/(svg-renderer|three-renderer|cad-simple-viewer|cad-viewer)$/,
       replacement: resolve(__dirname, '../$1/src')
     })
   }

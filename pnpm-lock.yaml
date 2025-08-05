@@ -33,6 +33,9 @@ importers:
       '@types/node':
         specifier: ^20.14.9
         version: 20.19.9
+      '@types/rollup-plugin-peer-deps-external':
+        specifier: ^2.2.5
+        version: 2.2.5
       '@typescript-eslint/parser':
         specifier: ^8.4.0
         version: 8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.3)
@@ -1743,6 +1746,9 @@ packages:
   '@types/babel__traverse@7.20.7':
     resolution: {integrity: sha512-dkO5fhS7+/oos4ciWxyEyjWe48zmG6wbCheo/G2ZnHx4fs3EU6YC6UM8rk56gAjNJ9P3MTH2jo5jb92/K6wbng==}
 
+  '@types/estree@0.0.39':
+    resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -1784,6 +1790,9 @@ packages:
 
   '@types/rbush@3.0.4':
     resolution: {integrity: sha512-knSt9cCW8jj1ZSFcFeBZaX++OucmfPxxHiRwTahZfJlnQsek7O0bazTJHWD2RVj9LEoejUYF2de3/stf+QXcXw==}
+
+  '@types/rollup-plugin-peer-deps-external@2.2.5':
+    resolution: {integrity: sha512-BvxHEsbzspw1BDyktFdjx5AQ5OHZGFJuDUAj+dDzDT0pfnz9/vr8sxxQwGINsptaltxbTVBTAxlZujM62F79XA==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -3918,6 +3927,10 @@ packages:
         optional: true
       rollup:
         optional: true
+
+  rollup@0.63.5:
+    resolution: {integrity: sha512-dFf8LpUNzIj3oE0vCvobX6rqOzHzLBoblyFp+3znPbjiSmSvOoK2kMKx+Fv9jYduG1rvcCfCveSgEaQHjWRF6g==}
+    hasBin: true
 
   rollup@4.45.1:
     resolution: {integrity: sha512-4iya7Jb76fVpQyLoiVpzUrsjQ12r3dM7fIVz+4NwoYvZOShknRmiv+iu9CClZml5ZLGb0XMcYLutK6w9tgxHDw==}
@@ -6218,6 +6231,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.2
 
+  '@types/estree@0.0.39': {}
+
   '@types/estree@1.0.8': {}
 
   '@types/graceful-fs@4.1.9':
@@ -6260,6 +6275,10 @@ snapshots:
   '@types/parse-json@4.0.2': {}
 
   '@types/rbush@3.0.4': {}
+
+  '@types/rollup-plugin-peer-deps-external@2.2.5':
+    dependencies:
+      rollup: 0.63.5
 
   '@types/stack-utils@2.0.3': {}
 
@@ -8762,6 +8781,11 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       rollup: 4.45.1
+
+  rollup@0.63.5:
+    dependencies:
+      '@types/estree': 0.0.39
+      '@types/node': 20.19.9
 
   rollup@4.45.1:
     dependencies:

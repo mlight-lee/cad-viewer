@@ -28,17 +28,19 @@ To achieve the final goal, the following milestones are defined:
 
 CAD-Viewer is organized into several subpackages, each responsible for a specific aspect of the system:
 
-- **mlightcad**: Main application frontend, including UI components and state management.
-- **svg-renderer**: Renders DWG/DXF entities as SVG graphics for exporting.
-- **three-renderer**: Uses THREE.js to render DWG/DXF entities as interactive 3D graphics.
-- **viewer**: Core document management, command handling, and integration logic for loading and interacting with CAD files.
+- **cad-viewer**: Main Vue 3 component and frontend application, including UI components, dialogs, toolbars, state management, and integration with rendering engines.
+- **cad-simple-viewer**: Core logic for document management, command handling, and integration between UI and rendering engines. Framework-agnostic and UI-free (canvas only).
+- **svg-renderer**: Renders DWG/DXF entities as SVG graphics for exporting and scalable 2D output.
+- **three-renderer**: Uses THREE.js to render DWG/DXF entities as interactive 2D/3D graphics with advanced visualization and custom shaders.
+- **cad-viewer-example**: Example application demonstrating how to use the `cad-viewer` component in a real project.
 
 ## Subpackages
 
-- [`packages/mlightcad/`](packages/mlightcad/): Main frontend application and UI components.
+- [`packages/cad-viewer/`](packages/cad-viewer/): Main Vue 3 component, UI, and integration logic.
+- [`packages/cad-simple-viewer/`](packages/cad-simple-viewer/): Core document management and command logic, UI-agnostic.
 - [`packages/svg-renderer/`](packages/svg-renderer/): SVG-based rendering engine for CAD entities.
 - [`packages/three-renderer/`](packages/three-renderer/): THREE.js-based rendering engine for 2D/3D CAD entities.
-- [`packages/viewer/`](packages/viewer/): Core logic for document management, commands, and integration.
+- [`packages/cad-viewer-example/`](packages/cad-viewer-example/): Example app showing usage and integration.
 
 ## Contributing
 
