@@ -16,7 +16,9 @@
   ],
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "README.md",
+    "package.json"
   ],
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",

@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       name: 'svg-renderer',
-      fileName: 'svg-renderer'
+      fileName: 'index'
     }
   },
   plugins: [peerDepsExternal()]

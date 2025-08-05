@@ -15,15 +15,17 @@
   ],
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "README.md",
+    "package.json"
   ],
-  "main": "./dist/three-renderer.umd.cjs",
-  "module": "./dist/three-renderer.js",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
     "types": "./lib/index.d.ts",
-    "import": "./dist/three-renderer.js",
-    "require": "./dist/three-renderer.umd.cjs"
+    "import": "./dist/index.js",
+    "require": "./dist/index.umd.cjs"
   },
   "scripts": {
     "clean": "rimraf dist lib tsconfig.tsbuildinfo",

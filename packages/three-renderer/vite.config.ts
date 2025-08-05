@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       name: 'three-renderer',
-      fileName: 'three-renderer'
+      fileName: 'index'
     }
   },
   plugins: [peerDepsExternal()]
