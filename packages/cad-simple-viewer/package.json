@@ -1,5 +1,6 @@
 {
   "name": "@mlightcad/cad-simple-viewer",
+  "private": false,
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",

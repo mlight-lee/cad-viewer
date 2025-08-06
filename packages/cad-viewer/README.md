@@ -1,15 +1,28 @@
 # CAD Viewer Component
 
-CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD files (DXF, DWG) in web applications. It provides a modern user interface, state management, and seamless integration with optimized rendering engines for smooth browser-based CAD workflows with exceptional performance.
+CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD files (DXF, DWG) **entirely in the browser without requiring any backend server**. It provides a modern user interface, state management, and seamless integration with optimized rendering engines for smooth browser-based CAD workflows with exceptional performance.
 
 ## Key Features
 
 - **High-performance** CAD editing and viewing with smooth 60+ FPS rendering
+- **No backend required** - Files are parsed and processed entirely in the browser
+- **Enhanced data security** - Files never leave your device, ensuring complete privacy
+- **Easy integration** - No server setup or backend infrastructure needed for third-party integration
 - Modern UI optimized for large CAD file handling
 - State management for layers, entities, and settings
 - Integration with optimized SVG and THREE.js renderers
 - Dialogs, toolbars, and command line interface
 - Vue 3 component for embedding high-performance CAD viewers in your own apps
+
+## Browser-Only Architecture
+
+This Vue 3 component operates entirely in the browser with **no backend dependencies**. DWG/DXF files are parsed and processed locally using WebAssembly and JavaScript, providing:
+
+- **Zero server requirements** - Deploy the component anywhere with just static file hosting
+- **Complete data privacy** - CAD files never leave the user's device
+- **Instant integration** - No complex backend setup or API configuration needed
+- **Offline capability** - Works without internet connectivity once loaded
+- **Third-party friendly** - Easy to embed in any Vue 3 application without server-side concerns
 
 ## Directory Structure (partial)
 

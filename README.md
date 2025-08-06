@@ -2,14 +2,17 @@
 
 [**🌐 Live Demo**](https://mlight-lee.github.io/cad-viewer/)
 
-CAD-Viewer is a **high-performance**, modern, web-based CAD editor inspired by AutoCAD. It enables users to view and edit DWG/DXF files directly in the browser with exceptional rendering speed and smooth interactions, supporting both offline and online workflows. The project is modular and designed for seamless integration with other applications.
+CAD-Viewer is a **high-performance**, modern, web-based CAD editor inspired by AutoCAD. It enables users to view and edit DWG/DXF files **entirely in the browser without requiring any backend server**, providing exceptional rendering speed and smooth interactions. The project is modular and designed for seamless integration with other applications.
 
 ![CAD-Viewer](./assets/dwg-viewer.jpg)
 
 ## Features
 
 - **High-performance** viewing of large DWG/DXF files with smooth 60+ FPS rendering
-- Modular architecture for easy integration
+- **No backend required** - Files are parsed and processed entirely in the browser
+- **Enhanced data security** - Files never leave your device, ensuring complete privacy
+- **Easy integration** - No server setup or backend infrastructure needed
+- Modular architecture for seamless third-party integration
 - Offline and online editing workflows
 - THREE.js 3D rendering engines with advanced optimization techniques
 - Designed for extensibility and integration with platforms like CMS, Notion, and WeChat
@@ -37,7 +40,14 @@ To achieve the final goal, the following milestones are defined:
 - [ ] **Offline CAD Editor**: Build an offline CAD editor that allows users to modify DWG/DXF files in the browser and store changes locally.
 - [ ] **Online CAD Editor**: Add backend support to enable users to store changes to DXF/DWG files in the cloud.
 
-## Architecture
+## Browser-Only Architecture
+
+CAD-Viewer operates entirely in the browser with **no backend dependencies**. DWG/DXF files are parsed and processed locally using WebAssembly and JavaScript, ensuring:
+
+- **Zero server requirements** - Deploy anywhere with just static file hosting
+- **Complete data privacy** - Files never leave the user's device
+- **Instant integration** - No complex backend setup or API configuration
+- **Offline capability** - Works without internet connectivity
 
 CAD-Viewer is organized into several subpackages, each responsible for a specific aspect of the system:
 

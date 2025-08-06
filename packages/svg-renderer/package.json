@@ -1,5 +1,6 @@
 {
   "name": "@mlightcad/svg-renderer",
+  "private": false,
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
