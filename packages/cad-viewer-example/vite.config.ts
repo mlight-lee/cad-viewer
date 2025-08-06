@@ -5,8 +5,6 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import svgLoader from 'vite-svg-loader'
 import { visualizer } from 'rollup-plugin-visualizer'
 import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
 
 import Unocss from 'unocss/vite'
 import {
@@ -47,22 +45,10 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     },
-    ssr: {
-      noExternal: ['@mlightcad/libredwg-web']
-    },
-    optimizeDeps: {
-      exclude: ['@mlightcad/libredwg-web']
-    },
     plugins: [
       vue(),
       svgLoader(),
       mode === 'analyze' ? visualizer() : undefined,
-      AutoImport({
-        // Remove ElementPlusResolver since we're importing globally
-      }),
-      Components({
-        // Remove ElementPlusResolver since we're importing globally
-      }),
       Unocss({
         presets: [
           presetUno(),
