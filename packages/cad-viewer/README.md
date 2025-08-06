@@ -14,6 +14,17 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 - Dialogs, toolbars, and command line interface
 - Vue 3 component for embedding high-performance CAD viewers in your own apps
 
+## When Should You Choose cad-viewer?
+
+Use `cad-viewer` if you want a **ready-to-use Vue 3 component** for viewing and editing CAD files with a modern UI, dialogs, toolbars, and state management. This package is ideal if:
+
+- You want to quickly embed a high-performance CAD viewer/editor into your Vue application with minimal setup.
+- You need a solution that handles file loading, rendering, layer/entity management, and user interactions out of the box.
+- You want seamless integration with optimized SVG and THREE.js renderers, internationalization, and theming.
+- You do **not** want to build your own UI from scratch.
+
+**Recommended for:** Most web applications, dashboards, or platforms that need to display CAD files with a polished user interface.
+
 ## Browser-Only Architecture
 
 This Vue 3 component operates entirely in the browser with **no backend dependencies**. DWG/DXF files are parsed and processed locally using WebAssembly and JavaScript, providing:
