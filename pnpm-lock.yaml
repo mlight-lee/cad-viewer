@@ -142,13 +142,12 @@ importers:
       '@mlightcad/data-model':
         specifier: 1.1.1
         version: 1.1.1
-    devDependencies:
-      typescript:
-        specifier: ^5.6.3
-        version: 5.8.3
-      vite:
-        specifier: ^6.0.1
-        version: 6.3.5(@types/node@20.19.9)(jiti@1.21.7)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      '@mlightcad/libredwg-converter':
+        specifier: 2.0.1
+        version: 2.0.1(@mlightcad/data-model@1.1.1)(@mlightcad/libredwg-web@0.1.5)
+      '@mlightcad/libredwg-web':
+        specifier: 0.1.5
+        version: 0.1.5
 
   packages/cad-viewer:
     dependencies:

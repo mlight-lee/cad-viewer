@@ -1,13 +1,15 @@
 import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
-import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
+import {
+  AcDbDatabaseConverterManager,
+  AcDbFileType,
+  AcDbOpenDatabaseOptions
+} from '@mlightcad/data-model'
+import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
 
 class CadViewerApp {
   private canvas: HTMLCanvasElement
   private fileInput: HTMLInputElement
-  private fileInputContainer: HTMLElement
   private loadingElement: HTMLElement
-  private messagesContainer: HTMLElement
-  private fileInfoElement: HTMLElement
 
   constructor() {
     // Get DOM elements
@@ -15,13 +17,9 @@ class CadViewerApp {
     this.fileInput = document.getElementById(
       'fileInputElement'
     ) as HTMLInputElement
-    this.fileInputContainer = document.getElementById(
-      'fileInput'
-    ) as HTMLElement
     this.loadingElement = document.getElementById('loading') as HTMLElement
-    this.messagesContainer = document.getElementById('messages') as HTMLElement
-    this.fileInfoElement = document.getElementById('fileInfo') as HTMLElement
 
+    this.registerDwgConverters()
     this.initializeViewer()
     this.setupFileHandling()
   }
@@ -37,6 +35,33 @@ class CadViewerApp {
     }
   }
 
+  private async registerDwgConverters() {
+    try {
+      const isDev = import.meta.env.DEV
+      if (!isDev) {
+        // Production mode - use dynamic import with explicit chunk name
+        const instance = await import(
+          /* webpackChunkName: "libredwg-web" */ '@mlightcad/libredwg-web'
+        )
+        const converter = new AcDbLibreDwgConverter(await instance.createModule())
+        AcDbDatabaseConverterManager.instance.register(
+          AcDbFileType.DWG,
+          converter
+        )
+      }
+    } catch (error) {
+      console.error('Failed to load libredwg-web: ', error)
+    }
+
+    // This is for development mode only. In production mode, the library is bundled
+    window.addEventListener('libredwg-ready', event => {
+      // @ts-expect-error this is one custom event and you can get details in index.html
+      const instance = event.detail as LibreDwgEx
+      const converter = new AcDbLibreDwgConverter(instance)
+      AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
+    })
+  }
+
   private setupFileHandling() {
     // File input change event
     this.fileInput.addEventListener('change', event => {
@@ -45,36 +70,6 @@ class CadViewerApp {
         this.loadFile(file)
       }
       this.fileInput.value = ''
-    })
-
-    // Click to open file dialog
-    this.fileInput.addEventListener('click', event => {
-      event.stopPropagation()
-    })
-
-    this.fileInputContainer.addEventListener('click', () => {
-      console.log('enter fileInputContainer click event')
-      this.fileInput.click()
-    })
-
-    // Drag and drop functionality
-    this.fileInputContainer.addEventListener('dragover', event => {
-      event.preventDefault()
-      this.fileInputContainer.classList.add('dragover')
-    })
-
-    this.fileInputContainer.addEventListener('dragleave', () => {
-      this.fileInputContainer.classList.remove('dragover')
-    })
-
-    this.fileInputContainer.addEventListener('drop', event => {
-      event.preventDefault()
-      this.fileInputContainer.classList.remove('dragover')
-
-      const files = event.dataTransfer?.files
-      if (files && files.length > 0) {
-        this.loadFile(files[0])
-      }
     })
   }
 
@@ -93,11 +88,10 @@ class CadViewerApp {
 
     this.showLoading(true)
     this.clearMessages()
-    this.fileInfoElement.textContent = `Loading: ${file.name}`
 
     try {
       // Read the file content
-      const arrayBuffer = await this.readFileAsArrayBuffer(file)
+      const fileContent = await this.readFile(file)
 
       // Set database options
       const options: AcDbOpenDatabaseOptions = {
@@ -108,52 +102,39 @@ class CadViewerApp {
       // Open the document
       const success = await AcApDocManager.instance.openDocument(
         file.name,
-        arrayBuffer,
+        fileContent,
         options
       )
 
       if (success) {
         this.showMessage(`Successfully loaded: ${file.name}`, 'success')
-        this.fileInfoElement.textContent = `Loaded: ${file.name}`
-
-        // Auto zoom to fit after a short delay to ensure rendering is complete
-        setTimeout(() => {
-          this.zoomToFit()
-        }, 500)
       } else {
         this.showMessage(`Failed to load: ${file.name}`, 'error')
-        this.fileInfoElement.textContent = 'Failed to load file'
       }
     } catch (error) {
       console.error('Error loading file:', error)
       this.showMessage(`Error loading file: ${error}`, 'error')
-      this.fileInfoElement.textContent = 'Error loading file'
     } finally {
       this.showLoading(false)
     }
   }
 
-  private readFileAsArrayBuffer(file: File): Promise<string> {
+  private readFile(file: File): Promise<string | ArrayBuffer> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
-      reader.onload = () => resolve(reader.result as string)
+      reader.onload = () => resolve(reader.result as string | ArrayBuffer)
       reader.onerror = () => reject(reader.error)
-      reader.readAsText(file)
+      const fileName = file.name.toLowerCase()
+      if (fileName.endsWith('.dxf')) {
+        reader.readAsText(file)
+      } else if (fileName.endsWith('.dwg')) {
+        reader.readAsArrayBuffer(file)
+      } else {
+        reject(new Error('Unsupported file type'))
+      }
     })
   }
 
-  private zoomToFit() {
-    try {
-      // Execute zoom to extents command
-      const context = AcApDocManager.instance.context
-      if (context && context.view) {
-        // Try to zoom to the extents of the drawing
-        context.view.zoomToFit()
-      }
-    } catch (error) {
-      console.error('Error zooming to fit:', error)
-    }
-  }
   private showLoading(show: boolean) {
     this.loadingElement.style.display = show ? 'block' : 'none'
   }
@@ -162,26 +143,53 @@ class CadViewerApp {
     message: string,
     type: 'success' | 'error' | 'info' = 'info'
   ) {
+    // Remove old persistent messages
     this.clearMessages()
 
-    const messageElement = document.createElement('div')
-    messageElement.className = type
-    messageElement.textContent = message
-
-    this.messagesContainer.appendChild(messageElement)
-
-    // Auto-remove success messages after 3 seconds
-    if (type === 'success') {
-      setTimeout(() => {
-        if (messageElement.parentNode) {
-          messageElement.parentNode.removeChild(messageElement)
-        }
-      }, 3000)
+    // Create popup message element
+    const popup = document.createElement('div')
+    popup.className = `popup-message ${type}`
+    popup.textContent = message
+    popup.style.position = 'fixed'
+    popup.style.top = '2rem'
+    popup.style.left = '50%'
+    popup.style.transform = 'translateX(-50%)'
+    popup.style.zIndex = '1000'
+    popup.style.padding = '1rem 2rem'
+    popup.style.borderRadius = '8px'
+    popup.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'
+    popup.style.fontSize = '1.1rem'
+    popup.style.opacity = '0.98'
+    popup.style.transition = 'opacity 0.2s'
+    if (type === 'error') {
+      popup.style.background = '#ffe6e6'
+      popup.style.color = '#dc3545'
+      popup.style.border = '1px solid #ffcccc'
+    } else if (type === 'success') {
+      popup.style.background = '#e6ffe6'
+      popup.style.color = '#28a745'
+      popup.style.border = '1px solid #ccffcc'
+    } else {
+      popup.style.background = '#f0f0f0'
+      popup.style.color = '#333'
+      popup.style.border = '1px solid #ccc'
     }
+
+    document.body.appendChild(popup)
+
+    setTimeout(() => {
+      popup.style.opacity = '0'
+      setTimeout(() => {
+        if (popup.parentNode) {
+          popup.parentNode.removeChild(popup)
+        }
+      }, 200)
+    }, 1000)
   }
 
   private clearMessages() {
-    this.messagesContainer.innerHTML = ''
+    // Remove all popup messages
+    document.querySelectorAll('.popup-message').forEach(el => el.remove())
   }
 }
 

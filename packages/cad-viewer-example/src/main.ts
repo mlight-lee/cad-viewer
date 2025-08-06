@@ -33,15 +33,15 @@ const registerConverters = async () => {
   } catch (error) {
     console.error('Failed to load libredwg-web: ', error)
   }
-}
 
-// This is for development mode only. In production mode, the library is bundled
-window.addEventListener('libredwg-ready', event => {
-  // @ts-expect-error this is one custom event and you can get details in index.html
-  const instance = event.detail as LibreDwgEx
-  const converter = new AcDbLibreDwgConverter(instance)
-  AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
-})
+  // This is for development mode only. In production mode, the library is bundled
+  window.addEventListener('libredwg-ready', event => {
+    // @ts-expect-error this is one custom event and you can get details in index.html
+    const instance = event.detail as LibreDwgEx
+    const converter = new AcDbLibreDwgConverter(instance)
+    AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
+  })
+}
 
 const initApp = () => {
   initializeCadViewer('canvas')

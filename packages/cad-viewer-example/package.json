@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "analyze": "vite build --mode analyze",
-    "dev": "vite",
-    "clean": "rimraf dist lib tsconfig.tsbuildinfo",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
+    "clean": "rimraf dist lib tsconfig.tsbuildinfo",
+    "dev": "vite",
     "lint": "eslint src/",
-    "lint:fix": "eslint --fix --quiet src/"
+    "lint:fix": "eslint --fix --quiet src/",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.3",
