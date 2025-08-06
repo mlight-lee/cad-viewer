@@ -16,11 +16,13 @@
     "build": "nx run-many -t build",
     "clean": "nx run-many -t clean",
     "dev": "nx run @mlightcad/cad-viewer-example:dev",
+    "dev:simple": "nx run @mlightcad/cad-simple-viewer-example:dev",
     "doc": "typedoc",
     "format": "prettier --config ./.prettierrc.js --write packages/**/*.{ts,js,vue,json}",
     "lint": "nx run-many -t lint",
     "lint:fix": "nx run-many -t lint:fix",
     "preview": "nx run @mlightcad/cad-viewer-example:preview",
+    "preview:simple": "nx run @mlightcad/cad-simple-viewer-example:preview",
     "test": "jest"
   },
   "engines": {

@@ -45,6 +45,22 @@ Please refer to sub-package `cad-viewer-example` as one example.
 
 ### Basic Usage
 
+Firstly, add the following dependencies into your package.json.
+
+- @element-plus/icons-vue
+- @mlightcad/cad-simple-viewer
+- @mlightcad/cad-viewer
+- @mlightcad/data-model
+- @mlightcad/libredwg-converter
+- @mlightcad/libredwg-web
+- @vueuse/core
+- element-plus
+- lodash-es
+- vue
+- vue-i18n
+
+Then create one vue component as follows.
+
 ```vue
 <template>
   <div>
@@ -192,21 +208,6 @@ Copy `libredwg-web.js` to folder `public/assets` and update `index.html` by addi
 - CSS and SCSS files for styling
 - Dark mode support
 - Element Plus integration
-
-## Dependencies
-
-This component library requires the following peer dependencies:
-
-- `vue` ^3.4.0
-- `@mlightcad/data-model`
-- `@mlightcad/libredwg-converter`
-- `@mlightcad/libredwg-web`
-- `@mlightcad/svg-renderer`
-- `@mlightcad/three-renderer`
-- `@mlightcad/cad-simple-viewer`
-- `element-plus`
-- `vue-i18n`
-- And others as specified in package.json
 
 ## Development
 

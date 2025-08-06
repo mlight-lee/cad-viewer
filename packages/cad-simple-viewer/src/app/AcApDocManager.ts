@@ -145,6 +145,7 @@ export class AcApDocManager {
     // TODO: The correct way is to create one new context instead of using old context and document
     const isSuccess = await this.context.doc.openUri(url, options)
     this.onAfterOpenDocument(isSuccess)
+    return isSuccess
   }
 
   async openDocument(
@@ -161,6 +162,7 @@ export class AcApDocManager {
       options
     )
     this.onAfterOpenDocument(isSuccess)
+    return isSuccess
   }
 
   registerCommands() {

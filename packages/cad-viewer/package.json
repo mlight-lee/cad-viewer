@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "lodash-es": "4.17.21",
     "three": "^0.172.0"
   },
   "peerDependencies": {
@@ -59,7 +60,6 @@
     "@mlightcad/data-model": "1.1.1",
     "@vueuse/core": "^11.1.0",
     "element-plus": "^2.9.1",
-    "lodash-es": "4.17.21",
     "vue": "^3.4.21",
     "vue-i18n": "^10.0.1"
   }

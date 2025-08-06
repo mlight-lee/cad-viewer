@@ -1,6 +1,5 @@
 import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
 import { AcDbDatabase } from '@mlightcad/data-model'
-import { find } from 'lodash-es'
 import { reactive } from 'vue'
 
 export interface LayerInfo {
@@ -40,8 +39,7 @@ export function useLayers(editor: AcApDocManager) {
   reset(doc.database)
 
   doc.database.events.layerModified.addEventListener(args => {
-    let layer: LayerInfo | undefined = find(
-      reactiveLayers.values,
+    let layer: LayerInfo | undefined = reactiveLayers.find(
       (layer: LayerInfo) => layer.name == args.layer.name
     )
     if (layer) {
