@@ -96,6 +96,9 @@ importers:
       vite:
         specifier: ^5.2.10
         version: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
+      vite-plugin-static-copy:
+        specifier: ^3.1.1
+        version: 3.1.1(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1))
 
   packages/cad-simple-viewer:
     dependencies:
@@ -3847,6 +3850,10 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
+  p-map@7.0.3:
+    resolution: {integrity: sha512-VkndIv2fIB99swvQoA65bm+fsmt6UNdGeIB0oxBs+WhAhdh08QA04JXpI7rbB9r08/nkbysKoya9rtDERYOYMA==}
+    engines: {node: '>=18'}
+
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
@@ -4555,6 +4562,12 @@ packages:
     resolution: {integrity: sha512-Rldq36U9TDlpDom3yoLybfJtzn897+oMKdX0+fxbVYnYjRGnTtaFfnMmfOckH8GQ3cvGAKv9Ai1PWyE0amIbjg==}
     peerDependencies:
       vite: '*'
+
+  vite-plugin-static-copy@3.1.1:
+    resolution: {integrity: sha512-oR53SkL5cX4KT1t18E/xU50vJDo0N8oaHza4EMk0Fm+2/u6nQivxavOfrDk3udWj+dizRizB/QnBvJOOQrTTAQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0
 
   vite-svg-loader@5.1.0:
     resolution: {integrity: sha512-M/wqwtOEjgb956/+m5ZrYT/Iq6Hax0OakWbokj8+9PXOnB7b/4AxESHieEtnNEy7ZpjsjYW1/5nK8fATQMmRxw==}
@@ -8896,6 +8909,8 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
+  p-map@7.0.3: {}
+
   p-try@2.2.0: {}
 
   package-json-from-dist@1.0.1: {}
@@ -9610,6 +9625,15 @@ snapshots:
       magic-string: 0.30.17
       picocolors: 1.1.1
       vite: 6.3.5(@types/node@20.19.9)(jiti@1.21.7)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+
+  vite-plugin-static-copy@3.1.1(vite@5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)):
+    dependencies:
+      chokidar: 3.6.0
+      fs-extra: 11.3.0
+      p-map: 7.0.3
+      picocolors: 1.1.1
+      tinyglobby: 0.2.14
+      vite: 5.4.19(@types/node@20.19.9)(sass@1.89.2)(terser@5.43.1)
 
   vite-svg-loader@5.1.0(vue@3.5.18(typescript@5.8.3)):
     dependencies:
