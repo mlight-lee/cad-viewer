@@ -1,14 +1,16 @@
 # CAD Simple Viewer
 
-This package provides the core components of one cad viewer such as document management, command handling, and collaberation between the UI and rendering engines.
+This package provides the **high-performance** core components of a CAD viewer such as document management, command handling, and collaboration between the UI and rendering engines. It's designed for optimal performance when handling large CAD files.
 
-This module doesn't depends on any UI framework and doesn't provide any UI except canvas. If you want to integrate cad viewer into one web application with your own UI, this module is the correct choice.
+This module doesn't depend on any UI framework and doesn't provide any UI except canvas. If you want to integrate a high-performance CAD viewer into a web application with your own UI, this module is the correct choice.
 
 ## Key Features
-- Document management (open, create, save)
-- Command stack and undo/redo
-- Integration with rendering engines
-- Settings and context management
+- Document management optimized for large files
+- Efficient command stack and undo/redo operations
+- Optimized integration with rendering engines
+- Performance-focused settings and context management
+- Framework-agnostic design for maximum flexibility
+
 
 ## Directory Structure (partial)
 - `src/app/` – Document/context management, settings
