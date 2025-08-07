@@ -43,7 +43,9 @@ class CadViewerApp {
         const instance = await import(
           /* webpackChunkName: "libredwg-web" */ '@mlightcad/libredwg-web'
         )
-        const converter = new AcDbLibreDwgConverter(await instance.createModule())
+        const converter = new AcDbLibreDwgConverter(
+          await instance.createModule()
+        )
         AcDbDatabaseConverterManager.instance.register(
           AcDbFileType.DWG,
           converter
@@ -58,7 +60,10 @@ class CadViewerApp {
       // @ts-expect-error this is one custom event and you can get details in index.html
       const instance = event.detail as LibreDwgEx
       const converter = new AcDbLibreDwgConverter(instance)
-      AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
+      AcDbDatabaseConverterManager.instance.register(
+        AcDbFileType.DWG,
+        converter
+      )
     })
   }
 
