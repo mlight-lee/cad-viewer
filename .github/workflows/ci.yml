@@ -46,10 +46,13 @@ jobs:
       - name: Run tests
         run: pnpm test
 
+      - name: Pre-serve
+        run: pnpm pre-serve
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './packages/cad-viewer-example/dist/'
+          path: './packages/examples/public/'
 
   deploy-pages:
     needs: build

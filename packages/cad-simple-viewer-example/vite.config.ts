@@ -4,6 +4,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ command }: ConfigEnv) => {
   return {
+    base: './',
     server: {
       port: 3000
     },

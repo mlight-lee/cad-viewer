@@ -23,6 +23,8 @@
     "lint:fix": "nx run-many -t lint:fix",
     "preview": "nx run @mlightcad/cad-viewer-example:preview",
     "preview:simple": "nx run @mlightcad/cad-simple-viewer-example:preview",
+    "pre-serve": "nx run @mlightcad/cad-viewer-examples:pre-serve",
+    "serve": "nx run @mlightcad/cad-viewer-examples:serve",
     "test": "jest"
   },
   "engines": {
