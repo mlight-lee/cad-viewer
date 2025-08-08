@@ -46,6 +46,9 @@ jobs:
       - name: Run tests
         run: pnpm test
 
+      - name: Build docs
+        run: pnpm doc
+
       - name: Pre-serve
         run: pnpm pre-serve
 

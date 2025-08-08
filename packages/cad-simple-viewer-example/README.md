@@ -1,6 +1,6 @@
 # CAD Simple Viewer Example
 
-A minimal web application demonstrating how to use the `@mlightcad/cad-simple-viewer` package to display DXF and DWG files in a web browser.
+A minimal web application demonstrating how to use the `@mlightcad/cad-simple-viewer` package to display DXF and DWG files in a web browser with a clean, modern interface.
 
 ## Features
 
@@ -9,6 +9,8 @@ A minimal web application demonstrating how to use the `@mlightcad/cad-simple-vi
 - 🔍 **Zoom Controls**: Zoom to fit and reset view functionality
 - 📱 **Responsive Design**: Clean, modern interface that works on different screen sizes
 - ⚡ **No Backend Required**: Files are processed entirely in the browser
+- 🎯 **DWG Support**: Full DWG file support via LibreDWG WebAssembly
+- 🚀 **Modern Build**: Optimized production builds with code splitting
 
 ## Getting Started
 
@@ -37,6 +39,7 @@ The application will be available at `http://localhost:3000`.
 
 ```bash
 pnpm build
+pnpm preview
 ```
 
 ## Usage
@@ -53,7 +56,7 @@ pnpm build
 ## Supported File Formats
 
 - **DXF**: AutoCAD Drawing Exchange Format
-- **DWG**: AutoCAD Drawing Database (requires additional converter setup)
+- **DWG**: AutoCAD Drawing Database (via LibreDWG WebAssembly)
 
 ## Technical Details
 
@@ -65,6 +68,7 @@ This example demonstrates:
 - Basic view controls (zoom to fit, reset view)
 - File drag & drop functionality
 - Error handling and user feedback
+- Dynamic DWG converter loading for production/development
 
 ## Code Structure
 
@@ -78,16 +82,54 @@ This example demonstrates:
 
 - `@mlightcad/cad-simple-viewer`: Core CAD viewer functionality
 - `@mlightcad/data-model`: CAD data model and database
-- `@mlightcad/three-renderer`: 3D rendering engine
+- `@mlightcad/libredwg-converter`: DWG file converter
+- `@mlightcad/libredwg-web`: WebAssembly DWG support
 - `three`: 3D graphics library
 - `vite`: Build tool and development server
+
+## Key Features
+
+- **Converter Registration**: Dynamic loading of DWG converters
+- **File Validation**: Proper file type checking and error handling
+- **Loading States**: Visual feedback during file processing
+- **Error Handling**: Graceful error messages and recovery
+- **Modern JavaScript**: ES2020+ features with TypeScript
+
+## Browser Support
+
+- Modern browsers with WebGL support
+- WebAssembly support required for DWG files
+- ES2020+ JavaScript features
+
+## Development Scripts
+
+```bash
+# Development
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
+
+# Clean build artifacts
+pnpm clean
+
+# Lint code
+pnpm lint
+
+# Fix linting issues
+pnpm lint:fix
+```
 
 ## Notes
 
 - This is a minimal example focusing on the core functionality
 - For more advanced features, consider using the full `@mlightcad/cad-viewer` package
-- DWG file support may require additional converter setup depending on your requirements
+- DWG file support requires WebAssembly support in the browser
 - The viewer uses WebGL for hardware-accelerated rendering
+- Production builds include optimized code splitting for better performance
 
 ## License
 

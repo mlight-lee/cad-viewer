@@ -12,17 +12,18 @@ const cadSimpleViewerExampleDist = path.resolve(
   '../cad-simple-viewer-example/dist'
 )
 const cadSimpleViewer = path.resolve(rootDir, './public/cad-simple-viewer/')
+const docsSource = path.resolve(rootDir, '../../docs')
+const docsTarget = path.resolve(rootDir, './public/docs/')
 
 export async function copyDist() {
   await fs.ensureDir(cadViewer)
   await fs.ensureDir(cadSimpleViewer)
+  await fs.ensureDir(docsTarget)
   await fs.copy(cadViewerExampleDist, cadViewer, { overwrite: true })
   await fs.copy(cadSimpleViewerExampleDist, cadSimpleViewer, {
     overwrite: true
   })
+  await fs.copy(docsSource, docsTarget, { overwrite: true })
 }
 
-// if (import.meta.url === `file://${process.argv[1]}`) {
-//   copyDist();
-// }
 copyDist()

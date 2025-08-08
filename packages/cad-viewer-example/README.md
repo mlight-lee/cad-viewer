@@ -1,12 +1,15 @@
 # CAD Viewer Example
 
-This is an example application that demonstrates how to use the `@mlightcad/cad-viewer` component.
+This is an example application that demonstrates how to use the `@mlightcad/cad-viewer` component with a full-featured Vue.js interface.
 
 ## Features
 
-- Single page application demonstrating the CAD viewer component
-- Shows how to integrate the component library into your own application
-- Includes all necessary setup for development and production builds
+- 🎨 **Full UI Interface**: Complete CAD viewer with toolbars, menus, and status bar
+- 🌐 **Internationalization**: Multi-language support (English and Chinese)
+- 🎯 **Advanced Controls**: Layer management, point styles, settings, and more
+- 📁 **File Support**: DXF and DWG file loading with drag & drop
+- 🎨 **Modern UI**: Built with Element Plus and UnoCSS for a professional look
+- 🔧 **Developer Tools**: Hot reload, linting, and build optimization
 
 ## Development
 
@@ -22,21 +25,62 @@ pnpm build
 
 # Preview production build
 pnpm preview
+
+# Analyze bundle size
+pnpm analyze
+
+# Lint code
+pnpm lint
+
+# Fix linting issues
+pnpm lint:fix
 ```
 
 ## Usage
 
-This example shows how to:
+This example demonstrates:
 
-1. Import the `MlApp` component from `@mlightcad/cad-viewer`
-2. Set up the necessary commands and dialogs
-3. Configure the document manager and converters
-4. Mount the application with proper styling
+1. **Vue.js Integration**: Using the `MlCadViewer` component with Vue 3
+2. **UI Framework**: Integration with Element Plus for UI components
+3. **Styling**: UnoCSS for utility-first CSS and custom styling
+4. **File Converters**: DWG support via LibreDWG converter
+5. **Internationalization**: Multi-language support with vue-i18n
+6. **Development Setup**: Hot reload and development tools
 
-## Structure
+## Technical Stack
 
-- `src/main.ts` - Main application entry point
-- `index.html` - HTML template
-- `vite.config.ts` - Vite configuration for the example app
+- **Framework**: Vue 3 with Composition API
+- **UI Library**: Element Plus with custom components
+- **Styling**: UnoCSS + SCSS
+- **Build Tool**: Vite with Vue plugin
+- **CAD Libraries**: 
+  - `@mlightcad/cad-viewer`: Main viewer component
+  - `@mlightcad/cad-simple-viewer`: Core viewer functionality
+  - `@mlightcad/data-model`: CAD data model
+  - `@mlightcad/libredwg-converter`: DWG file converter
+  - `@mlightcad/libredwg-web`: WebAssembly DWG support
 
-The example demonstrates the complete setup required to use the CAD viewer component library in your own application. 
+## Project Structure
+
+- `src/main.ts` - Application entry point with converter registration
+- `index.html` - HTML template with loading spinner
+- `vite.config.ts` - Vite configuration with plugins
+- `package.json` - Dependencies and scripts
+
+## Key Features Demonstrated
+
+- **Converter Registration**: Dynamic loading of DWG converters for production/development
+- **Component Registration**: Proper setup of CAD viewer components
+- **Error Handling**: Graceful handling of converter loading failures
+- **Loading States**: User feedback during initialization
+- **Modern Build**: Optimized production builds with code splitting
+
+## Browser Support
+
+- Modern browsers with WebGL support
+- WebAssembly support required for DWG files
+- ES2020+ JavaScript features
+
+## License
+
+MIT License - see the main project LICENSE file for details. 
