@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mlight-lee/cad-viewer"
+  },
   "files": [
     "dist",
     "lib",

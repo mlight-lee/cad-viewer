@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mlight-lee/cad-viewer"
+  },
   "scripts": {
     "build": "tsc && vite build",
     "clean": "rimraf dist lib tsconfig.tsbuildinfo",

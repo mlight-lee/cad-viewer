@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mlight-lee/cad-viewer"
+  },
   "scripts": {
     "analyze": "vite build --mode analyze",
     "build": "vue-tsc && vite build",

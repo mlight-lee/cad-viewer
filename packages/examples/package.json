@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mlight-lee/cad-viewer"
+  },
   "scripts": {
     "pre-serve": "node ./copyDist.js",
     "serve": "npm run pre-serve && serve ./public/"
