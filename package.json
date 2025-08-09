@@ -24,6 +24,7 @@
     "preview": "nx run @mlightcad/cad-viewer-example:preview",
     "preview:simple": "nx run @mlightcad/cad-simple-viewer-example:preview",
     "pre-serve": "nx run @mlightcad/cad-viewer-examples:pre-serve",
+    "publish-viewer": "pnpm -r publish --filter cad-viewer --filter cad-simple-viewer --no-git-checks",
     "serve": "nx run @mlightcad/cad-viewer-examples:serve",
     "test": "jest"
   },
@@ -36,6 +37,7 @@
     "@mlightcad/graphic-interface": "2.0.3"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.5",
     "@intlify/eslint-plugin-vue-i18n": "^3.0.0",
     "@nx/js": "19.3.1",
     "@types/jest": "^29.5.12",
