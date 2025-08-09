@@ -4,10 +4,42 @@ import { find, findIndex } from 'lodash-es'
 
 import { eventBus } from '../editor'
 
+/**
+ * Font loader implementation for CAD text rendering.
+ * 
+ * This class implements the {@link AcDbFontLoader} interface and provides functionality to:
+ * - Fetch available font metadata from a CDN
+ * - Load required fonts for CAD text rendering
+ * - Handle font loading errors and emit appropriate events
+ * - Manage font availability checking
+ * 
+ * The font loader works with a Three.js renderer to load fonts that are used
+ * for rendering CAD text entities like MText and Text.
+ * 
+ * @example
+ * ```typescript
+ * const renderer = new AcTrRenderer();
+ * const fontLoader = new AcApFontLoader(renderer);
+ * 
+ * // Load specific fonts
+ * await fontLoader.load(['Arial', 'SimSun']);
+ * 
+ * // Get all available fonts
+ * const fonts = await fontLoader.getAvaiableFonts();
+ * console.log('Available fonts:', fonts);
+ * ```
+ */
 export class AcApFontLoader implements AcDbFontLoader {
+  /** The Three.js renderer used for font loading */
   private _cadRenderer: AcTrRenderer
+  /** Cache of available fonts fetched from the CDN */
   private _avaiableFonts: AcDbFontInfo[]
 
+  /**
+   * Creates a new font loader instance.
+   * 
+   * @param renderer - The Three.js renderer that will use the loaded fonts
+   */
   constructor(renderer: AcTrRenderer) {
     this._cadRenderer = renderer
     this._avaiableFonts = []

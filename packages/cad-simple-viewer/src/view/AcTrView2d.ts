@@ -57,14 +57,49 @@ export const DEFAULT_VIEW_2D_OPTIONS: AcTrView2dOptions = {
   background: 0x000000
 }
 
+/**
+ * A 2D CAD viewer component that renders CAD drawings using Three.js.
+ * 
+ * This class extends {@link AcEdBaseView} and provides functionality for:
+ * - Rendering 2D CAD drawings with Three.js WebGL renderer
+ * - Handling user interactions (pan, zoom, select)
+ * - Managing layouts, layers, and entities
+ * - Supporting various CAD file formats (DWG, DXF)
+ * 
+ * @example
+ * ```typescript
+ * const viewer = new AcTrView2d({
+ *   canvas: document.getElementById('canvas') as HTMLCanvasElement,
+ *   background: 0x000000,
+ *   calculateSizeCallback: () => ({
+ *     width: window.innerWidth,
+ *     height: window.innerHeight
+ *   })
+ * });
+ * ```
+ */
 export class AcTrView2d extends AcEdBaseView {
+  /** The Three.js renderer wrapper for CAD rendering */
   private _renderer: AcTrRenderer
+  /** Manager for layout views and viewport handling */
   private _layoutViewManager: AcTrLayoutViewManager
+  /** The 3D scene containing all CAD entities organized by layouts and layers */
   private _scene: AcTrScene
+  /** Flag indicating if the view needs to be re-rendered */
   private _isDirty: boolean
+  /** Performance monitoring statistics display */
   private _stats: Stats
+  /** Map of missing raster images during rendering */
   private _missedImages: Map<AcDbObjectId, string>
 
+  /**
+   * Creates a new 2D CAD viewer instance.
+   * 
+   * @param options - Configuration options for the viewer
+   * @param options.canvas - Optional HTML canvas element. If not provided, a new canvas will be created
+   * @param options.calculateSizeCallback - Optional callback function to calculate canvas size on window resize
+   * @param options.background - Optional background color as hex number (default: 0x000000)
+   */
   constructor(options: AcTrView2dOptions = DEFAULT_VIEW_2D_OPTIONS) {
     const mergedOptions: AcTrView2dOptions = {
       ...DEFAULT_VIEW_2D_OPTIONS,
@@ -132,6 +167,14 @@ export class AcTrView2d extends AcEdBaseView {
     this._isDirty = true
   }
 
+  /**
+   * Initializes the viewer after renderer and camera are created.
+   * 
+   * This method sets up the initial cursor and can be overridden by child classes
+   * to add custom initialization logic.
+   * 
+   * @protected
+   */
   initialize() {
     // This method is called after camera and render are created.
     // Children class can override this method to add its own logic
@@ -139,28 +182,58 @@ export class AcTrView2d extends AcEdBaseView {
   }
 
   /**
+   * Gets the current view mode (selection or pan).
+   * 
+   * @returns The current view mode
    * @inheritdoc
    */
   get mode() {
     const activeLayoutView = this.activeLayoutView
     return activeLayoutView ? activeLayoutView.mode : AcEdViewMode.SELECTION
   }
+  
+  /**
+   * Sets the view mode (selection or pan).
+   * 
+   * @param value - The view mode to set
+   */
   set mode(value: AcEdViewMode) {
     this.activeLayoutView.mode = value
     this.editor.getPoint()
   }
 
+  /**
+   * Gets the Three.js renderer wrapper used for CAD rendering.
+   * 
+   * @returns The renderer instance
+   */
   get renderer() {
     return this._renderer
   }
 
+  /**
+   * Gets whether the view needs to be re-rendered.
+   * 
+   * @returns True if the view is dirty and needs re-rendering
+   */
   get isDirty() {
     return this._isDirty
   }
+  
+  /**
+   * Sets whether the view needs to be re-rendered.
+   * 
+   * @param value - True to mark the view as needing re-rendering
+   */
   set isDirty(value: boolean) {
     this._isDirty = value
   }
 
+  /**
+   * Gets information about missing data during rendering (fonts and images).
+   * 
+   * @returns Object containing maps of missing fonts and images
+   */
   get missedData() {
     return {
       fonts: this._renderer.missedFonts,

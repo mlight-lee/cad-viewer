@@ -5,17 +5,61 @@ import * as THREE from 'three'
 import { AcTrLayout, AcTrLayoutStats } from './AcTrLayout'
 
 /**
- * The scene is orginaized according to the following hierarchy.
- * - layout (AcTrLayout)
- *   - layer (AcTrLayer)
- *     - entity (AcTrEntity)
+ * Three.js scene manager for CAD drawings with hierarchical organization.
+ * 
+ * The scene manages the complete visual representation of a CAD drawing using
+ * a hierarchical structure that mirrors CAD data organization:
+ * 
+ * ```
+ * Scene
+ * └── Layout (AcTrLayout) - Paper space or model space
+ *     └── Layer (AcTrLayer) - Drawing layers for organization
+ *         └── Entity (AcTrEntity) - Individual CAD entities (lines, arcs, etc.)
+ * ```
+ * 
+ * ## Key Responsibilities
+ * - **Layout Management**: Handles multiple layouts (model space and paper spaces)
+ * - **Layer Organization**: Manages layer visibility and entity grouping
+ * - **Entity Rendering**: Provides access to all renderable CAD entities
+ * - **Spatial Queries**: Calculates bounding boxes and spatial relationships
+ * - **Three.js Integration**: Maintains the underlying Three.js scene
+ * 
+ * The scene automatically manages the active layout and provides efficient
+ * access to entities for rendering, selection, and spatial operations.
+ * 
+ * @example
+ * ```typescript
+ * const scene = new AcTrScene();
+ * 
+ * // Set up model space
+ * scene.modelSpaceBtrId = modelSpaceId;
+ * 
+ * // Add entities to layers
+ * const entity = new AcTrLine(...);
+ * scene.addEntity(entity, layerName);
+ * 
+ * // Get all visible entities for rendering
+ * const entities = scene.getAllEntities();
+ * 
+ * // Get scene bounds for zoom operations
+ * const bounds = scene.box;
+ * ```
  */
 export class AcTrScene {
+  /** The underlying Three.js scene object */
   private _scene: THREE.Scene
+  /** Map of layout ID to layout object */
   private _layouts: Map<AcDbObjectId, AcTrLayout>
+  /** ID of the currently active layout */
   private _activeLayoutBtrId: AcDbObjectId
+  /** ID of the model space layout */
   private _modelSpaceBtrId: AcDbObjectId
 
+  /**
+   * Creates a new CAD scene instance.
+   * 
+   * Initializes the Three.js scene and layout management structures.
+   */
   constructor() {
     this._scene = new THREE.Scene()
     this._layouts = new Map()

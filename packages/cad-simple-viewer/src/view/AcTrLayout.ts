@@ -6,31 +6,73 @@ import * as THREE from 'three'
 import { AcEdSpatialQueryResultItem } from '../editor'
 import { AcTrLayer, AcTrLayerStats } from './AcTrLayer'
 
+/**
+ * Interface representing statistics for a layout.
+ * Provides detailed information about the layout's content including
+ * layer statistics and memory usage breakdown.
+ */
 export interface AcTrLayoutStats {
+  /** Statistics for each layer in the layout */
   layers: AcTrLayerStats[]
+  /** Summary statistics for the entire layout */
   summary: {
+    /** Total number of entities across all layers */
     entityCount: number
+    /** Memory usage breakdown by object type */
     totalSize: {
+      /** Memory used by line geometries (bytes) */
       line: number
+      /** Memory used by mesh geometries (bytes) */
       mesh: number
+      /** Memory used by point geometries (bytes) */
       point: number
+      /** Total geometry memory usage (bytes) */
       geometry: number
+      /** Memory used by entity mappings (bytes) */
       mapping: number
     }
   }
 }
 
 /**
- * This class represents objects contained in one AuotCAD layout (model space or paper space).
+ * This class represents objects contained in one AutoCAD layout (model space or paper space).
+ * 
+ * A layout manages the organization and rendering of CAD entities within a specific coordinate space.
+ * It provides functionality for:
+ * - Managing entities organized by layers
+ * - Spatial indexing for efficient entity queries
+ * - Bounding box management for view operations
+ * - Entity selection and highlighting
+ * - Memory usage tracking and statistics
+ * 
+ * Layouts use a spatial index (R-tree) for fast entity lookup operations and maintain
+ * a hierarchical structure where entities are grouped by layers for efficient rendering
+ * and visibility management.
+ * 
+ * @example
+ * ```typescript
+ * const layout = new AcTrLayout();
+ * layout.addEntity(entity);
+ * const entities = layout.search(boundingBox);
+ * layout.select(['entity1', 'entity2']);
+ * ```
  */
 export class AcTrLayout {
-  // The group that contains all entities in this layout
+  /** The group that contains all entities in this layout */
   private _group: THREE.Group
+  /** Spatial index tree for efficient entity queries */
   private _indexTree: RBush<AcEdSpatialQueryResultItem>
+  /** Bounding box containing all entities in this layout */
   private _box: THREE.Box3
+  /** Map of layers indexed by layer name */
   private _layers: Map<string, AcTrLayer>
+  /** Optional object for displaying snap points */
   private _snapPointsObject?: AcTrObject
 
+  /**
+   * Creates a new layout instance.
+   * Initializes the layout with empty collections and a spatial index.
+   */
   constructor() {
     this._group = new THREE.Group()
     this._indexTree = new RBush()
@@ -46,16 +88,27 @@ export class AcTrLayout {
     return this._group
   }
 
+  /**
+   * Gets the map of layers in this layout.
+   * 
+   * @returns Map of layer names to layer objects
+   */
   get layers() {
     return this._layers
   }
 
+  /**
+   * Gets the bounding box that contains all entities in this layout.
+   * 
+   * @returns The layout's bounding box
+   */
   get box() {
     return this._box
   }
 
   /**
-   * The visibility of this layout
+   * The visibility of this layout.
+   * When set to false, the entire layout and all its contents are hidden.
    */
   get visible() {
     return this._group.visible
@@ -65,7 +118,8 @@ export class AcTrLayout {
   }
 
   /**
-   * The number of entities stored in this layer
+   * The number of entities stored in this layout.
+   * Calculates the total by summing entities across all layers.
    */
   get entityCount() {
     let count = 0
@@ -74,7 +128,8 @@ export class AcTrLayout {
   }
 
   /**
-   * The statistics of this layout
+   * The statistics of this layout.
+   * Provides detailed information about memory usage and entity counts.
    */
   get stats() {
     const layers: AcTrLayerStats[] = []
@@ -110,6 +165,12 @@ export class AcTrLayout {
     } as AcTrLayoutStats
   }
 
+  /**
+   * Clears all entities from the layout.
+   * Removes all layers, resets the bounding box, and clears the spatial index.
+   * 
+   * @returns This layout instance for method chaining
+   */
   clear() {
     this._layers.forEach(layer => {
       this._group.remove(layer.internalObject)
@@ -121,8 +182,10 @@ export class AcTrLayout {
   }
 
   /**
-   * Re-render points with latest point style settings
-   * @param displayMode Input display mode of points
+   * Re-render points with latest point style settings.
+   * Updates the visual representation of all point entities across all layers.
+   * 
+   * @param displayMode - Input display mode of points
    */
   rerenderPoints(displayMode: number) {
     this._layers.forEach(layer => {
@@ -132,8 +195,10 @@ export class AcTrLayout {
 
   /**
    * Return true if the object with the specified object id is intersected with the ray by using raycast.
-   * @param objectId  Input object id of object to check for intersection with the ray.
-   * @param raycaster Input raycaster to check intersection
+   * 
+   * @param objectId - Input object id of object to check for intersection with the ray.
+   * @param raycaster - Input raycaster to check intersection
+   * @returns True if the object intersects with the ray, false otherwise
    */
   isIntersectWith(objectId: string, raycaster: THREE.Raycaster) {
     const layer = this.getLayerByObjectId(objectId)
@@ -143,9 +208,13 @@ export class AcTrLayout {
   /**
    * Add one AutoCAD entity into this layout. If layer group referenced by the entity doesn't exist, create one
    * layer group and add this entity this group.
-   * @param entity Input AutoCAD entity to be added into this layout.
-   * @param extendBbox Input the flag whether to extend the bounding box of the scene by union the bounding box
-   * of the specified entity.
+   * 
+   * @param entity - Input AutoCAD entity to be added into this layout.
+   * @param extendBbox - Input the flag whether to extend the bounding box of the scene by union the bounding box
+   * of the specified entity. Defaults to true.
+   * @returns This layout instance for method chaining
+   * 
+   * @throws {Error} When entity is missing required objectId or layerName
    */
   addEntity(entity: AcTrEntity, extendBbox: boolean = true) {
     if (!entity.objectId) {
@@ -176,7 +245,8 @@ export class AcTrLayout {
 
   /**
    * Remove the specified entity from this layout.
-   * @param objectId Input the object id of the entity to remove
+   * 
+   * @param objectId - Input the object id of the entity to remove
    * @returns Return true if remove the specified entity successfully. Otherwise, return false.
    */
   remove(objectId: AcDbObjectId) {
@@ -188,7 +258,8 @@ export class AcTrLayout {
 
   /**
    * Update the specified entity in this layout.
-   * @param objectId Input the entity to update
+   * 
+   * @param entity - Input the entity to update
    * @returns Return true if update the specified entity successfully. Otherwise, return false.
    */
   update(entity: AcTrEntity) {
@@ -199,7 +270,10 @@ export class AcTrLayout {
   }
 
   /**
-   * Hover the specified entities
+   * Hover the specified entities.
+   * Applies hover highlighting to the entities with the given IDs.
+   * 
+   * @param ids - Array of entity object IDs to hover
    */
   hover(ids: AcDbObjectId[]) {
     ids.forEach(id => {
@@ -211,7 +285,10 @@ export class AcTrLayout {
   }
 
   /**
-   * Unhover the specified entities
+   * Unhover the specified entities.
+   * Removes hover highlighting from the entities with the given IDs.
+   * 
+   * @param ids - Array of entity object IDs to unhover
    */
   unhover(ids: AcDbObjectId[]) {
     ids.forEach(id => {
@@ -223,7 +300,10 @@ export class AcTrLayout {
   }
 
   /**
-   * Select the specified entities
+   * Select the specified entities.
+   * Applies selection highlighting to the entities with the given IDs.
+   * 
+   * @param ids - Array of entity object IDs to select
    */
   select(ids: AcDbObjectId[]) {
     ids.forEach(id => {
@@ -235,7 +315,10 @@ export class AcTrLayout {
   }
 
   /**
-   * Unselect the specified entities
+   * Unselect the specified entities.
+   * Removes selection highlighting from the entities with the given IDs.
+   * 
+   * @param ids - Array of entity object IDs to unselect
    */
   unselect(ids: AcDbObjectId[]) {
     ids.forEach(id => {
@@ -246,6 +329,12 @@ export class AcTrLayout {
     })
   }
 
+  /**
+   * Sets the snap points object for this layout.
+   * Replaces any existing snap points object with the new one.
+   * 
+   * @param object - The snap points object to display
+   */
   setSnapObject(object: AcTrObject) {
     if (this._snapPointsObject) {
       this._group.remove(this._snapPointsObject)
@@ -256,8 +345,10 @@ export class AcTrLayout {
 
   /**
    * Search entities intersected or contained in the specified bounding box.
-   * @param box Input the query bounding box
-   * @returns Return query results
+   * Uses the spatial index for efficient querying of entities within the given bounds.
+   * 
+   * @param box - Input the query bounding box (2D or 3D)
+   * @returns Return query results containing entity IDs and their bounds
    */
   search(box: AcGeBox2d | AcGeBox3d) {
     const results = this._indexTree.search({
@@ -269,6 +360,12 @@ export class AcTrLayout {
     return results
   }
 
+  /**
+   * Finds the layer containing the entity with the specified object ID.
+   * 
+   * @param objectId - The object ID to search for
+   * @returns The layer containing the entity, or undefined if not found
+   */
   private getLayerByObjectId(objectId: AcDbObjectId) {
     for (const [_, layer] of this._layers) {
       if (layer.hasEntity(objectId)) return layer
@@ -278,10 +375,11 @@ export class AcTrLayout {
 
   /**
    * Get layer group by name. If the layer doesn't exist, create one layer group into this layout.
-   * @param name Input layer name
-   * @param createIfNotExist Input one flag to indicate whether to create layer group if it doesn't exist in
-   * this layout.
-   * @returns Return matched layer
+   * 
+   * @param name - Input layer name
+   * @param createIfNotExist - Input one flag to indicate whether to create layer group if it doesn't exist in
+   * this layout. Defaults to true.
+   * @returns Return matched layer, or undefined if not found and createIfNotExist is false
    */
   private getLayer(name: string, createIfNotExist: boolean = true) {
     let layer = this._layers.get(name)

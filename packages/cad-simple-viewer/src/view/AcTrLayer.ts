@@ -6,17 +6,52 @@ import {
 } from '@mlightcad/three-renderer'
 import * as THREE from 'three'
 
+/**
+ * Statistics for a CAD layer including name and batched rendering metrics.
+ * 
+ * Extends the standard batched group statistics with layer-specific information.
+ */
 export type AcTrLayerStats = AcTrBatchedGroupStats & {
+  /** The name of the layer */
   name: string
 }
 
 /**
- * The class is used to render layer in AutoCAD.
- *
- * Notes:
- * Layers provided by THREE.js aren't used to control visibility of entities because it supports 32 layers only.
- * Instead groups are used to represent layers in AutoCAD. One AutoCAD layer is represented by one group in
- * THREE.js.
+ * Represents a CAD layer for organizing and rendering entities in Three.js.
+ * 
+ * This class manages a collection of CAD entities that belong to the same logical layer.
+ * It provides:
+ * - Entity organization and grouping
+ * - Layer visibility control
+ * - Efficient batched rendering through Three.js groups
+ * - Performance monitoring and statistics
+ * 
+ * ## Technical Notes
+ * Unlike Three.js built-in layers (which only support 32 layers), this implementation
+ * uses Three.js groups to represent AutoCAD layers, allowing unlimited layer support.
+ * Each AutoCAD layer corresponds to one Three.js group containing all entities.
+ * 
+ * ## Performance Benefits
+ * - Batched rendering reduces draw calls
+ * - Efficient visibility toggling for entire layers
+ * - Optimized entity grouping for better GPU performance
+ * 
+ * @example
+ * ```typescript
+ * // Create a new layer
+ * const layer = new AcTrLayer('Dimensions');
+ * 
+ * // Add entities to the layer
+ * const line = new AcTrLine(startPoint, endPoint);
+ * layer.add(line);
+ * 
+ * // Control layer visibility
+ * layer.visible = false; // Hide all entities in this layer
+ * 
+ * // Get layer statistics
+ * const stats = layer.stats;
+ * console.log(`Layer ${stats.name} has ${stats.entityCount} entities`);
+ * ```
  */
 export class AcTrLayer {
   /**
