@@ -24,10 +24,12 @@ class CadViewerApp {
     this.setupFileHandling()
   }
 
-  private initializeViewer() {
+  private async initializeViewer() {
     try {
       // Initialize the document manager with the canvas
       AcApDocManager.createInstance(this.canvas)
+      // Load default fonts
+      await AcApDocManager.instance.loadDefaultFonts()
       console.log('CAD Simple Viewer initialized successfully')
     } catch (error) {
       console.error('Failed to initialize CAD viewer:', error)
@@ -97,6 +99,12 @@ class CadViewerApp {
     try {
       // Read the file content
       const fileContent = await this.readFile(file)
+      
+      // Add loaded class to move file input container to top-left
+      const fileInputContainer = document.getElementById('fileInputContainer')
+      if (fileInputContainer) {
+        fileInputContainer.classList.add('loaded')
+      }
 
       // Set database options
       const options: AcDbOpenDatabaseOptions = {

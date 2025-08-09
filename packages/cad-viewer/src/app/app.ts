@@ -59,6 +59,7 @@ const registerDialogs = () => {
 export const initializeCadViewer = (elementId: string) => {
   const canvas = document.getElementById(elementId) as HTMLCanvasElement
   AcApDocManager.createInstance(canvas)
+  AcApDocManager.instance.loadDefaultFonts()
 }
 
 export const registerCommponents = () => {

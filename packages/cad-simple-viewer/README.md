@@ -65,6 +65,10 @@ import { AcDbDatabaseConverterManager, AcDbFileType } from '@mlightcad/data-mode
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
 AcApDocManager.createInstance(canvas)
 
+// Although it is optional, it is better to call this method to load the default fonts.
+// The default fonts are used if fonts used in drawing are not found.
+await AcApDocManager.instance.loadDefaultFonts()
+
 // Read the file content
 const fileContent = await this.readFile(file)
 
@@ -85,7 +89,7 @@ const success = await AcApDocManager.instance.openDocument(
 ......
 ```
 
-### Advanced Usage
+### Register DWG Converter to Display Drawings in DWG Format
 
 By default, cad-simple-viewer registers DXF converter only and can view DXF file only. If you want to view DWG file, you need to register DWG converter. The following example code shows how to register DWG converter.
 
@@ -197,6 +201,70 @@ window.addEventListener('libredwg-ready', event => {
   AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
 })
 ```
+
+### Beyond a Viewer
+
+While `cad-simple-viewer` doesn't support saving drawings to DWG/DXF files, it provides comprehensive support for **modifying drawings in real-time**. You can add, edit, and delete entities within the drawing, and the viewer will automatically update to reflect these changes.
+
+When you modify entities, you're working directly with the underlying drawing database. The viewer automatically detects these changes and updates the display accordingly. This real-time synchronization ensures that:
+
+- All modifications are immediately visible
+- The command stack properly tracks changes for undo/redo operations. This will be implemented soon.
+
+This capability makes `cad-simple-viewer` suitable for applications that need to not only display CAD files but also allow users to interact with and modify the drawing content.
+
+**Important Note**: The usage patterns in `cad-simple-viewer` are **very similar to AutoCAD RealDWG**. If you're familiar with AutoCAD RealDWG development, you'll find the API structure and workflow nearly identical. The main difference is that we use the [**realdwg-web API**](https://mlight-lee.github.io/realdwg-web/) instead of the native RealDWG libraries.
+
+#### Example: Adding Entities
+
+The following code demonstrates how to add entities, following the same pattern you'd use in AutoCAD RealDWG:
+
+```typescript
+import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
+import { AcDbLine, AcDbCircle, AcDbText, AcGePoint3d, AcGeVector3d } from '@mlightcad/data-model'
+
+// Get the current document (same as RealDWG)
+const doc = AcApDocManager.instance.activeDocument
+if (!doc) return
+
+// Get the model space (identical to RealDWG pattern)
+const modelSpace = doc.database.modelSpace
+
+// Add a line (same constructor and property setting as RealDWG)
+const startPoint = new AcGePoint3d(0, 0, 0)
+const endPoint = new AcGePoint3d(100, 100, 0)
+const line = new AcDbLine(startPoint, endPoint)
+line.layer = '0' // Set layer (same property name as RealDWG)
+line.color = 1 // Red color (same color index as RealDWG)
+modelSpace.appendEntity(line)
+
+// Add a circle (identical API to RealDWG)
+const centerPoint = new AcGePoint3d(50, 50, 0)
+const radius = 25
+const circle = new AcDbCircle(centerPoint, radius)
+circle.layer = '0'
+circle.color = 2 // Yellow color
+modelSpace.appendEntity(circle)
+
+// Add text (same constructor pattern as RealDWG)
+const textPoint = new AcGePoint3d(0, -50, 0)
+const text = new AcDbText(textPoint, 'Sample Text', 10) // position, text, height
+text.layer = '0'
+text.color = 3 // Green color
+modelSpace.appendEntity(text)
+```
+
+#### Example: Editing Entities
+
+TBD
+
+#### Example: Deleting Entities
+
+TBD
+
+#### Example: Working with Layers
+
+TBD
 
 ## Available Exports
 

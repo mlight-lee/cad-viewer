@@ -20,13 +20,21 @@
 
       .file-input-container {
         position: absolute;
-        top: 2rem;
-        left: 2rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: 10;
         display: flex;
         flex-direction: column;
         align-items: center;
         pointer-events: none;
+        transition: all 0.3s ease;
+      }
+      
+      .file-input-container.loaded {
+        top: 2rem;
+        left: 2rem;
+        transform: none;
       }
       
       .file-fab {
@@ -35,17 +43,23 @@
         color: #e0e0e0;
         border: none;
         border-radius: 12px;
-        width: 40px;
-        height: 32px;
+        width: 80px;
+        height: 64px;
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: 0 2px 8px rgba(0,0,0,0.18);
         cursor: pointer;
-        transition: background 0.2s, box-shadow 0.2s;
+        transition: all 0.3s ease;
         outline: none;
         padding: 0;
       }
+      
+      .file-input-container.loaded .file-fab {
+        width: 40px;
+        height: 32px;
+      }
+      
       .file-fab:hover {
         background: #353b45;
         box-shadow: 0 4px 16px rgba(0,0,0,0.22);
@@ -56,10 +70,25 @@
       .file-fab-label {
         margin-top: 0.5rem;
         color: #fff;
-        font-size: 1rem;
+        font-size: 1.2rem;
         text-align: center;
         text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+        transition: all 0.3s ease;
       }
+      
+      .file-input-container.loaded .file-fab-label {
+        font-size: 1rem;
+      }
+      
+      .file-icon {
+        transition: all 0.3s ease;
+      }
+      
+      .file-input-container.loaded .file-icon {
+        width: 20px;
+        height: 20px;
+      }
+      
       .file-input-container.hide {
         display: none;
       }
@@ -107,9 +136,9 @@
   <body>
     <div class="viewer-container">
       <div class="file-input-container" id="fileInputContainer">
-        <label class="file-fab" id="fileFab" title="Select DXF/DWG file">
+        <label class="file-fab" id="fileFab">
           <input type="file" id="fileInputElement" accept=".dxf,.dwg" />
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="file-icon">
             <path d="M3 6.5V15a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 17 15V7.5A1.5 1.5 0 0 0 15.5 6H7.414a1.5 1.5 0 0 1-1.06-.44l-1.414-1.414A1.5 1.5 0 0 0 4.586 4H4.5A1.5 1.5 0 0 0 3 5.5V6.5z"/>
             <path d="M8 11v2m0 0v-2m0 2h4m-4 0h4"/>
           </svg>

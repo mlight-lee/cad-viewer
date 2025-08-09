@@ -87,7 +87,6 @@ export class AcApDocManager {
     this._fontLoader = new AcApFontLoader(view.renderer)
     acdbHostApplicationServices().workingDatabase = doc.database
     this.registerCommands()
-    this.createExampleDoc()
   }
 
   /**
@@ -203,16 +202,40 @@ export class AcApDocManager {
   }
 
   /**
-   * Loads the default fonts used by the CAD viewer.
+   * Loads default fonts for CAD text rendering.
    * 
-   * Currently loads Chinese fonts for text rendering support.
+   * This method loads either the specified fonts or falls back to default Chinese fonts
+   * (specifically 'simkai') if no fonts are provided. The loaded fonts are used for
+   * rendering CAD text entities like MText and Text in the viewer.
    * 
-   * @returns Promise that resolves when default fonts are loaded
+   * It is better to load default fonts when viewer is initialized so that the viewer can
+   * render text correctly if fonts used in the document are not available.
+   * 
+   * @param fonts - Optional array of font names to load. If not provided or null, 
+   *               defaults to ['simkai'] for Chinese text support
+   * @returns Promise that resolves when all specified fonts are loaded
+   * 
+   * @example
+   * ```typescript
+   * // Load default fonts (simkai)
+   * await docManager.loadDefaultFonts();
+   * 
+   * // Load specific fonts
+   * await docManager.loadDefaultFonts(['Arial', 'SimSun']);
+   * 
+   * // Load no fonts (empty array)
+   * await docManager.loadDefaultFonts([]);
+   * ```
+   * 
+   * @see {@link AcApFontLoader.load} - The underlying font loading implementation
+   * @see {@link createExampleDoc} - Method that uses this for example document creation
    */
-  async loadDefaultFonts() {
-    // const fontFiles = ['simsun']
-    const fontFiles = ['simkai']
-    await this._fontLoader.load(fontFiles)
+  async loadDefaultFonts(fonts?: string[]) {
+    if (fonts == null) {
+      await this._fontLoader.load(['simkai'])
+    } else {
+      await this._fontLoader.load(fonts)
+    }
   }
 
   /**
