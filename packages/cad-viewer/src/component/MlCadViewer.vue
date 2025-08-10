@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
-import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
-import { ElMessage } from 'element-plus'
+import {
+  AcDbDatabaseConverterManager,
+  AcDbFileType,
+  AcDbOpenDatabaseOptions} from '@mlightcad/data-model'
+import { ElLoading,ElMessage } from 'element-plus'
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -23,12 +26,67 @@ import { MlStatusBar } from './statusBar'
 interface Props {
   locale?: LocaleProp
   url?: string
+  wait?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   locale: 'default',
-  url: undefined
+  url: undefined,
+  wait: 10
 })
+
+// Function to wait for libredwg.js to be loaded
+const waitForLibreDwg = () => {
+  if (props.wait <= 0) {
+    return Promise.resolve()
+  }
+
+  return new Promise<void>(resolve => {
+    // Show loading service
+    const loading = ElLoading.service({
+      lock: true,
+      text: t('main.message.loadingDwgConverter')
+    })
+
+    // Check if DWG converter is already registered
+    const checkDwgConverter = () => {
+      const dwgConverter = AcDbDatabaseConverterManager.instance.get(
+        AcDbFileType.DWG
+      )
+      if (dwgConverter) {
+        loading.close()
+        resolve()
+        return true
+      }
+      return false
+    }
+
+    // Check immediately first
+    if (checkDwgConverter()) {
+      return
+    }
+
+    // Poll every 0.5 seconds for up to the specified timeout
+    let attempts = 0
+    const maxAttempts = Math.floor(props.wait * 2) // Convert seconds to attempts (0.5 second intervals)
+    const pollInterval = setInterval(() => {
+      attempts++
+      if (checkDwgConverter()) {
+        clearInterval(pollInterval)
+        return
+      }
+
+      if (attempts >= maxAttempts) {
+        console.warn(
+          `DWG converter loading timeout after ${props.wait} seconds - proceeding anyway`
+        )
+        loading.close()
+        clearInterval(pollInterval)
+        resolve()
+      }
+    }, 500) // Check every 0.5 seconds
+  })
+}
 
 const { t } = useI18n()
 const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
@@ -64,15 +122,20 @@ const openFileFromUrl = async (url: string) => {
 // Watch for URL changes and open file
 watch(
   () => props.url,
-  newUrl => {
+  async newUrl => {
     if (newUrl) {
+      // Wait for libredwg.js to be loaded if wait prop is true
+      await waitForLibreDwg()
       openFileFromUrl(newUrl)
     }
   }
 )
 
 // Open file from URL on mount if provided
-onMounted(() => {
+onMounted(async () => {
+  // Wait for libredwg.js to be loaded if wait prop is true
+  await waitForLibreDwg()
+
   if (props.url) {
     openFileFromUrl(props.url)
   }

@@ -119,6 +119,7 @@ The `MlCadViewer` component accepts the following props:
 |----------|------|---------|-------------|
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
+| `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready for use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
 
 ### Usage Examples
 
@@ -141,6 +142,16 @@ The `MlCadViewer` component accepts the following props:
 <template>
   <MlCadViewer 
     locale="zh" 
+    url="https://example.com/path/to/drawing.dwg" 
+  />
+</template>
+```
+
+#### Wait for DWG Converter Ready to Use
+```vue
+<template>
+  <MlCadViewer 
+    :wait="10"
     url="https://example.com/path/to/drawing.dwg" 
   />
 </template>
