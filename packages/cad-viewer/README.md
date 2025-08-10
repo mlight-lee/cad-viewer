@@ -107,6 +107,73 @@ initApp()
 </script>
 ```
 
+## MlCadViewer Component
+
+The `MlCadViewer` is the main Vue 3 component that provides a complete CAD viewing and editing interface. It includes toolbars, layer management, command line, status bar, and various dialogs for a full-featured CAD experience.
+
+### Component Properties
+
+The `MlCadViewer` component accepts the following props:
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
+| `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
+
+**Notes:**
+
+- Property `url` is still in progress and will be done soon.
+
+### Usage Examples
+
+#### Basic Usage with Default Settings
+```vue
+<template>
+  <MlCadViewer />
+</template>
+```
+
+#### With Custom Locale
+```vue
+<template>
+  <MlCadViewer locale="en" />
+</template>
+```
+
+#### Auto-load File from URL
+```vue
+<template>
+  <MlCadViewer 
+    locale="zh" 
+    url="https://example.com/path/to/drawing.dwg" 
+  />
+</template>
+```
+
+### Component Features
+
+The `MlCadViewer` component includes:
+
+- **Main Menu** - File operations, view controls, and settings
+- **Toolbars** - Drawing tools, zoom controls, and selection tools
+- **Layer Manager** - Layer visibility and property management
+- **Command Line** - AutoCAD-style command input
+- **Status Bar** - Current position, zoom level, and system status
+- **Dialog Manager** - Modal dialogs for various operations
+- **File Reader** - Drag-and-drop file loading
+- **Entity Info** - Detailed information about selected entities
+- **Language Selector** - UI language switching
+- **Theme Support** - Dark/light mode toggle
+
+### Event Handling
+
+The component automatically handles various events:
+
+- **File Loading** - Supports drag-and-drop and URL-based file loading
+- **Error Messages** - Displays user-friendly error messages for failed operations
+- **Font Loading** - Handles missing fonts with appropriate notifications
+- **System Messages** - Shows status updates and operation feedback
+
 ### Advanced Usage
 
 Please refer to [readme of cad-simple-viewer](../cad-simple-viewer/README.md) to learn the following advanced usage.

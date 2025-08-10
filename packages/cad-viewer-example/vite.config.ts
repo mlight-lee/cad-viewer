@@ -23,6 +23,44 @@ export default defineConfig(({ command, mode }) => {
       replacement: resolve(__dirname, '../$1/src')
     })
   }
+
+  const plugins = [
+    vue(),
+    svgLoader(),
+    Unocss({
+      presets: [
+        presetUno(),
+        presetAttributify(),
+        presetIcons({
+          scale: 1.2,
+          warn: true
+        })
+      ],
+      transformers: [transformerDirectives(), transformerVariantGroup()]
+    }),
+    legacy({
+      targets: ['ie >= 11']
+    })
+  ]
+
+  // Add conditional plugins
+  if (mode === 'analyze') {
+    plugins.push(visualizer() as any)
+  }
+
+  if (command === 'serve') {
+    plugins.push(
+      viteStaticCopy({
+        targets: [
+          {
+            src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
+            dest: 'assets'
+          }
+        ]
+      }) as any
+    )
+  }
+
   return {
     base: './',
     resolve: {
@@ -45,34 +83,6 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     },
-    plugins: [
-      vue(),
-      svgLoader(),
-      mode === 'analyze' ? visualizer() : undefined,
-      Unocss({
-        presets: [
-          presetUno(),
-          presetAttributify(),
-          presetIcons({
-            scale: 1.2,
-            warn: true
-          })
-        ],
-        transformers: [transformerDirectives(), transformerVariantGroup()]
-      }),
-      command === 'serve'
-        ? viteStaticCopy({
-            targets: [
-              {
-                src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
-                dest: 'assets'
-              }
-            ]
-          })
-        : undefined,
-      legacy({
-        targets: ['ie >= 11']
-      })
-    ]
+    plugins: plugins as any
   }
 })

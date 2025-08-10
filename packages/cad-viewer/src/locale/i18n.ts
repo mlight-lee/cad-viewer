@@ -11,9 +11,15 @@ import zhDialog from './zh/dialog'
 import zhEnity from './zh/entity'
 import zhMain from './zh/main'
 
-// Get language of browser
-const preferredLang = localStorage.getItem('preferred_lang')
-const lang = preferredLang || navigator.language.toLowerCase()
+// Get language of browser - use same logic as useLocale
+const getInitialLocale = (): string => {
+  const stored = localStorage.getItem('preferred_lang')
+  if (stored === 'en' || stored === 'zh') return stored
+  
+  const browserLang = navigator.language.toLowerCase()
+  const browserLocale = browserLang.substring(0, 2)
+  return browserLocale === 'zh' ? 'zh' : 'en'
+}
 
 const messages = {
   en: {
@@ -33,7 +39,8 @@ const messages = {
 export const i18n = createI18n({
   legacy: false,
   messages,
-  locale: lang.substring(0, 2),
+  locale: getInitialLocale(),
+  fallbackLocale: 'en',
   allowComposition: true,
   globalInjection: true
 })

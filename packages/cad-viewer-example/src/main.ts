@@ -5,7 +5,6 @@ import 'element-plus/dist/index.css'
 import {
   i18n,
   initializeCadViewer,
-  MlCadViewer,
   registerCommponents
 } from '@mlightcad/cad-viewer'
 import {
@@ -15,6 +14,8 @@ import {
 import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
 import ElementPlus from 'element-plus'
 import { createApp } from 'vue'
+
+import App from './App.vue'
 
 const registerConverters = async () => {
   try {
@@ -46,7 +47,7 @@ const registerConverters = async () => {
 const initApp = () => {
   initializeCadViewer('canvas')
 
-  const app = createApp(MlCadViewer)
+  const app = createApp(App)
   app.use(i18n)
   app.use(ElementPlus)
   app.mount('#app')

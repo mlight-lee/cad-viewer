@@ -2,7 +2,7 @@
   <ml-language
     class="ml-language-selector"
     :languages="languages"
-    :current="locale"
+    :current="effectiveLocale"
     @click="handleClick"
   />
 </template>
@@ -10,23 +10,39 @@
 <script setup lang="ts">
 import { MlDropdownMenuItem, MlLanguage } from '@mlightcad/ui-components'
 import { reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { locale } = useI18n()
+
+import { useLocale } from '../../composable'
+import { LocaleProp,LocaleValue } from '../../locale'
+
+// Define props
+interface Props {
+  currentLocale?: LocaleProp
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  currentLocale: undefined
+})
+
+const { effectiveLocale, setLocale } = useLocale(
+  props.currentLocale
+)
 
 const languages = reactive<MlDropdownMenuItem[]>([
   {
-    name: 'en',
+    name: 'en' as LocaleValue,
     text: 'English'
   },
   {
-    name: 'zh',
+    name: 'zh' as LocaleValue,
     text: '简体中文'
   }
 ])
 
 const handleClick = (lang: string) => {
-  locale.value = lang
-  localStorage.setItem('preferred_lang', lang)
+  // Allow changing locale regardless of prop control
+  if (lang === 'en' || lang === 'zh') {
+    setLocale(lang as 'en' | 'zh')
+  }
 }
 </script>
 

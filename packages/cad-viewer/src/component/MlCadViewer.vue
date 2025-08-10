@@ -2,12 +2,12 @@
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
 import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
 import { ElMessage } from 'element-plus'
-import en from 'element-plus/es/locale/lang/en'
-import zh from 'element-plus/es/locale/lang/zh-cn'
-import { computed, onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { store } from '../app'
+import { useLocale } from '../composable'
+import { LocaleProp } from '../locale'
 import { MlDialogManager, MlFileReader } from './common'
 import { MlLayerManager } from './layerManager'
 import {
@@ -21,7 +21,7 @@ import { MlStatusBar } from './statusBar'
 
 // Define props
 interface Props {
-  locale?: 'en' | 'zh' | 'default'
+  locale?: LocaleProp
   url?: string
 }
 
@@ -30,16 +30,8 @@ const props = withDefaults(defineProps<Props>(), {
   url: undefined
 })
 
-const { locale: i18nLocale, t } = useI18n()
-
-// Use prop locale if provided, otherwise use i18n locale
-const currentLocale = computed(() => {
-  return props.locale === 'default' ? i18nLocale.value : props.locale
-})
-
-const elLocale = computed(() => {
-  return currentLocale.value === 'en' ? en : zh
-})
+const { t } = useI18n()
+const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
 
 const handleFileRead = async (
   fileName: string,
@@ -132,10 +124,10 @@ eventBus.on('failed-to-open-file', params => {
 
 <template>
   <div>
-    <el-config-provider :locale="elLocale">
+    <el-config-provider :locale="elementPlusLocale">
       <header>
         <ml-main-menu />
-        <ml-language-selector />
+        <ml-language-selector :current-locale="effectiveLocale" />
       </header>
       <main>
         <div class="ml-file-name">{{ store.fileName }}</div>
