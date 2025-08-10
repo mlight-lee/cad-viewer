@@ -45,15 +45,11 @@ const handleFileRead = async (
 // Function to fetch and open file from URL
 const openFileFromUrl = async (url: string) => {
   try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
+    const options: AcDbOpenDatabaseOptions = { minimumChunkSize: 1000 }
+    await AcApDocManager.instance.openUrl(url, options)
 
-    const fileName = url.split('/').pop() || 'file.dwg'
-    const fileContent = await response.arrayBuffer()
-
-    await handleFileRead(fileName, fileContent)
+    const fileName = url.split('/').pop()
+    store.fileName = fileName ?? ''
   } catch (error) {
     console.error('Failed to open file from URL:', error)
     ElMessage({

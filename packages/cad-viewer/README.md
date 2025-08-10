@@ -120,10 +120,6 @@ The `MlCadViewer` component accepts the following props:
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
 
-**Notes:**
-
-- Property `url` is still in progress and will be done soon.
-
 ### Usage Examples
 
 #### Basic Usage with Default Settings

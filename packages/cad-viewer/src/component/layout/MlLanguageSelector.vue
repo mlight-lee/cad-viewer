@@ -12,7 +12,7 @@ import { MlDropdownMenuItem, MlLanguage } from '@mlightcad/ui-components'
 import { reactive } from 'vue'
 
 import { useLocale } from '../../composable'
-import { LocaleProp,LocaleValue } from '../../locale'
+import { LocaleProp, LocaleValue } from '../../locale'
 
 // Define props
 interface Props {
@@ -23,9 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   currentLocale: undefined
 })
 
-const { effectiveLocale, setLocale } = useLocale(
-  props.currentLocale
-)
+const { effectiveLocale, setLocale } = useLocale(props.currentLocale)
 
 const languages = reactive<MlDropdownMenuItem[]>([
   {

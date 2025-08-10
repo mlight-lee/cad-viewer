@@ -1,6 +1,9 @@
 <template>
   <div id="app-root">
-    <MlCadViewer locale="en" url="https://cdn.jsdelivr.net/gh/mlight-lee/cad-data/data/anteen.dwg"/>
+    <MlCadViewer
+      locale="en"
+      url="https://cdn.jsdelivr.net/gh/mlight-lee/cad-data/data/anteen.dwg"
+    />
   </div>
 </template>
 

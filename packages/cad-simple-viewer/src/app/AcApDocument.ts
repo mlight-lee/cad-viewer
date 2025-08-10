@@ -57,8 +57,24 @@ export class AcApDocument {
     this._fileName = this.getFileNameFromUri(uri)
     let isSuccess = true
     try {
-      await this._database.openUri(uri, options)
-      this.docTitle = this._fileName
+      const response = await fetch(uri)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file '${uri}' with HTTP status codee '${response.status}'!`)
+      }
+
+      let content: string | ArrayBuffer
+      const fileExtension = uri.toLowerCase().split('.').pop()
+      if (fileExtension === 'dwg') {
+        // DWG files are binary, read as ArrayBuffer
+        content = await response.arrayBuffer()
+      } else {
+        // Default to DXF files (text-based) or fallback
+        content = await response.text()
+      }
+      isSuccess = await this.openDocument(this._fileName, content, options)
+      if (isSuccess) {
+        this.docTitle = this._fileName
+      }
     } catch (_) {
       isSuccess = false
       eventBus.emit('failed-to-open-file', { fileName: uri })
