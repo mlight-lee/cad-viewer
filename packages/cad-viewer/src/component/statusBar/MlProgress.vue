@@ -10,33 +10,48 @@
 </template>
 
 <script lang="ts" setup>
-import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
-import { AcDbConversionStage } from '@mlightcad/data-model'
+import { AcApDocManager, AcEdOpenFileProgressEventArgs, eventBus } from '@mlightcad/cad-simple-viewer'
 import { ElLoading, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-import { progressStageName } from '../../locale'
+import { conversionSubStageName } from '../../locale'
 
+const { t } = useI18n()
 const percentage = ref(0)
 const visible = ref(false)
 
-const updateProgress = (data: {
-  percentage: number
-  stage: AcDbConversionStage
-}) => {
-  const stageName = progressStageName(data.stage)
-  const loading = ElLoading.service({
-    lock: true
-  })
-  loading.setText(stageName)
+const updateProgress = (data: AcEdOpenFileProgressEventArgs) => {
+  if (data.stage === 'CONVERSION') {
+    const loading = ElLoading.service({
+      lock: true
+    })
+    if (data.subStage) {
+      const stageName = conversionSubStageName(data.subStage)
+      loading.setText(stageName)
+    }
 
-  percentage.value = data.percentage
-  if (percentage.value < 100) {
-    visible.value = true
-  } else {
-    visible.value = false
-    loading.close()
-    AcApDocManager.instance.curView.zoomToFit()
+    percentage.value = data.percentage
+    if (percentage.value < 100) {
+      visible.value = true
+    } else {
+      visible.value = false
+      loading.close()
+      AcApDocManager.instance.curView.zoomToFit()
+    }
+  } else if (data.stage === 'FETCH_FILE') {
+    const loading = ElLoading.service({
+      lock: true
+    })
+    loading.setText(t('main.message.fetchingDrawingFile'))
+    
+    percentage.value = data.percentage
+    if (percentage.value < 100) {
+      visible.value = true
+    } else {
+      visible.value = false
+      loading.close()
+    }
   }
 }
 

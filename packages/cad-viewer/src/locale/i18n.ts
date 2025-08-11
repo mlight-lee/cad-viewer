@@ -75,7 +75,7 @@ export const colorName = (colorKeyName: string) => {
   }
 }
 
-export const progressStageName = (stage: AcDbConversionStage) => {
+export const conversionSubStageName = (stage: AcDbConversionStage) => {
   const t = i18n.global.t
   const key = 'main.progress.' + stage.replace(/_/g, '').toLowerCase()
   return t(key, stage)

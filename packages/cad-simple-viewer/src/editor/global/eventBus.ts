@@ -1,7 +1,4 @@
-import {
-  AcDbConversionStage,
-  AcDbConversionStageStatus
-} from '@mlightcad/data-model'
+import { AcDbProgressdEventArgs } from '@mlightcad/data-model'
 import mitt, { type Emitter } from 'mitt'
 
 /**
@@ -10,6 +7,14 @@ import mitt, { type Emitter } from 'mitt'
  * Used to categorize messages shown to users with appropriate visual styling.
  */
 export type AcEdMessageType = 'success' | 'warning' | 'info' | 'error'
+
+/**
+ * Progress event arguments for database operations.
+ * 
+ * This type represents the progress information for database operations
+ * like opening files, excluding the database reference.
+ */
+export type AcEdOpenFileProgressEventArgs = Omit<AcDbProgressdEventArgs, 'database'>
 
 /**
  * Type definition for all events that can be emitted through the global event bus.
@@ -26,14 +31,7 @@ export type AcEdEvents = {
   /** Emitted to request opening a file dialog */
   'open-file': {}
   /** Emitted during file opening to report progress */
-  'open-file-progress': {
-    /** Progress percentage (0-100) */
-    percentage: number
-    /** Current conversion stage */
-    stage: AcDbConversionStage
-    /** Status of the current stage */
-    stageStatus: AcDbConversionStageStatus
-  }
+  'open-file-progress': AcEdOpenFileProgressEventArgs
   /** Emitted to display a message to the user */
   message: { 
     /** The message text to display */
@@ -93,7 +91,8 @@ export type AcEdEvents = {
  * // Emit a progress update
  * eventBus.emit('open-file-progress', {
  *   percentage: 50,
- *   stage: AcDbConversionStage.Parsing,
+ *   stage: 'CONVERSION'
+ *   subStage: AcDbConversionStage.Parsing,
  *   stageStatus: AcDbConversionStageStatus.InProgress
  * });
  * 

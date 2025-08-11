@@ -73,6 +73,7 @@ export class AcApDocManager {
       eventBus.emit('open-file-progress', {
         percentage: args.percentage,
         stage: args.stage,
+        subStage: args.subStage,
         stageStatus: args.stageStatus
       })
     })

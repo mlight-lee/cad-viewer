@@ -88,6 +88,7 @@ export default {
     loadingDwgConverter: '正在加载DWG转换器...',
     fontNotLoaded: '无法从"{url}"加载字体"{fontName}"！',
     failedToGetAvaiableFonts: '无法从"{url}"获取可用的字体信息!',
-    failedToOpenFile: '无法打开文件"{fileName}"!'
+    failedToOpenFile: '无法打开文件"{fileName}"!',
+    fetchingDrawingFile: '正在加载图纸文件...'
   }
 }

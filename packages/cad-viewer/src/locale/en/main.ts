@@ -89,6 +89,7 @@ export default {
     loadingDwgConverter: 'Loading DWG converter...',
     fontNotLoaded: 'Font "{fontName}" can not be loaded from "{url}"!',
     failedToGetAvaiableFonts: 'Failed to get avaiable fonts from "{url}"!',
-    failedToOpenFile: 'Failed to open file "{fileName}"!'
+    failedToOpenFile: 'Failed to open file "{fileName}"!',
+    fetchingDrawingFile: 'Fetching file ...'
   }
 }
