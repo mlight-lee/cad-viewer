@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.2
+
+### Patch Changes
+
+- feat: refine MlCadViewer component by adding properties 'url' and 'wait'
+
 ## 1.0.1
 
 ### Patch Changes

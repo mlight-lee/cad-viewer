@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.0.2
+
+### Patch Changes
+
+- feat: refine MlCadViewer component by adding properties 'url' and 'wait'
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.2
+  - @mlightcad/cad-viewer@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
