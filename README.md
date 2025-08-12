@@ -19,6 +19,18 @@ CAD-Viewer is a **high-performance**, modern, web-based CAD editor inspired by A
 - THREE.js 3D rendering engines with advanced optimization techniques
 - Designed for extensibility and integration with platforms like CMS, Notion, and WeChat
 
+## How to Use
+
+### Desktop Browser Operations
+- **Select**: Left-click on entities
+- **Zoom in/out**: Scroll mouse wheel up/down
+- **Pan**: Hold middle mouse button and drag
+
+### Pad/Mobile Browser Operations
+- **Select**: Tap on entities
+- **Zoom**: Pinch with two fingers to zoom in/out
+- **Pan**: Drag with two fingers to move the view
+
 ## Performance
 
 CAD-Viewer is engineered for **exceptional performance** and can handle very large DXF/DWG files while maintaining high frame rates. It employs multiple advanced rendering technologies to optimize performance:
