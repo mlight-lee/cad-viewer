@@ -8,6 +8,7 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 - **No backend required** - Files are parsed and processed entirely in the browser
 - **Enhanced data security** - Files never leave your device, ensuring complete privacy
 - **Easy integration** - No server setup or backend infrastructure needed for third-party integration
+- **Customizable UI** - Control visibility of toolbars, command line, coordinates, and performance stats
 - Modern UI optimized for large CAD file handling
 - State management for layers, entities, and settings
 - Integration with optimized SVG and THREE.js renderers
@@ -119,43 +120,45 @@ The `MlCadViewer` component accepts the following props:
 |----------|------|---------|-------------|
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
-| `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready for use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
+| `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
 
-### Usage Examples
+### UI Settings
 
-#### Basic Usage with Default Settings
-```vue
-<template>
-  <MlCadViewer />
-</template>
-```
+The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (provided by `@mlightcad/cad-simple-viewer`). Configure these flags anywhere before rendering the viewer to customize the UI.
 
-#### With Custom Locale
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `isShowToolbar` | `boolean` | `true` | Controls toolbar visibility |
+| `isShowCommandLine` | `boolean` | `true` | Controls command line visibility |
+| `isShowCoordinate` | `boolean` | `true` | Controls coordinate display visibility |
+| `isShowStats` | `boolean` | `false` | Controls performance statistics display |
+
+#### Example (recommended)
 ```vue
 <template>
   <MlCadViewer locale="en" />
+  <!-- Or provide url/wait props as needed -->
+  <!-- <MlCadViewer :wait="10" url="https://example.com/drawing.dwg" /> -->
+  
 </template>
+
+<script setup lang="ts">
+import { MlCadViewer } from '@mlightcad/cad-viewer'
+import { AcApSettingManager } from '@mlightcad/cad-simple-viewer'
+
+// Configure global UI flags before the viewer mounts
+AcApSettingManager.instance.isShowCommandLine = false
+// Optional toggles
+// AcApSettingManager.instance.isShowToolbar = false
+// AcApSettingManager.instance.isShowStats = true
+// AcApSettingManager.instance.isShowCoordinate = false
+</script>
 ```
 
-#### Auto-load File from URL
-```vue
-<template>
-  <MlCadViewer 
-    locale="zh" 
-    url="https://example.com/path/to/drawing.dwg" 
-  />
-</template>
-```
+#### Notes
 
-#### Wait for DWG Converter Ready to Use
-```vue
-<template>
-  <MlCadViewer 
-    :wait="10"
-    url="https://example.com/path/to/drawing.dwg" 
-  />
-</template>
-```
+- Settings are global and immediately reflected by `MlCadViewer`.
+- You can change them at runtime using the same `AcApSettingManager.instance` reference.
 
 ### Component Features
 

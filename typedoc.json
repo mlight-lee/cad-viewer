@@ -16,7 +16,8 @@
     "packageOptions": {
         "includeVersion": true,
         "entryPoints": ["src/index.ts"]
-    }
+    },
+    "excludeInternal": false
 
     // Potentially useful for debugging
     // "logLevel": "Verbose"

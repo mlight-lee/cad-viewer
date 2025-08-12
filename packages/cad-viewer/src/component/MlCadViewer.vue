@@ -1,4 +1,74 @@
+<!--
+  MlCadViewer - Main CAD Viewer Component
+  
+  This is the primary component for displaying and interacting with CAD files (DWG, DXF, etc.).
+  It provides a complete CAD viewing experience with file loading, layer management, 
+  command execution, and various viewing tools.
+  
+  USAGE EXAMPLE:
+  MlCadViewer with locale="en", url="path/to/file.dwg", wait="15"
+  
+  FEATURES:
+  - File loading from local files or URLs
+  - Layer management and visibility control
+  - Command line interface for CAD operations
+  - Toolbars with common CAD tools (zoom, pan, select, etc.)
+  - Entity information display
+  - Multi-language support (English/Chinese)
+  - Dark/light theme support
+  - Status bar with progress and settings
+  
+  COMPONENTS INCLUDED:
+  - Main menu and language selector
+  - Toolbars with CAD commands
+  - Layer manager for controlling entity visibility
+  - Command line for text-based commands
+  - Status bar with various controls
+  - File reader for local file uploads
+  - Entity info panel for object details
+  
+  EVENTS HANDLED:
+  - File loading and error handling
+  - Font loading notifications
+  - General message display
+  - File opening failures
+  
+  DEPENDENCIES:
+  - @mlightcad/cad-simple-viewer: Core CAD functionality
+  - @mlightcad/data-model: File format support
+  - Element Plus: UI components
+  - Vue 3 Composition API
+-->
+
 <script setup lang="ts">
+/**
+ * MlCadViewer Component
+ * 
+ * A comprehensive CAD viewer component that provides a complete interface for viewing
+ * and interacting with CAD files (DWG, DXF, etc.). This component integrates multiple
+ * sub-components to deliver a full-featured CAD viewing experience.
+ * 
+ * @example
+ * ```vue
+ * // Basic usage
+ * <MlCadViewer 
+ *   :locale="'en'"
+ *   :url="'https://example.com/drawing.dwg'"
+ *   :wait="15"
+ * />
+ * 
+ * // Import statement
+ * import { MlCadViewer } from '@mlightcad/cad-viewer'
+ * ```
+ * 
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author MLight Lee (mlight.lee@outlook.com)
+ * 
+ * @see {@link https://github.com/mlight-lee/cad-viewer | Project Repository}
+ * @see {@link https://github.com/mlight-lee/cad-viewer/blob/main/packages/cad-viewer/src/component/MlCadViewer.vue | Source Code}
+ */
+
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
 import {
   AcDbDatabaseConverterManager,
@@ -22,10 +92,13 @@ import {
 } from './layout'
 import { MlStatusBar } from './statusBar'
 
-// Define props
+// Define component props with their purposes
 interface Props {
+  /** Language locale for internationalization ('en', 'zh', or 'default') */
   locale?: LocaleProp
+  /** Optional URL to automatically load a CAD file on component mount */
   url?: string
+  /** Timeout in seconds to wait for DWG converter (libredwg.js) to load before proceeding */
   wait?: number
 }
 
@@ -35,20 +108,27 @@ const props = withDefaults(defineProps<Props>(), {
   wait: 10
 })
 
-// Function to wait for libredwg.js to be loaded
+/**
+ * Waits for the DWG converter (libredwg.js) to be loaded and registered
+ * This is necessary because the DWG converter is loaded asynchronously
+ * and we need to ensure it's available before attempting to open DWG files
+ * 
+ * @returns Promise that resolves when converter is ready or timeout is reached
+ */
 const waitForLibreDwg = () => {
+  // If wait is 0 or negative, proceed immediately without waiting
   if (props.wait <= 0) {
     return Promise.resolve()
   }
 
   return new Promise<void>(resolve => {
-    // Show loading service
+    // Show loading service to indicate we're waiting for converter
     const loading = ElLoading.service({
       lock: true,
       text: t('main.message.loadingDwgConverter')
     })
 
-    // Check if DWG converter is already registered
+    // Check if DWG converter is already registered in the converter manager
     const checkDwgConverter = () => {
       const dwgConverter = AcDbDatabaseConverterManager.instance.get(
         AcDbFileType.DWG
@@ -61,7 +141,7 @@ const waitForLibreDwg = () => {
       return false
     }
 
-    // Check immediately first
+    // Check immediately first in case converter is already loaded
     if (checkDwgConverter()) {
       return
     }
@@ -76,6 +156,7 @@ const waitForLibreDwg = () => {
         return
       }
 
+      // If timeout reached, warn and proceed anyway
       if (attempts >= maxAttempts) {
         console.warn(
           `DWG converter loading timeout after ${props.wait} seconds - proceeding anyway`
@@ -91,6 +172,13 @@ const waitForLibreDwg = () => {
 const { t } = useI18n()
 const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
 
+/**
+ * Handles file read events from the file reader component
+ * Opens the file content using the document manager
+ * 
+ * @param fileName - Name of the uploaded file
+ * @param fileContent - File content as string or ArrayBuffer
+ */
 const handleFileRead = async (
   fileName: string,
   fileContent: string | ArrayBuffer
@@ -100,12 +188,18 @@ const handleFileRead = async (
   store.fileName = fileName
 }
 
-// Function to fetch and open file from URL
+/**
+ * Fetches and opens a CAD file from a remote URL
+ * Used when the url prop is provided to automatically load files
+ * 
+ * @param url - Remote URL to the CAD file
+ */
 const openFileFromUrl = async (url: string) => {
   try {
     const options: AcDbOpenDatabaseOptions = { minimumChunkSize: 1000 }
     await AcApDocManager.instance.openUrl(url, options)
 
+    // Extract filename from URL for display
     const fileName = url.split('/').pop()
     store.fileName = fileName ?? ''
   } catch (error) {
@@ -119,7 +213,8 @@ const openFileFromUrl = async (url: string) => {
   }
 }
 
-// Watch for URL changes and open file
+// Watch for URL changes and automatically open new files
+// This allows dynamic loading of different CAD files without component remounting
 watch(
   () => props.url,
   async newUrl => {
@@ -131,16 +226,21 @@ watch(
   }
 )
 
-// Open file from URL on mount if provided
+// Component lifecycle: Initialize and load initial file if URL is provided
 onMounted(async () => {
   // Wait for libredwg.js to be loaded if wait prop is true
   await waitForLibreDwg()
 
+  // If URL prop is provided, automatically load the file on mount
   if (props.url) {
     openFileFromUrl(props.url)
   }
 })
 
+// Set up global event listeners for various CAD operations and notifications
+// These events are emitted by the underlying CAD engine and other components
+
+// Handle general messages from the CAD system (info, warnings, errors)
 eventBus.on('message', params => {
   ElMessage({
     message: params.message,
@@ -150,6 +250,7 @@ eventBus.on('message', params => {
   })
 })
 
+// Handle font loading failures - important for proper text rendering
 eventBus.on('font-not-loaded', params => {
   ElMessage({
     message: t('main.message.fontNotLoaded', {
@@ -162,6 +263,7 @@ eventBus.on('font-not-loaded', params => {
   })
 })
 
+// Handle failures when trying to get available fonts from the system
 eventBus.on('failed-to-get-avaiable-fonts', params => {
   ElMessage({
     message: t('main.message.failedToGetAvaiableFonts', { url: params.url }),
@@ -171,6 +273,7 @@ eventBus.on('failed-to-get-avaiable-fonts', params => {
   })
 })
 
+// Handle file opening failures with user-friendly error messages
 eventBus.on('failed-to-open-file', params => {
   ElMessage({
     message: t('main.message.failedToOpenFile', { fileName: params.fileName }),
@@ -182,30 +285,53 @@ eventBus.on('failed-to-open-file', params => {
 </script>
 
 <template>
+  <!-- Main CAD viewer container with complete UI layout -->
   <div>
+    <!-- Element Plus configuration provider for internationalization -->
     <el-config-provider :locale="elementPlusLocale">
+      <!-- Header section with main menu and language selector -->
       <header>
         <ml-main-menu />
         <ml-language-selector :current-locale="effectiveLocale" />
       </header>
+      
+      <!-- Main content area with CAD viewing tools and controls -->
       <main>
+        <!-- Display current filename at the top center -->
         <div class="ml-file-name">{{ store.fileName }}</div>
+        
+        <!-- Toolbar with common CAD operations (zoom, pan, select, etc.) -->
         <ml-tool-bars />
+        
+        <!-- Layer manager for controlling entity visibility and properties -->
         <ml-layer-manager :editor="AcApDocManager.instance" />
+        
+        <!-- Dialog manager for modal dialogs and settings -->
         <ml-dialog-manager />
       </main>
+      
+      <!-- Footer section with command line and status information -->
       <footer>
+        <!-- Command line for text-based CAD commands -->
         <ml-command-line />
+        
+        <!-- Status bar with progress, settings, and theme controls -->
         <ml-status-bar />
       </footer>
 
+      <!-- Hidden components for file handling and entity information -->
+      <!-- File reader for local file uploads -->
       <ml-file-reader @file-read="handleFileRead" />
+      
+      <!-- Entity info panel for displaying object properties -->
       <ml-entity-info />
     </el-config-provider>
   </div>
 </template>
 
+<!-- Component-specific styles -->
 <style>
+/* Position the filename display at the top center of the viewer */
 .ml-file-name {
   position: absolute;
   top: 0;

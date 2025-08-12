@@ -16,11 +16,11 @@ export default {
     dimstyle: 'Parsing dimension styles ...',
     layer: 'Parsing layers ...',
     vport: 'Parsing viewports ...',
-    blockrecord: 'Prasing block record ...',
+    blockrecord: 'Parsing block record ...',
     header: 'Parsing header ...',
     block: 'Parsing blocks ...',
     entity: 'Parsing entities ...',
-    object: 'Prasing named dictionaries ...',
+    object: 'Parsing named dictionaries ...',
     end: 'Finished!'
   },
   verticalToolbar: {
