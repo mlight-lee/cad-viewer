@@ -44,6 +44,17 @@ CAD-Viewer is engineered for **exceptional performance** and can handle very lar
 
 These optimizations enable CAD-Viewer to smoothly render complex CAD drawings with thousands of entities while maintaining responsive user interactions.
 
+## Known Issues
+
+CAD-Viewer has some known limitations that users should be aware of:
+
+- **Unsupported Entities**: 
+  - **Tables** (DWG files only): Table entities are not currently supported in DWG files because [LibreDWG](https://github.com/LibreDWG/libredwg) is used to read DWG files and it doesn't support table entity yet. If one table is created by line and polyline entities, definitely it is supported.
+  - **XRefs**: External references (XRefs) are not supported and will not be displayed.
+- **DWG File Compatibility**: Some DWG drawings may fail to open due to bugs in the underlying [LibreDWG](https://github.com/LibreDWG/libredwg) library. This is a known limitation of the current DWG parsing implementation. If you find those issues, please log one issue on [CAD-Viewer issues page](https://github.com/mlight-lee/cad-viewer/issues) or [LibreDWG issues page](https://github.com/LibreDWG/libredwg/issues).
+
+These issues are being tracked and will be addressed in future releases.
+
 ## Roadmap
 
 To achieve the final goal, the following milestones are defined:

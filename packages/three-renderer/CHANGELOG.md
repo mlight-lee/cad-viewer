@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.3
+
+### Patch Changes
+
+- feat: upgrade version of data-model package to fix issue on refreshing multiple times when opening one drawing
+
 ## 1.0.2
 
 ### Patch Changes

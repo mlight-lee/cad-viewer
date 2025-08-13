@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.0.3
+
+### Patch Changes
+
+- feat: upgrade version of data-model package to fix issue on refreshing multiple times when opening one drawing
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

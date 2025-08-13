@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.4
+
+### Patch Changes
+
+- feat: upgrade version of data-model package to fix issue on refreshing multiple times when opening one drawing
+
 ## 0.0.3
 
 ### Patch Changes
