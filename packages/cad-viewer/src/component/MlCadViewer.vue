@@ -43,28 +43,28 @@
 <script setup lang="ts">
 /**
  * MlCadViewer Component
- * 
+ *
  * A comprehensive CAD viewer component that provides a complete interface for viewing
  * and interacting with CAD files (DWG, DXF, etc.). This component integrates multiple
  * sub-components to deliver a full-featured CAD viewing experience.
- * 
+ *
  * @example
  * ```vue
  * // Basic usage
- * <MlCadViewer 
+ * <MlCadViewer
  *   :locale="'en'"
  *   :url="'https://example.com/drawing.dwg'"
  *   :wait="15"
  * />
- * 
+ *
  * // Import statement
  * import { MlCadViewer } from '@mlightcad/cad-viewer'
  * ```
- * 
+ *
  * @since 1.0.0
  * @version 1.0.0
  * @author MLight Lee (mlight.lee@outlook.com)
- * 
+ *
  * @see {@link https://github.com/mlight-lee/cad-viewer | Project Repository}
  * @see {@link https://github.com/mlight-lee/cad-viewer/blob/main/packages/cad-viewer/src/component/MlCadViewer.vue | Source Code}
  */
@@ -73,12 +73,13 @@ import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
 import {
   AcDbDatabaseConverterManager,
   AcDbFileType,
-  AcDbOpenDatabaseOptions} from '@mlightcad/data-model'
-import { ElLoading,ElMessage } from 'element-plus'
+  AcDbOpenDatabaseOptions
+} from '@mlightcad/data-model'
+import { ElLoading, ElMessage } from 'element-plus'
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { store } from '../app'
+import { registerDialogs, store } from '../app'
 import { useLocale } from '../composable'
 import { LocaleProp } from '../locale'
 import { MlDialogManager, MlFileReader } from './common'
@@ -112,7 +113,7 @@ const props = withDefaults(defineProps<Props>(), {
  * Waits for the DWG converter (libredwg.js) to be loaded and registered
  * This is necessary because the DWG converter is loaded asynchronously
  * and we need to ensure it's available before attempting to open DWG files
- * 
+ *
  * @returns Promise that resolves when converter is ready or timeout is reached
  */
 const waitForLibreDwg = () => {
@@ -175,7 +176,7 @@ const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
 /**
  * Handles file read events from the file reader component
  * Opens the file content using the document manager
- * 
+ *
  * @param fileName - Name of the uploaded file
  * @param fileContent - File content as string or ArrayBuffer
  */
@@ -191,7 +192,7 @@ const handleFileRead = async (
 /**
  * Fetches and opens a CAD file from a remote URL
  * Used when the url prop is provided to automatically load files
- * 
+ *
  * @param url - Remote URL to the CAD file
  */
 const openFileFromUrl = async (url: string) => {
@@ -282,6 +283,8 @@ eventBus.on('failed-to-open-file', params => {
     showClose: true
   })
 })
+
+registerDialogs()
 </script>
 
 <template>
@@ -294,27 +297,27 @@ eventBus.on('failed-to-open-file', params => {
         <ml-main-menu />
         <ml-language-selector :current-locale="effectiveLocale" />
       </header>
-      
+
       <!-- Main content area with CAD viewing tools and controls -->
       <main>
         <!-- Display current filename at the top center -->
         <div class="ml-file-name">{{ store.fileName }}</div>
-        
+
         <!-- Toolbar with common CAD operations (zoom, pan, select, etc.) -->
         <ml-tool-bars />
-        
+
         <!-- Layer manager for controlling entity visibility and properties -->
         <ml-layer-manager :editor="AcApDocManager.instance" />
-        
+
         <!-- Dialog manager for modal dialogs and settings -->
         <ml-dialog-manager />
       </main>
-      
+
       <!-- Footer section with command line and status information -->
       <footer>
         <!-- Command line for text-based CAD commands -->
         <ml-command-line />
-        
+
         <!-- Status bar with progress, settings, and theme controls -->
         <ml-status-bar />
       </footer>
@@ -322,7 +325,7 @@ eventBus.on('failed-to-open-file', params => {
       <!-- Hidden components for file handling and entity information -->
       <!-- File reader for local file uploads -->
       <ml-file-reader @file-read="handleFileRead" />
-      
+
       <!-- Entity info panel for displaying object properties -->
       <ml-entity-info />
     </el-config-provider>

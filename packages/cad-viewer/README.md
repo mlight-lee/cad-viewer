@@ -87,8 +87,7 @@ import 'element-plus/dist/index.css'
 import {
   i18n,
   initializeCadViewer,
-  MlCadViewer,
-  registerCommponents
+  MlCadViewer
 } from '@mlightcad/cad-viewer'
 import ElementPlus from 'element-plus'
 import { createApp } from 'vue'
@@ -100,8 +99,6 @@ const initApp = () => {
   app.use(i18n)
   app.use(ElementPlus)
   app.mount('#app')
-
-  registerCommponents()
 }
 
 initApp()

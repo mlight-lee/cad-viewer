@@ -5,7 +5,6 @@ import 'element-plus/dist/index.css'
 import {
   i18n,
   initializeCadViewer,
-  registerCommponents
 } from '@mlightcad/cad-viewer'
 import {
   AcDbDatabaseConverterManager,
@@ -51,8 +50,6 @@ const initApp = () => {
   app.use(i18n)
   app.use(ElementPlus)
   app.mount('#app')
-
-  registerCommponents()
 
   // Register converters after the app is mounted with a small delay
   // so that the app can be loaded faster

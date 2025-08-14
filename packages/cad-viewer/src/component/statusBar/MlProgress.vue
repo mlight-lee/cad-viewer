@@ -10,7 +10,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AcApDocManager, AcEdOpenFileProgressEventArgs, eventBus } from '@mlightcad/cad-simple-viewer'
+import {
+  AcApDocManager,
+  AcEdOpenFileProgressEventArgs,
+  eventBus
+} from '@mlightcad/cad-simple-viewer'
 import { ElLoading, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -44,7 +48,7 @@ const updateProgress = (data: AcEdOpenFileProgressEventArgs) => {
       lock: true
     })
     loading.setText(t('main.message.fetchingDrawingFile'))
-    
+
     percentage.value = data.percentage
     if (percentage.value < 100) {
       visible.value = true
