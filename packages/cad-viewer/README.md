@@ -75,7 +75,7 @@ Then create one vue component as follows.
 ```vue
 <template>
   <div>
-    <MlCADViewer />
+    <MlCADViewer canvas-id="canvas" />
   </div>
 </template>
 
@@ -86,15 +86,12 @@ import 'element-plus/dist/index.css'
 
 import {
   i18n,
-  initializeCadViewer,
   MlCadViewer
 } from '@mlightcad/cad-viewer'
 import ElementPlus from 'element-plus'
 import { createApp } from 'vue'
 
 const initApp = () => {
-  initializeCadViewer('canvas')
-
   const app = createApp(MlCadViewer)
   app.use(i18n)
   app.use(ElementPlus)
@@ -118,6 +115,7 @@ The `MlCadViewer` component accepts the following props:
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
 | `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
+| `canvasId` | `string` | **Required** | Canvas element ID for the CAD viewer. The component will automatically call `initializeCadViewer` with this ID during its mount lifecycle. |
 
 ### UI Settings
 
@@ -133,9 +131,9 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
 #### Example (recommended)
 ```vue
 <template>
-  <MlCadViewer locale="en" />
+  <MlCadViewer locale="en" canvas-id="canvas" />
   <!-- Or provide url/wait props as needed -->
-  <!-- <MlCadViewer :wait="10" url="https://example.com/drawing.dwg" /> -->
+  <!-- <MlCadViewer :wait="10" canvas-id="my-canvas" url="https://example.com/drawing.dwg" /> -->
   
 </template>
 

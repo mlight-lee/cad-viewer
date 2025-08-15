@@ -2,10 +2,7 @@ import 'uno.css'
 import 'element-plus/dist/index.css'
 import 'element-plus/dist/index.css'
 
-import {
-  i18n,
-  initializeCadViewer,
-} from '@mlightcad/cad-viewer'
+import { i18n } from '@mlightcad/cad-viewer'
 import {
   AcDbDatabaseConverterManager,
   AcDbFileType
@@ -44,8 +41,6 @@ const registerConverters = async () => {
 }
 
 const initApp = () => {
-  initializeCadViewer('canvas')
-
   const app = createApp(App)
   app.use(i18n)
   app.use(ElementPlus)

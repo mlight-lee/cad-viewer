@@ -2,6 +2,7 @@
   <div id="app-root">
     <MlCadViewer
       locale="en"
+      canvas-id="canvas"
       url="https://cdn.jsdelivr.net/gh/mlight-lee/cad-data/data/anteen.dwg"
     />
   </div>

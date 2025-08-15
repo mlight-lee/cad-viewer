@@ -79,7 +79,7 @@ import { ElLoading, ElMessage } from 'element-plus'
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { registerDialogs, store } from '../app'
+import { registerDialogs, store, initializeCadViewer } from '../app'
 import { useLocale } from '../composable'
 import { LocaleProp } from '../locale'
 import { MlDialogManager, MlFileReader } from './common'
@@ -101,6 +101,8 @@ interface Props {
   url?: string
   /** Timeout in seconds to wait for DWG converter (libredwg.js) to load before proceeding */
   wait?: number
+  /** Canvas element ID for the CAD viewer. This is required to specify which canvas element to use */
+  canvasId: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -108,6 +110,9 @@ const props = withDefaults(defineProps<Props>(), {
   url: undefined,
   wait: 10
 })
+
+// Initialize the CAD viewer with the specified canvas ID
+initializeCadViewer(props.canvasId)
 
 /**
  * Waits for the DWG converter (libredwg.js) to be loaded and registered

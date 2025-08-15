@@ -1,4 +1,3 @@
-export * from './app'
 export * from './command'
 export * from './component'
 export * from './composable'
