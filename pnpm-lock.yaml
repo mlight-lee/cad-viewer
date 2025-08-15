@@ -12,11 +12,11 @@ importers:
         specifier: 1.1.4
         version: 1.1.4
       '@mlightcad/geometry-engine':
-        specifier: 2.0.5
-        version: 2.0.5(@mlightcad/common@1.1.4)
+        specifier: 2.0.6
+        version: 2.0.6(@mlightcad/common@1.1.4)
       '@mlightcad/graphic-interface':
-        specifier: 2.0.5
-        version: 2.0.5(@mlightcad/geometry-engine@2.0.5(@mlightcad/common@1.1.4))
+        specifier: 2.0.6
+        version: 2.0.6(@mlightcad/geometry-engine@2.0.6(@mlightcad/common@1.1.4))
     devDependencies:
       '@changesets/cli':
         specifier: ^2.29.5
@@ -106,8 +106,8 @@ importers:
   packages/cad-simple-viewer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@mlightcad/svg-renderer':
         specifier: workspace:*
         version: link:../svg-renderer
@@ -146,11 +146,11 @@ importers:
         specifier: workspace:*
         version: link:../cad-simple-viewer
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@mlightcad/libredwg-converter':
-        specifier: 2.0.5
-        version: 2.0.5(@mlightcad/data-model@1.1.5)(@mlightcad/libredwg-web@0.1.5)
+        specifier: 2.0.6
+        version: 2.0.6(@mlightcad/data-model@1.1.6)(@mlightcad/libredwg-web@0.1.5)
       '@mlightcad/libredwg-web':
         specifier: 0.1.5
         version: 0.1.5
@@ -164,8 +164,8 @@ importers:
         specifier: workspace:*
         version: link:../cad-simple-viewer
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.3.0(vue@3.5.18(typescript@5.8.3))
@@ -234,11 +234,11 @@ importers:
         specifier: workspace:*
         version: link:../cad-viewer
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@mlightcad/libredwg-converter':
-        specifier: 2.0.5
-        version: 2.0.5(@mlightcad/data-model@1.1.5)(@mlightcad/libredwg-web@0.1.5)
+        specifier: 2.0.6
+        version: 2.0.6(@mlightcad/data-model@1.1.6)(@mlightcad/libredwg-web@0.1.5)
       '@mlightcad/libredwg-web':
         specifier: 0.1.5
         version: 0.1.5
@@ -310,14 +310,14 @@ importers:
   packages/svg-renderer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
 
   packages/three-renderer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@mlightcad/mtext-renderer':
         specifier: 0.4.2
         version: 0.4.2(three@0.172.0)
@@ -1568,26 +1568,26 @@ packages:
   '@mlightcad/common@1.1.4':
     resolution: {integrity: sha512-rSI1Q0wxsZNIBJGx/ofkLxloPfX1qNVrqYb5eAJ0NICyk68dtpQNgiL9D3manNOGJr9Xe7kPd8KPGtQnUTzsjw==}
 
-  '@mlightcad/data-model@1.1.5':
-    resolution: {integrity: sha512-lLrcRE/n9nxmQqAeGZoJoq0RJx0I82/U1niXO15y916n1wbU9L3wT/bzutax3v2+rDV7eu0VlbIsEKDzfa0oTA==}
+  '@mlightcad/data-model@1.1.6':
+    resolution: {integrity: sha512-8HxnveiaXQ6Rwh6YmKTl8iWjbrVBdcTpTrigMiiQ/pV9vqGV5Y7JcO/h/ZMaCKguyE15QlnVcu4c6G5Yhq9K4g==}
 
   '@mlightcad/dxf-json@1.0.8':
     resolution: {integrity: sha512-NOLt3LcyOti+Ero9PMbvZaYWvn2IwVL7ysty0aYxTdeYc3gs1+Xnj+VjaCEL6ACMXLlmQd8pFQjMdRsuIIUd2A==}
 
-  '@mlightcad/geometry-engine@2.0.5':
-    resolution: {integrity: sha512-15BBcMpVy7uYwtOczzgaet10DkTAGjDBozSu+sdbyc/6eoxrm6BOfdKFauhdDHa+v3r3rlFRZSL8eV3MJzXKYQ==}
+  '@mlightcad/geometry-engine@2.0.6':
+    resolution: {integrity: sha512-qg7qvI5OJuLkCJO7HpiYNZTRpT3Wq94u9bGtx/WUSSXq2rDpWrloh8e+rOiDWlbgduyoQMSs4VQxjeQtMIdTgg==}
     peerDependencies:
       '@mlightcad/common': 1.1.4
 
-  '@mlightcad/graphic-interface@2.0.5':
-    resolution: {integrity: sha512-eKw9pPCvxZXBc+ZM2s73Ymp3x4bzaHKKGBscseIfhjvDZ/mch644sW+ONd1xYoPzG3GDKZs75CeuDRIk9JIB/w==}
+  '@mlightcad/graphic-interface@2.0.6':
+    resolution: {integrity: sha512-dPzTWuu9S35dsmdqyFUM7pBctQEh6D0ZwijWhag4AFalG+LD726xibh22FcId89k6hUqEUPR0O1j2723hoJZ9Q==}
     peerDependencies:
-      '@mlightcad/geometry-engine': 2.0.5
+      '@mlightcad/geometry-engine': 2.0.6
 
-  '@mlightcad/libredwg-converter@2.0.5':
-    resolution: {integrity: sha512-KZvYHHZTmaqJwjUGbQ5RQnLUABgnO/IMsnG45+Ie71HfOK1XGEMxad6yRsq1X2CJ1K2UxilUUtGh9G3nfLFVxQ==}
+  '@mlightcad/libredwg-converter@2.0.6':
+    resolution: {integrity: sha512-O9EhX2uvG2fmX1V/R0mPBKI8RnUPUfMoAbESFdl9G3DgdUEcK5EKeJoeccTheKvyjZhSVoumPb9HKw961GE7uw==}
     peerDependencies:
-      '@mlightcad/data-model': 1.1.5
+      '@mlightcad/data-model': 1.1.6
       '@mlightcad/libredwg-web': 0.1.5
 
   '@mlightcad/libredwg-web@0.1.5':
@@ -6637,7 +6637,7 @@ snapshots:
     dependencies:
       loglevel: 1.9.2
 
-  '@mlightcad/data-model@1.1.5':
+  '@mlightcad/data-model@1.1.6':
     dependencies:
       '@mlightcad/dxf-json': 1.0.8
       uid: 2.0.2
@@ -6646,17 +6646,17 @@ snapshots:
     dependencies:
       '@fxts/core': 1.15.0
 
-  '@mlightcad/geometry-engine@2.0.5(@mlightcad/common@1.1.4)':
+  '@mlightcad/geometry-engine@2.0.6(@mlightcad/common@1.1.4)':
     dependencies:
       '@mlightcad/common': 1.1.4
 
-  '@mlightcad/graphic-interface@2.0.5(@mlightcad/geometry-engine@2.0.5(@mlightcad/common@1.1.4))':
+  '@mlightcad/graphic-interface@2.0.6(@mlightcad/geometry-engine@2.0.6(@mlightcad/common@1.1.4))':
     dependencies:
-      '@mlightcad/geometry-engine': 2.0.5(@mlightcad/common@1.1.4)
+      '@mlightcad/geometry-engine': 2.0.6(@mlightcad/common@1.1.4)
 
-  '@mlightcad/libredwg-converter@2.0.5(@mlightcad/data-model@1.1.5)(@mlightcad/libredwg-web@0.1.5)':
+  '@mlightcad/libredwg-converter@2.0.6(@mlightcad/data-model@1.1.6)(@mlightcad/libredwg-web@0.1.5)':
     dependencies:
-      '@mlightcad/data-model': 1.1.5
+      '@mlightcad/data-model': 1.1.6
       '@mlightcad/libredwg-web': 0.1.5
 
   '@mlightcad/libredwg-web@0.1.5': {}
