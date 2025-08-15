@@ -79,7 +79,7 @@ import { ElLoading, ElMessage } from 'element-plus'
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { registerDialogs, store, initializeCadViewer } from '../app'
+import { initializeCadViewer, registerDialogs, store } from '../app'
 import { useLocale } from '../composable'
 import { LocaleProp } from '../locale'
 import { MlDialogManager, MlFileReader } from './common'
