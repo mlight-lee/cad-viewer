@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.4
+
+### Patch Changes
+
+- feat: add property 'canvasId' for MlCadViewer component and update its example and readme
+
 ## 1.0.3
 
 ### Patch Changes

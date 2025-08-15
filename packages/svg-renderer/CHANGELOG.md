@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.5
+
+### Patch Changes
+
+- feat: add property 'canvasId' for MlCadViewer component and update its example and readme
+
 ## 0.0.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.4
+
+### Patch Changes
+
+- feat: add property 'canvasId' for MlCadViewer component and update its example and readme
+- Updated dependencies
+  - @mlightcad/three-renderer@1.0.4
+  - @mlightcad/svg-renderer@0.0.5
+
 ## 1.0.3
 
 ### Patch Changes
