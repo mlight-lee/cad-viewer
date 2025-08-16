@@ -1,7 +1,6 @@
 {
   "name": "@mlightcad/cad-simple-viewer",
-  "private": false,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -40,6 +39,9 @@
     "lint:fix": "eslint --fix --quiet src/"
   },
   "devDependencies": {
+    "@mlightcad/svg-renderer": "workspace:*",
+    "@mlightcad/three-renderer": "workspace:*",
+    "@mlightcad/three-viewcube": "0.0.9",
     "@types/lodash-es": "^4.17.12",
     "@types/rbush": "^3.0.4",
     "@types/three": "^0.172.0"
@@ -50,9 +52,6 @@
   },
   "peerDependencies": {
     "@mlightcad/data-model": "1.1.6",
-    "@mlightcad/svg-renderer": "workspace:*",
-    "@mlightcad/three-renderer": "workspace:*",
-    "@mlightcad/three-viewcube": "0.0.9",
     "three": "^0.172.0",
     "lodash-es": "4.17.21"
   }

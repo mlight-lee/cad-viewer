@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.6
+
+### Patch Changes
+
+- fix: fix dependencies of cad-simple-viewer
+
 ## 0.0.5
 
 ### Patch Changes
