@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.7
+
+### Patch Changes
+
+- feat: upgrade version of realdwg-web to fix some bugs
+
 ## 0.0.6
 
 ### Patch Changes

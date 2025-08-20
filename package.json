@@ -45,7 +45,6 @@
     "@types/node": "^20.14.9",
     "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "@typescript-eslint/parser": "^8.4.0",
-    "@vitejs/plugin-legacy": "^5.4.2",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

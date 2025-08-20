@@ -1,7 +1,7 @@
 {
   "name": "@mlightcad/cad-viewer-example",
   "private": true,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -34,9 +34,9 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@mlightcad/cad-simple-viewer": "workspace:*",
     "@mlightcad/cad-viewer": "workspace:*",
-    "@mlightcad/data-model": "1.1.6",
-    "@mlightcad/libredwg-converter": "2.0.6",
-    "@mlightcad/libredwg-web": "0.1.5",
+    "@mlightcad/data-model": "1.1.7",
+    "@mlightcad/libredwg-converter": "2.0.7",
+    "@mlightcad/libredwg-web": "0.1.6",
     "@vueuse/core": "^11.1.0",
     "element-plus": "^2.9.1",
     "vue": "^3.4.21",

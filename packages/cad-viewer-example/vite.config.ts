@@ -1,4 +1,3 @@
-import legacy from '@vitejs/plugin-legacy'
 import { resolve } from 'path'
 import { Alias, defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
@@ -37,9 +36,6 @@ export default defineConfig(({ command, mode }) => {
         })
       ],
       transformers: [transformerDirectives(), transformerVariantGroup()]
-    }),
-    legacy({
-      targets: ['ie >= 11']
     })
   ]
 

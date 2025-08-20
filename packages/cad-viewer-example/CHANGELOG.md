@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.0.6
+
+### Patch Changes
+
+- feat: upgrade version of realdwg-web to fix some bugs
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.6
+  - @mlightcad/cad-viewer@1.0.6
+
 ## 1.0.5
 
 ### Patch Changes
