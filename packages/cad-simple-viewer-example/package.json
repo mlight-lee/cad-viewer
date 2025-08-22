@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@mlightcad/cad-simple-viewer": "workspace:*",
-    "@mlightcad/data-model": "1.1.7",
-    "@mlightcad/libredwg-converter": "2.0.7",
+    "@mlightcad/data-model": "1.1.8",
+    "@mlightcad/libredwg-converter": "2.0.8",
     "@mlightcad/libredwg-web": "0.1.6"
   }
 }
