@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.7
+
+### Patch Changes
+
+- feat: upgrade realdwg-web to version 1.1.8 to fix some bugs
+
 ## 1.0.6
 
 ### Patch Changes
