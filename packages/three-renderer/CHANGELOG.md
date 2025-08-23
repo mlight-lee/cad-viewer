@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.8
+
+### Patch Changes
+
+- fix: catch errors to continue rendering drawing if bigfont characters are found
+
 ## 1.0.7
 
 ### Patch Changes

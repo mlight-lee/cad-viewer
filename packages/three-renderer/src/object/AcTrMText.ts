@@ -6,7 +6,7 @@ import { AcTrStyleManager } from '../style/AcTrStyleManager'
 import { AcTrEntity } from './AcTrEntity'
 
 export class AcTrMText extends AcTrEntity {
-  private _mtext: MText
+  private _mtext?: MText
 
   constructor(
     text: AcGiMTextData,
@@ -14,17 +14,21 @@ export class AcTrMText extends AcTrEntity {
     styleManager: AcTrStyleManager
   ) {
     super(styleManager)
-    // @ts-expect-error AcGiTextData and MTextData are compatible
-    this._mtext = new MText(text, style, styleManager, FontManager.instance, {
-      byLayerColor: style.byLayerColor,
-      byBlockColor: style.byBlockColor
-    })
-    this.add(this._mtext)
-    this.flatten()
-    this.traverse(object => {
-      // Add the flag to check intersection using bounding box of the mesh
-      object.userData.bboxIntersectionCheck = true
-    })
+    try {
+      // @ts-expect-error AcGiTextData and MTextData are compatible
+      this._mtext = new MText(text, style, styleManager, FontManager.instance, {
+        byLayerColor: style.byLayerColor,
+        byBlockColor: style.byBlockColor
+      })
+      this.add(this._mtext)
+      this.flatten()
+      this.traverse(object => {
+        // Add the flag to check intersection using bounding box of the mesh
+        object.userData.bboxIntersectionCheck = true
+      })
+    } catch (error) {
+      console.log(`Failed to render mtext '${text.text}' with the following error:\n`, error)
+    }
   }
 
   /**
@@ -32,7 +36,7 @@ export class AcTrMText extends AcTrEntity {
    * to calculate intersection using the bounding box of texts.
    */
   raycast(raycaster: THREE.Raycaster, intersects: THREE.Intersection[]) {
-    this._mtext.raycast(raycaster, intersects)
+    this._mtext?.raycast(raycaster, intersects)
   }
 
   protected getTextEncoding(style: AcGiTextStyle) {
