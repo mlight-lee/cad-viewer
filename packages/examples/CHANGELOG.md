@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.6
+
+### Patch Changes
+
+- fix: upgrade new version of libredwg-web and libredwg-converter to fix bugs on decoding texts
+
 ## 1.0.5
 
 ### Patch Changes
