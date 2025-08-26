@@ -146,11 +146,11 @@ importers:
         specifier: 1.1.8
         version: 1.1.8
       '@mlightcad/libredwg-converter':
-        specifier: 2.0.8
-        version: 2.0.8(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.6)
+        specifier: 2.0.9
+        version: 2.0.9(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.8)
       '@mlightcad/libredwg-web':
-        specifier: 0.1.6
-        version: 0.1.6
+        specifier: 0.1.8
+        version: 0.1.8
 
   packages/cad-viewer:
     dependencies:
@@ -234,11 +234,11 @@ importers:
         specifier: 1.1.8
         version: 1.1.8
       '@mlightcad/libredwg-converter':
-        specifier: 2.0.8
-        version: 2.0.8(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.6)
+        specifier: 2.0.9
+        version: 2.0.9(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.8)
       '@mlightcad/libredwg-web':
-        specifier: 0.1.6
-        version: 0.1.6
+        specifier: 0.1.8
+        version: 0.1.8
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.3.0(vue@3.5.18(typescript@5.8.3))
@@ -1581,14 +1581,14 @@ packages:
     peerDependencies:
       '@mlightcad/geometry-engine': 2.0.7
 
-  '@mlightcad/libredwg-converter@2.0.8':
-    resolution: {integrity: sha512-7nyETWLfbYihr8/aZOoTaqREFUMIzm7bJScZtEFjBgD1L3GaeaXpfSke+pwN4LYtCX+dhRANsPCY2/HgX+oTDw==}
+  '@mlightcad/libredwg-converter@2.0.9':
+    resolution: {integrity: sha512-F0a7ZXLPAIDqQFQP6ct7G+r3Kuz6O5jzy6N3YIk7bmI8vhUIxFqVpGIB00GyfdpiZeAEeeifGdWrPaQsORYysw==}
     peerDependencies:
       '@mlightcad/data-model': 1.1.8
-      '@mlightcad/libredwg-web': 0.1.6
+      '@mlightcad/libredwg-web': 0.1.8
 
-  '@mlightcad/libredwg-web@0.1.6':
-    resolution: {integrity: sha512-koij5nBsiFyqi2u4L4yU/4in6rcexz+22myv/3YU5TI6bftrlYZkUnDXYaUN/V262fr4+eS2ef+wysQ17WTFvQ==}
+  '@mlightcad/libredwg-web@0.1.8':
+    resolution: {integrity: sha512-glgblIY0B+qRzQR1/Nf2GW/t6HiRcm1m/yCvu6OBkYoKaP1DcTHjd5BAlGxUNZf5DN1WIDzUxcAuu5oIhmcR4w==}
 
   '@mlightcad/mtext-parser@1.2.0':
     resolution: {integrity: sha512-ecAJZWIgxeCHMbf8r5bYVos0k9/6whQy2Y6v1y1Ku7RAOrP+vxN/BJF+88u4k3+2cGGn6/xRasCpK7B+hvYsgw==}
@@ -6642,12 +6642,12 @@ snapshots:
     dependencies:
       '@mlightcad/geometry-engine': 2.0.7(@mlightcad/common@1.1.4)
 
-  '@mlightcad/libredwg-converter@2.0.8(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.6)':
+  '@mlightcad/libredwg-converter@2.0.9(@mlightcad/data-model@1.1.8)(@mlightcad/libredwg-web@0.1.8)':
     dependencies:
       '@mlightcad/data-model': 1.1.8
-      '@mlightcad/libredwg-web': 0.1.6
+      '@mlightcad/libredwg-web': 0.1.8
 
-  '@mlightcad/libredwg-web@0.1.6': {}
+  '@mlightcad/libredwg-web@0.1.8': {}
 
   '@mlightcad/mtext-parser@1.2.0': {}
 
