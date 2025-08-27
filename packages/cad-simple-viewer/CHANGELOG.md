@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.10
+
+### Patch Changes
+
+- fix: upgrade new version of libredwg-web and libredwg-converter to fix bugs on decoding texts
+
 ## 1.0.9
 
 ### Patch Changes
