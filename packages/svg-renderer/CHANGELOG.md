@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.10
+
+### Patch Changes
+
+- fix: fix bug on getting tranlated entity name in order to show entity information when hovering on one entity
+
 ## 0.0.9
 
 ### Patch Changes

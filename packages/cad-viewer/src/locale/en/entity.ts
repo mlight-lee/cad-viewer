@@ -1,20 +1,29 @@
 export default {
   entityName: {
+    '3PointAngularDimension': 'Three Point Angular Dimension',
     AlignedDimension: 'Aligned Dimension',
     Arc: 'Arc',
+    ArcDimension: 'Arc Dimension',
     BlockReference: 'Block Reference',
     Circle: 'Circle',
     Dimension: 'Dimension',
+    DiametricDimension: 'Diametric Dimension',
     Ellipse: 'Ellipse',
     Hatch: 'Hatch',
     Leader: 'Leader',
     Line: 'Line',
     MText: 'MText',
+    OrdinateDimension: 'Ordinate Dimension',
     Point: 'Point',
     Polyline: 'Polyline',
+    RadialDimension: 'Radial Dimension',
+    RasterImage: 'Raster Image',
+    Ray: 'Ray',
     Spline: 'Spline',
     Table: 'Table',
-    Text: 'Text'
+    Trace: 'Trace',
+    Text: 'Text',
+    Xline: 'Xline'
   },
   color: {
     aliceblue: 'Alice Blue',

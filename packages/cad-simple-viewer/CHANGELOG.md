@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.12
+
+### Patch Changes
+
+- fix: fix bug on getting tranlated entity name in order to show entity information when hovering on one entity
+
 ## 1.0.11
 
 ### Patch Changes

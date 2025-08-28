@@ -62,7 +62,7 @@ export const userCmdDescription = (name: string) => {
 export const entityName = (entity: AcDbEntity) => {
   const t = i18n.global.t
   const key = 'entity.entityName.' + entity.type
-  return t(key, entity.type)
+  return t(key, entity.type, { missingWarn: false })
 }
 
 export const colorName = (colorKeyName: string) => {
@@ -71,7 +71,7 @@ export const colorName = (colorKeyName: string) => {
   } else {
     const t = i18n.global.t
     const key = 'entity.color.' + colorKeyName
-    return t(key, colorKeyName)
+    return t(key, colorKeyName, { missingWarn: false })
   }
 }
 

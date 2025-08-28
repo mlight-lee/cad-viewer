@@ -8,26 +8,26 @@
       </el-col>
     </el-row>
     <el-row class="ml-entity-info-text">
-      <el-col :span="8">
+      <el-col :span="10">
         <el-text size="small">{{ t('main.entityInfo.color') }}</el-text>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="14">
         <el-text size="small">{{ info.color }}</el-text>
       </el-col>
     </el-row>
     <el-row class="ml-entity-info-text">
-      <el-col :span="8">
+      <el-col :span="10">
         <el-text size="small">{{ t('main.entityInfo.layer') }}</el-text>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="14">
         <el-text size="small">{{ info.layer }}</el-text>
       </el-col>
     </el-row>
     <el-row class="ml-entity-info-text">
-      <el-col :span="8">
+      <el-col :span="10">
         <el-text size="small">{{ t('main.entityInfo.lineType') }}</el-text>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="14">
         <el-text size="small">{{ info.lineType }}</el-text>
       </el-col>
     </el-row>
@@ -120,16 +120,15 @@ onUnmounted(() => {
   width: 180px;
   left: v-bind(left);
   top: v-bind(top);
-  margin: 6px;
+  margin: 0px;
 }
 
 .ml-entity-info-title {
   font-weight: bold;
-  margin-bottom: 16px;
-  margin-top: 0px;
 }
 
 .ml-entity-info-text {
-  margin: 6px;
+  margin-bottom: 6px;
+  margin-top: 6px;
 }
 </style>

@@ -1,7 +1,7 @@
 {
   "name": "@mlightcad/cad-simple-viewer-example",
   "private": true,
-  "version": "1.0.11",
+  "version": "1.0.12",
   "type": "module",
   "repository": {
     "type": "git",
@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@mlightcad/cad-simple-viewer": "workspace:*",
-    "@mlightcad/data-model": "1.2.0",
-    "@mlightcad/libredwg-converter": "3.0.0",
+    "@mlightcad/data-model": "1.2.1",
+    "@mlightcad/libredwg-converter": "3.0.1",
     "@mlightcad/libredwg-web": "0.2.1"
   }
 }

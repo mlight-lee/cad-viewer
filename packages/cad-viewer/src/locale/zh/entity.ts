@@ -1,20 +1,29 @@
 export default {
   entityName: {
+    '3PointAngularDimension': '三点角度标注',
     AlignedDimension: '线性标注',
     Arc: '圆弧',
+    ArcDimension: '弧长标注',
     BlockReference: '块引用',
     Circle: '圆',
     Dimension: '标注',
+    DiametricDimension: '直径标注',
     Ellipse: '椭圆',
     Hatch: '填充',
     Leader: '引线',
     Line: '线',
     MText: '多行文本',
+    OrdinateDimension: '坐标标注',
     Point: '点',
     Polyline: '多段线',
+    RadialDimension: '半径标注',
+    RasterImage: '光栅图像',
+    Ray: '射线',
     Spline: '拟合曲线',
     Table: '表格',
-    Text: '文本'
+    Trace: '跟踪',
+    Text: '文本',
+    Xline: '构造线'
   },
   color: {
     aliceblue: '爱丽丝蓝',
