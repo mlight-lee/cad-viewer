@@ -36,7 +36,7 @@ export interface AcTrLayoutStats {
 
 /**
  * This class represents objects contained in one AutoCAD layout (model space or paper space).
- * 
+ *
  * A layout manages the organization and rendering of CAD entities within a specific coordinate space.
  * It provides functionality for:
  * - Managing entities organized by layers
@@ -44,11 +44,11 @@ export interface AcTrLayoutStats {
  * - Bounding box management for view operations
  * - Entity selection and highlighting
  * - Memory usage tracking and statistics
- * 
+ *
  * Layouts use a spatial index (R-tree) for fast entity lookup operations and maintain
  * a hierarchical structure where entities are grouped by layers for efficient rendering
  * and visibility management.
- * 
+ *
  * @example
  * ```typescript
  * const layout = new AcTrLayout();
@@ -90,7 +90,7 @@ export class AcTrLayout {
 
   /**
    * Gets the map of layers in this layout.
-   * 
+   *
    * @returns Map of layer names to layer objects
    */
   get layers() {
@@ -99,7 +99,7 @@ export class AcTrLayout {
 
   /**
    * Gets the bounding box that contains all entities in this layout.
-   * 
+   *
    * @returns The layout's bounding box
    */
   get box() {
@@ -168,7 +168,7 @@ export class AcTrLayout {
   /**
    * Clears all entities from the layout.
    * Removes all layers, resets the bounding box, and clears the spatial index.
-   * 
+   *
    * @returns This layout instance for method chaining
    */
   clear() {
@@ -184,7 +184,7 @@ export class AcTrLayout {
   /**
    * Re-render points with latest point style settings.
    * Updates the visual representation of all point entities across all layers.
-   * 
+   *
    * @param displayMode - Input display mode of points
    */
   rerenderPoints(displayMode: number) {
@@ -195,7 +195,7 @@ export class AcTrLayout {
 
   /**
    * Return true if the object with the specified object id is intersected with the ray by using raycast.
-   * 
+   *
    * @param objectId - Input object id of object to check for intersection with the ray.
    * @param raycaster - Input raycaster to check intersection
    * @returns True if the object intersects with the ray, false otherwise
@@ -208,12 +208,12 @@ export class AcTrLayout {
   /**
    * Add one AutoCAD entity into this layout. If layer group referenced by the entity doesn't exist, create one
    * layer group and add this entity this group.
-   * 
+   *
    * @param entity - Input AutoCAD entity to be added into this layout.
    * @param extendBbox - Input the flag whether to extend the bounding box of the scene by union the bounding box
    * of the specified entity. Defaults to true.
    * @returns This layout instance for method chaining
-   * 
+   *
    * @throws {Error} When entity is missing required objectId or layerName
    */
   addEntity(entity: AcTrEntity, extendBbox: boolean = true) {
@@ -245,7 +245,7 @@ export class AcTrLayout {
 
   /**
    * Remove the specified entity from this layout.
-   * 
+   *
    * @param objectId - Input the object id of the entity to remove
    * @returns Return true if remove the specified entity successfully. Otherwise, return false.
    */
@@ -258,7 +258,7 @@ export class AcTrLayout {
 
   /**
    * Update the specified entity in this layout.
-   * 
+   *
    * @param entity - Input the entity to update
    * @returns Return true if update the specified entity successfully. Otherwise, return false.
    */
@@ -272,7 +272,7 @@ export class AcTrLayout {
   /**
    * Hover the specified entities.
    * Applies hover highlighting to the entities with the given IDs.
-   * 
+   *
    * @param ids - Array of entity object IDs to hover
    */
   hover(ids: AcDbObjectId[]) {
@@ -287,7 +287,7 @@ export class AcTrLayout {
   /**
    * Unhover the specified entities.
    * Removes hover highlighting from the entities with the given IDs.
-   * 
+   *
    * @param ids - Array of entity object IDs to unhover
    */
   unhover(ids: AcDbObjectId[]) {
@@ -302,7 +302,7 @@ export class AcTrLayout {
   /**
    * Select the specified entities.
    * Applies selection highlighting to the entities with the given IDs.
-   * 
+   *
    * @param ids - Array of entity object IDs to select
    */
   select(ids: AcDbObjectId[]) {
@@ -317,7 +317,7 @@ export class AcTrLayout {
   /**
    * Unselect the specified entities.
    * Removes selection highlighting from the entities with the given IDs.
-   * 
+   *
    * @param ids - Array of entity object IDs to unselect
    */
   unselect(ids: AcDbObjectId[]) {
@@ -332,7 +332,7 @@ export class AcTrLayout {
   /**
    * Sets the snap points object for this layout.
    * Replaces any existing snap points object with the new one.
-   * 
+   *
    * @param object - The snap points object to display
    */
   setSnapObject(object: AcTrObject) {
@@ -346,7 +346,7 @@ export class AcTrLayout {
   /**
    * Search entities intersected or contained in the specified bounding box.
    * Uses the spatial index for efficient querying of entities within the given bounds.
-   * 
+   *
    * @param box - Input the query bounding box (2D or 3D)
    * @returns Return query results containing entity IDs and their bounds
    */
@@ -362,7 +362,7 @@ export class AcTrLayout {
 
   /**
    * Finds the layer containing the entity with the specified object ID.
-   * 
+   *
    * @param objectId - The object ID to search for
    * @returns The layer containing the entity, or undefined if not found
    */
@@ -375,7 +375,7 @@ export class AcTrLayout {
 
   /**
    * Get layer group by name. If the layer doesn't exist, create one layer group into this layout.
-   * 
+   *
    * @param name - Input layer name
    * @param createIfNotExist - Input one flag to indicate whether to create layer group if it doesn't exist in
    * this layout. Defaults to true.

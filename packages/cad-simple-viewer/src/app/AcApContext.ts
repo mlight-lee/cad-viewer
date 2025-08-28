@@ -4,23 +4,23 @@ import { AcApDocument } from './AcApDocument'
 
 /**
  * Application context that binds a CAD document with its associated view.
- * 
+ *
  * This class establishes the connection between a CAD document (containing the drawing database)
  * and its visual representation (the view). It handles event forwarding between the document
  * and view to keep them synchronized.
- * 
+ *
  * The context manages:
  * - Entity lifecycle events (add, modify, remove)
  * - Layer visibility changes
  * - System variable changes (like point display mode)
  * - Entity selection and highlighting
- * 
+ *
  * @example
  * ```typescript
  * const document = new AcApDocument();
  * const view = new AcTrView2d();
  * const context = new AcApContext(view, document);
- * 
+ *
  * // The context will automatically sync changes between document and view
  * // For example, when entities are added to the document, they appear in the view
  * ```
@@ -33,13 +33,13 @@ export class AcApContext {
 
   /**
    * Creates a new application context that binds a document with its view.
-   * 
+   *
    * The constructor sets up event listeners to synchronize the document and view:
    * - Entity additions/modifications are reflected in the view
    * - Layer visibility changes update the view
    * - System variable changes (like point display mode) update rendering
    * - Entity selections show/hide grip points
-   * 
+   *
    * @param view - The view used to display the drawing
    * @param doc - The document containing the drawing database
    */
@@ -82,7 +82,7 @@ export class AcApContext {
 
   /**
    * Gets the view component that renders the CAD drawing.
-   * 
+   *
    * @returns The associated view instance
    */
   get view() {
@@ -91,7 +91,7 @@ export class AcApContext {
 
   /**
    * Gets the document containing the CAD database.
-   * 
+   *
    * @returns The associated document instance
    */
   get doc(): AcApDocument {

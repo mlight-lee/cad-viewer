@@ -10,21 +10,21 @@ const BORDER_WIDTH = '1px'
 
 /**
  * Selector used to select entities by a box.
- * 
+ *
  * This class provides interactive box selection functionality for the CAD editor.
  * Users can click and drag to create a selection rectangle, which is then converted
  * to world coordinates for entity selection operations.
- * 
+ *
  * The selector handles mouse events to track the selection area and provides visual
  * feedback through a DOM overlay showing the selection bounds.
- * 
+ *
  * @example
  * ```typescript
  * const boxSelector = new AcEdBoxSelector(view);
  * const selectionBox = await boxSelector.start();
  * // Use selectionBox to select entities
  * ```
- * 
+ *
  * @internal
  */
 export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
@@ -46,7 +46,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
 
   /**
    * Creates a new box selector instance.
-   * 
+   *
    * @param view - The view that will handle this box selection operation
    */
   constructor(view: AcEdBaseView) {
@@ -84,7 +84,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
   /**
    * Rejects the box selection operation.
    * Cleans up the selection box DOM element.
-   * 
+   *
    * @param reason - The reason for rejecting the selection operation
    */
   reject(reason: string) {
@@ -96,7 +96,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
   /**
    * Handles mouse down events to start box selection.
    * Records the initial mouse position for the selection area.
-   * 
+   *
    * @param e - The mouse event
    */
   private mousedown = (e: MouseEvent) => {
@@ -111,7 +111,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
   /**
    * Handles mouse move events to update the selection box.
    * Creates and updates the visual selection rectangle as the user drags.
-   * 
+   *
    * @param e - The mouse event
    */
   private mousemove = (e: MouseEvent) => {
@@ -142,7 +142,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
   /**
    * Handles mouse up events to complete box selection.
    * Calculates the final selection area and resolves the promise with the result.
-   * 
+   *
    * @param e - The mouse event
    */
   private mouseup = (e: MouseEvent) => {
@@ -169,7 +169,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
   /**
    * Draws the selection rectangle on screen.
    * Creates or updates the DOM element representing the selection box.
-   * 
+   *
    * @param leftTop - The top-left corner of the selection rectangle
    * @param rightBottom - The bottom-right corner of the selection rectangle
    */
@@ -208,7 +208,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
 
   /**
    * Sets the visibility of the selection rectangle DOM element.
-   * 
+   *
    * @param visible - Whether the selection rectangle should be visible
    */
   private setRectDomVisible(visible: boolean) {
@@ -221,7 +221,7 @@ export class AcEdBoxSelector extends AcEdBaseInput<AcGeBox2d> {
    * Converts a screen coordinate box to world coordinate system.
    * Transforms the selection box from screen coordinates to world coordinates
    * for use in entity selection operations.
-   * 
+   *
    * @param box - The selection box in screen coordinates
    * @returns The selection box in world coordinates
    */

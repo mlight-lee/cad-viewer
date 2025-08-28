@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.8
+
+### Patch Changes
+
+- fix: upgrade new version of dependencies to fix bugs on getting layer name and line type name
+
 ## 1.0.7
 
 ### Patch Changes

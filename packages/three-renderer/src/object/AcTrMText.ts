@@ -27,7 +27,10 @@ export class AcTrMText extends AcTrEntity {
         object.userData.bboxIntersectionCheck = true
       })
     } catch (error) {
-      console.log(`Failed to render mtext '${text.text}' with the following error:\n`, error)
+      console.log(
+        `Failed to render mtext '${text.text}' with the following error:\n`,
+        error
+      )
     }
   }
 

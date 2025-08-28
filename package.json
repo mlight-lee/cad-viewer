@@ -32,9 +32,9 @@
     "pnpm": ">=8"
   },
   "dependencies": {
-    "@mlightcad/common": "1.1.4",
-    "@mlightcad/geometry-engine": "2.0.7",
-    "@mlightcad/graphic-interface": "2.0.7"
+    "@mlightcad/common": "1.2.0",
+    "@mlightcad/geometry-engine": "3.0.0",
+    "@mlightcad/graphic-interface": "3.0.0"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.5",

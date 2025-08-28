@@ -15,7 +15,7 @@ import zhMain from './zh/main'
 const getInitialLocale = (): string => {
   const stored = localStorage.getItem('preferred_lang')
   if (stored === 'en' || stored === 'zh') return stored
-  
+
   const browserLang = navigator.language.toLowerCase()
   const browserLocale = browserLang.substring(0, 2)
   return browserLocale === 'zh' ? 'zh' : 'en'

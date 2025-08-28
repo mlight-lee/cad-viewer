@@ -70,24 +70,24 @@ export interface AcEdViewHoverEventArgs {
 
 /**
  * Enumeration of view interaction modes.
- * 
+ *
  * The view mode determines how the view responds to user mouse interactions:
  * - In SELECTION mode, clicks select entities
  * - In PAN mode, clicks and drags pan the view
- * 
+ *
  * @example
  * ```typescript
  * // Set to selection mode for entity picking
  * view.mode = AcEdViewMode.SELECTION;
- * 
- * // Set to pan mode for view navigation  
+ *
+ * // Set to pan mode for view navigation
  * view.mode = AcEdViewMode.PAN;
  * ```
  */
 export enum AcEdViewMode {
   /**
    * Selection mode - mouse clicks select entities.
-   * 
+   *
    * In this mode:
    * - Single clicks select individual entities
    * - Drag operations can create selection boxes
@@ -96,7 +96,7 @@ export enum AcEdViewMode {
   SELECTION = 0,
   /**
    * Pan mode - mouse interactions pan the view.
-   * 
+   *
    * In this mode:
    * - Click and drag operations move the view
    * - The cursor typically changes to indicate pan mode
@@ -120,7 +120,7 @@ export type AcEdCalculateSizeCallback = () => { width: number; height: number }
 
 /**
  * Abstract base class for all CAD view implementations.
- * 
+ *
  * This class provides the foundation for rendering and interacting with CAD drawings.
  * It manages:
  * - Canvas and viewport dimensions
@@ -129,17 +129,17 @@ export type AcEdCalculateSizeCallback = () => { width: number; height: number }
  * - View modes (selection, pan, etc.)
  * - Spatial queries for entity picking
  * - Hover/unhover detection with timing
- * 
+ *
  * Concrete implementations must provide specific rendering logic and coordinate
  * transformations appropriate for their rendering technology (e.g., Three.js, SVG).
- * 
+ *
  * ## Key Responsibilities
  * - **Input Management**: Handles mouse events and user interactions
  * - **Selection**: Manages selected entities and visual feedback
  * - **Coordinate Systems**: Converts between screen and world coordinates
  * - **Spatial Queries**: Finds entities at specific locations
  * - **View State**: Tracks current position, zoom, and view mode
- * 
+ *
  * @example
  * ```typescript
  * class MyView extends AcEdBaseView {
@@ -149,7 +149,7 @@ export type AcEdCalculateSizeCallback = () => { width: number; height: number }
  *   set mode(value) { this._mode = value; }
  *   // ... other abstract methods
  * }
- * 
+ *
  * const view = new MyView(canvasElement);
  * view.events.mouseMove.addEventListener(args => {
  *   console.log('Mouse at world coords:', args.x, args.y);
@@ -200,10 +200,10 @@ export abstract class AcEdBaseView {
 
   /**
    * Creates a new base view instance.
-   * 
+   *
    * Sets up the canvas, initializes internal state, and registers event listeners
    * for mouse interactions and window resize events.
-   * 
+   *
    * @param canvas - The HTML canvas element to render into
    */
   constructor(canvas: HTMLCanvasElement) {
@@ -240,10 +240,10 @@ export abstract class AcEdBaseView {
 
   /**
    * Gets the input manager for handling user interactions.
-   * 
+   *
    * The editor provides high-level methods for getting user input like
    * point selection, entity selection, and cursor management.
-   * 
+   *
    * @returns The editor instance
    */
   get editor() {
@@ -252,19 +252,19 @@ export abstract class AcEdBaseView {
 
   /**
    * Gets the size of the selection box used for entity picking.
-   * 
+   *
    * This determines how close the mouse needs to be to an entity
    * to select it, measured in screen pixels.
-   * 
+   *
    * @returns Selection box size in pixels
    */
   get selectionBoxSize() {
     return this._selectionBoxSize
   }
-  
+
   /**
    * Sets the size of the selection box used for entity picking.
-   * 
+   *
    * @param value - Selection box size in pixels
    */
   set selectionBoxSize(value: number) {
@@ -273,57 +273,57 @@ export abstract class AcEdBaseView {
 
   /**
    * Gets information about missing data during rendering.
-   * 
+   *
    * This includes fonts that couldn't be loaded and images that are
    * missing or inaccessible. Implementations should track and report
    * this information to help users understand rendering issues.
-   * 
+   *
    * @returns Object containing missing fonts and images
    */
   abstract get missedData(): AcEdMissedData
 
   /**
    * Gets the current view mode.
-   * 
+   *
    * The view mode determines how the view responds to user interactions:
    * - SELECTION: Click to select entities
    * - PAN: Click and drag to pan the view
-   * 
+   *
    * @returns The current view mode
    */
   abstract get mode(): AcEdViewMode
-  
+
   /**
    * Sets the current view mode.
-   * 
+   *
    * @param value - The view mode to set
    */
   abstract set mode(value: AcEdViewMode)
 
   /**
    * Gets the center point of the current view in world coordinates.
-   * 
+   *
    * @returns The view center point
    */
   abstract get center(): AcGePoint2d
-  
+
   /**
    * Sets the center point of the current view in world coordinates.
-   * 
+   *
    * @param value - The new center point
    */
   abstract set center(value: AcGePoint2d)
 
   /**
    * Converts a point from client window coordinates to world coordinates.
-   * 
+   *
    * The client window coordinate system has its origin at the top-left corner
    * of the canvas, with Y increasing downward. World coordinates use the
    * CAD coordinate system with Y typically increasing upward.
-   * 
+   *
    * @param point - Point in client window coordinates
    * @returns Point in world coordinates
-   * 
+   *
    * @example
    * ```typescript
    * const screenPoint = { x: 100, y: 200 }; // 100px right, 200px down
@@ -332,16 +332,16 @@ export abstract class AcEdBaseView {
    * ```
    */
   abstract cwcs2Wcs(point: AcGePoint2dLike): AcGePoint2d
-  
+
   /**
    * Converts a point from world coordinates to client window coordinates.
-   * 
+   *
    * This is the inverse of `cwcs2Wcs()`, converting from the CAD world
    * coordinate system to screen pixel coordinates.
-   * 
-   * @param point - Point in world coordinates  
+   *
+   * @param point - Point in world coordinates
    * @returns Point in client window coordinates
-   * 
+   *
    * @example
    * ```typescript
    * const worldPoint = new AcGePoint2d(10, 20); // CAD coordinates

@@ -1,18 +1,18 @@
 /**
  * Enumeration of cursor types available in the CAD editor.
- * 
+ *
  * These cursor types provide visual feedback to users about the current
  * operation mode or expected input type. Each cursor has a specific
  * appearance and is used in different contexts.
- * 
+ *
  * @example
  * ```typescript
  * // Set crosshair cursor for precise point input
  * editor.setCursor(AcEdCorsorType.Crosshair);
- * 
+ *
  * // Set grab cursor for pan operations
  * editor.setCursor(AcEdCorsorType.Grab);
- * 
+ *
  * // Restore default cursor
  * editor.setCursor(AcEdCorsorType.NoSpecialCursor);
  * ```
@@ -52,24 +52,24 @@ export enum AcEdCorsorType {
 
 /**
  * Manages cursor appearance and behavior for the CAD editor.
- * 
+ *
  * This class creates and applies custom cursors to HTML elements,
  * providing visual feedback for different CAD operations. It supports
  * both built-in browser cursors and custom SVG-based cursors.
- * 
+ *
  * The cursor manager maintains a cache of cursor definitions to avoid
  * recreating them repeatedly, improving performance.
- * 
+ *
  * @internal This class is for internal use by the editor system
- * 
+ *
  * @example
  * ```typescript
  * const cursorManager = new AcEdCursorManager();
  * const canvas = document.getElementById('canvas') as HTMLCanvasElement;
- * 
+ *
  * // Set crosshair cursor
  * cursorManager.setCursor(AcEdCorsorType.Crosshair, canvas);
- * 
+ *
  * // Set grab cursor for panning
  * cursorManager.setCursor(AcEdCorsorType.Grab, canvas);
  * ```
@@ -77,10 +77,10 @@ export enum AcEdCorsorType {
 export class AcEdCursorManager {
   /** Cache of cursor definitions mapped by cursor type */
   private _cursorMap: Map<AcEdCorsorType, string>
-  
+
   /**
    * Creates a new cursor manager instance.
-   * 
+   *
    * Initializes the cursor cache and creates default cursor definitions.
    */
   constructor() {
@@ -93,14 +93,14 @@ export class AcEdCursorManager {
 
   /**
    * Sets the cursor for the specified HTML element.
-   * 
+   *
    * Applies the appropriate cursor style based on the cursor type.
    * For built-in cursor types, uses CSS cursor values. For custom
    * cursor types, uses cached SVG-based cursor definitions.
-   * 
+   *
    * @param cursorType - The type of cursor to set
    * @param element - The HTML element to apply the cursor to
-   * 
+   *
    * @example
    * ```typescript
    * const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -122,15 +122,15 @@ export class AcEdCursorManager {
 
   /**
    * Encodes an SVG string into a CSS cursor URL.
-   * 
+   *
    * This method converts SVG markup into a data URI that can be used
    * as a CSS cursor value, with specified hotspot coordinates.
-   * 
+   *
    * @param svgString - The SVG markup as a string
    * @param xOffset - X coordinate of the cursor hotspot
    * @param yOffset - Y coordinate of the cursor hotspot
    * @returns CSS cursor string in url() format
-   * 
+   *
    * @example
    * ```typescript
    * const svgCursor = '<svg width="20" height="20">...</svg>';
@@ -165,6 +165,10 @@ export class AcEdCursorManager {
         <line x1="0" y1="${halfSize + lineLength}" x2="${lineLength}" y2="${halfSize + lineLength}" stroke="${lineColor}" />
       </svg>
     `
-    return this.encodeSvgToCursor(svg, halfSize + lineLength, halfSize + lineLength)
+    return this.encodeSvgToCursor(
+      svg,
+      halfSize + lineLength,
+      halfSize + lineLength
+    )
   }
 }

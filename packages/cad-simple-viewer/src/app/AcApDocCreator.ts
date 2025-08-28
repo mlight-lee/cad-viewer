@@ -21,27 +21,27 @@ const DEFAULT_FONT = 'simsun'
 
 /**
  * Factory class for creating example CAD documents with predefined content.
- * 
+ *
  * This utility class provides methods to generate sample CAD drawings for
  * testing, demonstration, or initial document templates. It creates various
  * types of CAD entities including:
  * - Geometric shapes (arcs, lines, hatches)
  * - Text elements (MText with formatting)
  * - Text styles and formatting
- * 
+ *
  * The class follows a singleton pattern to ensure consistent example
  * data generation across the application.
- * 
+ *
  * @internal This class is for internal use by the framework
- * 
+ *
  * @example
  * ```typescript
  * const creator = AcApDocCreator.instance;
  * const database = new AcDbDatabase();
- * 
+ *
  * // Create example document with various entities
  * creator.createExampleDoc2(database);
- * 
+ *
  * // The database now contains sample lines, arcs, hatches, and text
  * ```
  */
@@ -51,7 +51,7 @@ export class AcApDocCreator {
 
   /**
    * Gets the singleton instance of the document creator.
-   * 
+   *
    * @returns The singleton AcApDocCreator instance
    */
   static get instance() {
@@ -63,12 +63,12 @@ export class AcApDocCreator {
 
   /**
    * Creates a simple example document with circular hatches.
-   * 
+   *
    * This method generates a 2x2 grid of circular hatched areas,
    * useful for testing hatch rendering and basic geometry display.
-   * 
+   *
    * @param db - The database to add the example entities to
-   * 
+   *
    * @example
    * ```typescript
    * const creator = AcApDocCreator.instance;
@@ -95,18 +95,18 @@ export class AcApDocCreator {
 
   /**
    * Creates a comprehensive example document with various CAD entities.
-   * 
+   *
    * This method generates a more complex document containing:
    * - Arcs and lines forming geometric shapes
    * - Complex hatches with boundary loops
    * - Formatted text (MText) with Chinese characters
    * - Custom text styles
-   * 
+   *
    * This example is useful for testing complex rendering scenarios,
    * text handling, and international character support.
-   * 
+   *
    * @param db - The database to add the example entities to
-   * 
+   *
    * @example
    * ```typescript
    * const creator = AcApDocCreator.instance;

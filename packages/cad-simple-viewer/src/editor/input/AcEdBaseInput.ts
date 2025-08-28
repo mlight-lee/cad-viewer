@@ -3,14 +3,14 @@ import { AcEdBaseView } from '../view/AcEdBaseView'
 /**
  * The base class for all of classes to get user inputs such as string, angle, number, point, selection,
  * and so on.
- * 
+ *
  * This abstract class provides a common framework for handling user input operations in the CAD editor.
  * It manages the input lifecycle including activation, deactivation, and promise-based resolution.
  * Subclasses must implement specific input behaviors while this base class handles common functionality
  * like keyboard event handling and promise management.
- * 
+ *
  * @template TResult - The type of result that this input operation will return
- * 
+ *
  * @example
  * ```typescript
  * class MyInput extends AcEdBaseInput<string> {
@@ -19,7 +19,7 @@ import { AcEdBaseView } from '../view/AcEdBaseView'
  * const input = new MyInput(view);
  * const result = await input.start();
  * ```
- * 
+ *
  * @internal
  */
 export abstract class AcEdBaseInput<TResult> {
@@ -37,7 +37,7 @@ export abstract class AcEdBaseInput<TResult> {
 
   /**
    * Creates a new base input instance.
-   * 
+   *
    * @param view - The view that will handle this input operation
    */
   constructor(view: AcEdBaseView) {
@@ -46,7 +46,7 @@ export abstract class AcEdBaseInput<TResult> {
 
   /**
    * Gets whether this input is currently active.
-   * 
+   *
    * @returns True if the input is active, false otherwise
    */
   get isActive() {
@@ -79,7 +79,7 @@ export abstract class AcEdBaseInput<TResult> {
   /**
    * Resolves the input operation with the specified result.
    * Automatically deactivates the input and prevents multiple resolutions.
-   * 
+   *
    * @param result - The result to resolve the promise with
    */
   resolve(result: TResult) {
@@ -93,7 +93,7 @@ export abstract class AcEdBaseInput<TResult> {
   /**
    * Rejects the input operation with the specified reason.
    * Automatically deactivates the input and prevents multiple rejections.
-   * 
+   *
    * @param reason - The reason for rejecting the input operation
    */
   reject(reason: string) {
@@ -107,7 +107,7 @@ export abstract class AcEdBaseInput<TResult> {
   /**
    * Handles keyboard events for the input operation.
    * By default, cancels the operation when Escape is pressed.
-   * 
+   *
    * @param e - The keyboard event
    */
   private onKeyDown = (e: KeyboardEvent) => {
@@ -120,7 +120,7 @@ export abstract class AcEdBaseInput<TResult> {
    * Starts the input operation and returns a promise that resolves with the result.
    * This method activates the input and returns a promise that will be resolved
    * when the user completes the input operation.
-   * 
+   *
    * @returns A promise that resolves with the input result
    */
   async start(): Promise<TResult> {

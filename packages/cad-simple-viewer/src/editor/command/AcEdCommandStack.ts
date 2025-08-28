@@ -16,11 +16,11 @@ export interface AcEdCommandGroup {
 
 /**
  * The class to create, define, and register command objects.
- * 
+ *
  * This is a singleton class that manages all command registration and lookup functionality.
  * Commands are organized into groups, with system commands (ACAD) and user commands (USER)
  * being the default groups.
- * 
+ *
  * @example
  * ```typescript
  * const commandStack = AcEdCommandStack.instance;
@@ -33,7 +33,7 @@ export class AcEdCommandStack {
   static SYSTEMT_COMMAND_GROUP_NAME = 'ACAD'
   /** The name of the default user command group */
   static DEFAUT_COMMAND_GROUP_NAME = 'USER'
-  
+
   /** Array of all command groups in the stack */
   private _commandsByGroup: AcEdCommandGroup[]
   /** Reference to the system command group */
@@ -66,7 +66,7 @@ export class AcEdCommandStack {
   /**
    * Gets the singleton instance of the command stack.
    * Creates a new instance if one doesn't exist.
-   * 
+   *
    * @returns The singleton instance of AcEdCommandStack
    */
   static get instance() {
@@ -78,14 +78,14 @@ export class AcEdCommandStack {
 
   /**
    * Adds a command to the specified command group.
-   * 
+   *
    * @param cmdGroupName - The name of the command group. If empty, uses the default group.
    * @param cmdGlobalName - The global (untranslated) name of the command. Must be unique within the group.
    * @param cmdLocalName - The local (translated) name of the command. Defaults to global name if empty.
    * @param cmd - The command object to add to the stack.
-   * 
+   *
    * @throws {Error} When the global name is empty or when a command with the same name already exists
-   * 
+   *
    * @example
    * ```typescript
    * commandStack.addCommand('USER', 'LINE', 'ligne', new LineCommand());
@@ -141,7 +141,7 @@ export class AcEdCommandStack {
   /**
    * Return an iterator that can be used to traverse all of command objects in this command stack
    * (that is, the iterator iterates through all commands in all groups).
-   * 
+   *
    * @returns Return an iterator that can be used to traverse all of command objects in this command
    * stack.
    */
@@ -155,7 +155,7 @@ export class AcEdCommandStack {
    * matched AcEdCommand object is returned. Otherwise undefined is returned to indicate that the command
    * could not be found. If more than one command of the same name is present in the command stack (that
    * is, in separate command groups), then the first one found is used.
-   * 
+   *
    * @param cmdName - Input the command name to search for
    * @returns Return the matched AcEdCommand object if a match is found. Otherwise, return undefined.
    */
@@ -174,7 +174,7 @@ export class AcEdCommandStack {
    * AcEdCommand object is returned. Otherwise undefined is returned to indicate that the command could not
    * be found. If more than one command of the same name is present in the command stack (that is, in
    * separate command groups), then the first one found is used.
-   * 
+   *
    * @param cmdName - Input the command name to search for
    * @returns Return the matched AcEdCommand object if a match is found. Otherwise, return undefined.
    */
@@ -191,7 +191,7 @@ export class AcEdCommandStack {
    * Remove the command with the global and untranslated name `cmdGlobalName` from the `cmdGroupName`
    * command group. Return true if successful. Return false if no command with the global and untranslated
    * name `cmdGlobalName` is found in the `cmdGroupName` command group.
-   * 
+   *
    * @param cmdGroupName - Input the name of the command group containing the command to be removed
    * @param cmdGlobalName - Input the command name which is to be removed from cmdGroupName
    * @returns Return true if successful. Return false if no command with the global and untranslated
@@ -209,7 +209,7 @@ export class AcEdCommandStack {
   /**
    * Remove the command group with the name `GroupName` from the command stack and delete the command group
    * dictionary object and all the AcEdCommand objects stored within it.
-   * 
+   *
    * @param groupName - Input the name of the command group to be removed from the command stack.
    * @returns Return true if successful. Return false if no command group is found with the name `GroupName`.
    */

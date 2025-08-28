@@ -2,14 +2,14 @@ import { AcEdCommandStack } from '@mlightcad/cad-simple-viewer'
 import { markRaw } from 'vue'
 
 import {
-    AcApLayerStateCmd,
-    AcApLogCmd,
-    AcApMissedDataCmd,
-    AcApPointStyleCmd
-  } from '../command'
+  AcApLayerStateCmd,
+  AcApLogCmd,
+  AcApMissedDataCmd,
+  AcApPointStyleCmd
+} from '../command'
 import { MlPointStyleDlg, MlReplacementDlg } from '../component'
 import { useDialogManager } from '../composable'
-  
+
 const { registerDialog } = useDialogManager()
 
 export const registerCmds = () => {

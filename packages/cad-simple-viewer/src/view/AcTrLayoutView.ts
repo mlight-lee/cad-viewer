@@ -20,7 +20,7 @@ export interface AcDbEntityEventArgs {
 
 /**
  * Each layout has its own camera and camera control. This class represents view associated with one layout.
- * 
+ *
  * A layout view manages the visual representation and interaction for a specific AutoCAD layout.
  * It provides:
  * - Camera and view controls specific to the layout
@@ -28,11 +28,11 @@ export interface AcDbEntityEventArgs {
  * - View mode switching (selection, pan, etc.)
  * - Axes gizmo for orientation feedback
  * - Rendering coordination with viewports
- * 
+ *
  * The layout view coordinates between the layout's data (entities, layers) and the visual
  * presentation, handling camera positioning, user interaction modes, and multi-viewport
  * rendering for paper space layouts.
- * 
+ *
  * @example
  * ```typescript
  * const layoutView = new AcTrLayoutView(renderer, layoutId, 800, 600);
@@ -52,7 +52,7 @@ export class AcTrLayoutView extends AcTrBaseView {
 
   /**
    * Construct one instance of this class.
-   * 
+   *
    * @param renderer - Input renderer for this view
    * @param layoutBtrId - Input the id of the block table record associated the layout
    * @param width - Input width of this view in pixels
@@ -73,7 +73,7 @@ export class AcTrLayoutView extends AcTrBaseView {
 
   /**
    * Gets the block table record ID associated with this layout.
-   * 
+   *
    * @returns The layout's block table record ID
    */
   get layoutBtrId() {
@@ -112,7 +112,7 @@ export class AcTrLayoutView extends AcTrBaseView {
   /**
    * Add one viewport view instance to this layout view.
    * Viewports are used in paper space layouts to show different views of the model.
-   * 
+   *
    * @param viewportView - Input one viewport instance to add
    */
   addViewport(viewportView: AcTrViewportView) {
@@ -121,7 +121,7 @@ export class AcTrLayoutView extends AcTrBaseView {
 
   /**
    * Remove the specified viewport view by its id from this layout view.
-   * 
+   *
    * @param id - Input the id of one viewport instance to remove
    */
   removeViewport(id: string) {
@@ -131,7 +131,7 @@ export class AcTrLayoutView extends AcTrBaseView {
   /**
    * Resize this layout view.
    * Updates the view dimensions and notifies all viewports of the size change.
-   * 
+   *
    * @param width - Input new width of the layout view in pixels
    * @param height - Input new height of the layout view in pixels
    */
@@ -148,7 +148,7 @@ export class AcTrLayoutView extends AcTrBaseView {
    * Renders the scene in this layout view.
    * Performs the main rendering pass and then renders any viewports if present.
    * Updates the axes gizmo to reflect the current camera orientation.
-   * 
+   *
    * @param scene - The scene containing the layout data to render
    */
   render(scene: AcTrScene) {
@@ -165,7 +165,7 @@ export class AcTrLayoutView extends AcTrBaseView {
    * Creates and configures the axes gizmo for this view.
    * The gizmo shows the current coordinate system orientation and is positioned
    * at the bottom-left of the view without a Z-axis (2D view).
-   * 
+   *
    * @returns The configured axes gizmo instance
    */
   private createAxesGizmo() {
@@ -184,7 +184,7 @@ export class AcTrLayoutView extends AcTrBaseView {
    * Draw viewports into the current rendering context.
    * Handles the complex rendering process for paper space layouts that contain
    * multiple viewports, each with their own view of model space.
-   * 
+   *
    * @param scene - Input the scene object to draw in each viewport
    */
   private drawViewports(scene: THREE.Object3D) {

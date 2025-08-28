@@ -8,7 +8,7 @@ import { eventBus } from '../editor'
 
 /**
  * Represents a CAD document that manages a drawing database and associated metadata.
- * 
+ *
  * This class handles:
  * - Opening CAD files from URIs or file content (DWG/DXF formats)
  * - Managing document properties (title, read-only state)
@@ -29,7 +29,7 @@ export class AcApDocument {
 
   /**
    * Creates a new document instance with an empty database.
-   * 
+   *
    * The document is initialized with an "Untitled" title and read-only mode enabled.
    */
   constructor() {
@@ -39,11 +39,11 @@ export class AcApDocument {
 
   /**
    * Opens a CAD document from a URI.
-   * 
+   *
    * @param uri - The URI of the CAD file to open
    * @param options - Options for opening the database, including read-only mode
    * @returns Promise resolving to true if successful, false if failed
-   * 
+   *
    * @example
    * ```typescript
    * const success = await document.openUri('https://example.com/drawing.dwg', {
@@ -68,12 +68,12 @@ export class AcApDocument {
 
   /**
    * Opens a CAD document from file content.
-   * 
+   *
    * @param fileName - The name of the file (used to determine file type from extension)
    * @param content - The file content as string or ArrayBuffer
    * @param options - Options for opening the database, including read-only mode
    * @returns Promise resolving to true if successful, false if failed
-   * 
+   *
    * @example
    * ```typescript
    * const fileContent = await fetch('drawing.dwg').then(r => r.arrayBuffer());
@@ -107,7 +107,7 @@ export class AcApDocument {
 
   /**
    * Gets the URI of the document if opened from a URI.
-   * 
+   *
    * @returns The document URI, or undefined if not opened from URI
    */
   get uri() {
@@ -116,7 +116,7 @@ export class AcApDocument {
 
   /**
    * Gets the database object containing all drawing data.
-   * 
+   *
    * @returns The underlying CAD database instance
    */
   get database() {
@@ -125,18 +125,18 @@ export class AcApDocument {
 
   /**
    * Gets the display title of the document.
-   * 
+   *
    * @returns The document title displayed in the window/tab
    */
   get docTitle() {
     return this._docTitle
   }
-  
+
   /**
    * Sets the display title of the document.
-   * 
+   *
    * Also updates the browser tab title if running in a browser environment.
-   * 
+   *
    * @param value - The new document title
    */
   set docTitle(value: string) {
@@ -149,7 +149,7 @@ export class AcApDocument {
 
   /**
    * Gets whether the document is opened in read-only mode.
-   * 
+   *
    * @returns True if the document is read-only, false if editable
    */
   get isReadOnly() {
@@ -158,7 +158,7 @@ export class AcApDocument {
 
   /**
    * Extracts the file name from a URI.
-   * 
+   *
    * @param uri - The URI to extract the file name from
    * @returns The extracted file name, or empty string if extraction fails
    * @private

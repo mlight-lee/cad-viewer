@@ -99,7 +99,7 @@ class CadViewerApp {
     try {
       // Read the file content
       const fileContent = await this.readFile(file)
-      
+
       // Add loaded class to move file input container to top-left
       const fileInputContainer = document.getElementById('fileInputContainer')
       if (fileInputContainer) {

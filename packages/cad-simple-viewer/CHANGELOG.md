@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.11
+
+### Patch Changes
+
+- fix: upgrade new version of dependencies to fix bugs on getting layer name and line type name
+
 ## 1.0.10
 
 ### Patch Changes

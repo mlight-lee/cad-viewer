@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.9
+
+### Patch Changes
+
+- fix: upgrade new version of dependencies to fix bugs on getting layer name and line type name
+
 ## 0.0.8
 
 ### Patch Changes

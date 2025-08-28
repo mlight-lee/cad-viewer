@@ -5,19 +5,19 @@ import { AcEdBaseInput } from './AcEdBaseInput'
 
 /**
  * A specialized input class for jig operations that provides continuous mouse tracking.
- * 
+ *
  * This class extends the base input functionality to provide real-time mouse position
  * tracking for interactive operations like drawing previews or dynamic objects that
  * follow the mouse cursor. It fires update events whenever the mouse moves, allowing
  * subscribers to respond to cursor movement.
- * 
+ *
  * Jig loops are commonly used in CAD applications for operations like:
  * - Drawing preview lines that stretch from a fixed point to the cursor
  * - Moving objects dynamically with the mouse
  * - Providing visual feedback during interactive operations
- * 
+ *
  * @template TResult - The type of result that this jig operation will return
- * 
+ *
  * @example
  * ```typescript
  * const jigLoop = new AcEdJigLoop<string>(view);
@@ -39,7 +39,7 @@ export class AcEdJigLoop<TResult> extends AcEdBaseInput<TResult> {
 
   /**
    * Creates a new jig loop instance.
-   * 
+   *
    * @param view - The view that will handle this jig operation
    */
   constructor(view: AcEdBaseView) {
@@ -70,7 +70,7 @@ export class AcEdJigLoop<TResult> extends AcEdBaseInput<TResult> {
   /**
    * Handles mouse move events to update the current cursor position.
    * Updates the current position and fires the update event to notify subscribers.
-   * 
+   *
    * @param event - The mouse move event containing the new cursor position
    */
   private onMouseMove = (event: MouseEvent) => {

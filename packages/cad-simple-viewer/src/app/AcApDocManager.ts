@@ -31,14 +31,14 @@ export interface AcDbDocumentEventArgs {
 
 /**
  * Document manager that handles CAD document lifecycle and provides the main entry point for the CAD viewer.
- * 
+ *
  * This singleton class manages:
  * - Document creation and opening (from URLs or file content)
  * - View and context management
  * - Command registration and execution
  * - Font loading for text rendering
  * - Event handling for document lifecycle
- * 
+ *
  * The manager follows a singleton pattern to ensure only one instance manages the application state.
  */
 export class AcApDocManager {
@@ -59,10 +59,10 @@ export class AcApDocManager {
 
   /**
    * Private constructor for singleton pattern.
-   * 
+   *
    * Creates an empty document with a 2D view and sets up the application context.
    * Registers default commands and creates an example document.
-   * 
+   *
    * @param canvas - Optional HTML canvas element for rendering. If not provided, a new canvas will be created
    * @private
    */
@@ -92,13 +92,13 @@ export class AcApDocManager {
 
   /**
    * Creates the singleton instance with an optional canvas element.
-   * 
+   *
    * This method should be called before accessing the `instance` property
    * if you want to provide a specific canvas element.
-   * 
+   *
    * @param canvas - Optional HTML canvas element for rendering
    * @returns The singleton instance
-   * 
+   *
    * @example
    * ```typescript
    * const canvas = document.getElementById('my-canvas') as HTMLCanvasElement;
@@ -114,9 +114,9 @@ export class AcApDocManager {
 
   /**
    * Gets the singleton instance of the document manager.
-   * 
+   *
    * Creates a new instance if one doesn't exist yet.
-   * 
+   *
    * @returns The singleton document manager instance
    */
   static get instance() {
@@ -128,9 +128,9 @@ export class AcApDocManager {
 
   /**
    * Gets the current application context.
-   * 
+   *
    * The context binds the current document with its associated view.
-   * 
+   *
    * @returns The current application context
    */
   get context() {
@@ -139,7 +139,7 @@ export class AcApDocManager {
 
   /**
    * Gets the currently open CAD document.
-   * 
+   *
    * @returns The current document instance
    */
   get curDocument() {
@@ -148,10 +148,10 @@ export class AcApDocManager {
 
   /**
    * Gets the currently active document.
-   * 
+   *
    * For now, this is the same as `curDocument` since only one document
    * can be active at a time.
-   * 
+   *
    * @returns The current active document
    */
   get mdiActiveDocument() {
@@ -160,7 +160,7 @@ export class AcApDocManager {
 
   /**
    * Gets the current 2D view used to display the drawing.
-   * 
+   *
    * @returns The current 2D view instance
    */
   get curView() {
@@ -169,7 +169,7 @@ export class AcApDocManager {
 
   /**
    * Gets the editor instance for handling user input.
-   * 
+   *
    * @returns The current editor instance
    */
   get editor() {
@@ -178,9 +178,9 @@ export class AcApDocManager {
 
   /**
    * Gets the list of available fonts that can be loaded.
-   * 
+   *
    * Note: These fonts are available for loading but may not be loaded yet.
-   * 
+   *
    * @returns Array of available font names
    */
   get avaiableFonts() {
@@ -189,10 +189,10 @@ export class AcApDocManager {
 
   /**
    * Loads the specified fonts for text rendering.
-   * 
+   *
    * @param fonts - Array of font names to load
    * @returns Promise that resolves when fonts are loaded
-   * 
+   *
    * @example
    * ```typescript
    * await docManager.loadFonts(['Arial', 'Times New Roman']);
@@ -204,30 +204,30 @@ export class AcApDocManager {
 
   /**
    * Loads default fonts for CAD text rendering.
-   * 
+   *
    * This method loads either the specified fonts or falls back to default Chinese fonts
    * (specifically 'simkai') if no fonts are provided. The loaded fonts are used for
    * rendering CAD text entities like MText and Text in the viewer.
-   * 
+   *
    * It is better to load default fonts when viewer is initialized so that the viewer can
    * render text correctly if fonts used in the document are not available.
-   * 
-   * @param fonts - Optional array of font names to load. If not provided or null, 
+   *
+   * @param fonts - Optional array of font names to load. If not provided or null,
    *               defaults to ['simkai'] for Chinese text support
    * @returns Promise that resolves when all specified fonts are loaded
-   * 
+   *
    * @example
    * ```typescript
    * // Load default fonts (simkai)
    * await docManager.loadDefaultFonts();
-   * 
+   *
    * // Load specific fonts
    * await docManager.loadDefaultFonts(['Arial', 'SimSun']);
-   * 
+   *
    * // Load no fonts (empty array)
    * await docManager.loadDefaultFonts([]);
    * ```
-   * 
+   *
    * @see {@link AcApFontLoader.load} - The underlying font loading implementation
    * @see {@link createExampleDoc} - Method that uses this for example document creation
    */
@@ -241,7 +241,7 @@ export class AcApDocManager {
 
   /**
    * Creates an example CAD document with sample content.
-   * 
+   *
    * This method asynchronously loads default fonts, creates example drawing content,
    * sets up layout information, and zooms the view to fit the content.
    * The creation is performed after a short delay to ensure proper initialization.
@@ -257,14 +257,14 @@ export class AcApDocManager {
 
   /**
    * Opens a CAD document from a URL.
-   * 
+   *
    * This method loads a document from the specified URL and replaces the current document.
    * It handles the complete document lifecycle including before/after open events.
-   * 
+   *
    * @param url - The URL of the CAD file to open
    * @param options - Optional database opening options. If not provided, default options with font loader will be used
    * @returns Promise that resolves to true if the document was successfully opened, false otherwise
-   * 
+   *
    * @example
    * ```typescript
    * const success = await docManager.openUrl('https://example.com/drawing.dwg');
@@ -284,16 +284,16 @@ export class AcApDocManager {
 
   /**
    * Opens a CAD document from file content.
-   * 
+   *
    * This method loads a document from the provided file content (string or binary data)
    * and replaces the current document. It handles the complete document lifecycle
    * including before/after open events.
-   * 
+   *
    * @param fileName - The name of the file being opened (used for format detection)
    * @param content - The file content as string or ArrayBuffer
    * @param options - Database opening options including font loader settings
    * @returns Promise that resolves to true if the document was successfully opened, false otherwise
-   * 
+   *
    * @example
    * ```typescript
    * const fileContent = await file.arrayBuffer();
@@ -319,7 +319,7 @@ export class AcApDocManager {
 
   /**
    * Registers all default commands available in the CAD viewer.
-   * 
+   *
    * This method sets up the command system by registering built-in commands including:
    * - pan: Pan/move the view
    * - select: Select entities
@@ -328,7 +328,7 @@ export class AcApDocManager {
    * - csvg: Convert to SVG
    * - qnew: Quick new document
    * - open: Open document
-   * 
+   *
    * All commands are registered under the system command group.
    */
   registerCommands() {
@@ -379,12 +379,12 @@ export class AcApDocManager {
 
   /**
    * Executes a command by its string name.
-   * 
+   *
    * This method looks up a registered command by name and executes it with the current context.
    * If the command is not found, no action is taken.
-   * 
+   *
    * @param cmdStr - The command string to execute (e.g., 'pan', 'zoom', 'select')
-   * 
+   *
    * @example
    * ```typescript
    * docManager.sendStringToExecute('zoom');
@@ -399,10 +399,10 @@ export class AcApDocManager {
 
   /**
    * Performs cleanup operations before opening a new document.
-   * 
+   *
    * This protected method is called automatically before any document opening operation.
    * It clears the current view to prepare for the new document content.
-   * 
+   *
    * @protected
    */
   protected onBeforeOpenDocument() {
@@ -411,11 +411,11 @@ export class AcApDocManager {
 
   /**
    * Performs setup operations after a document opening attempt.
-   * 
+   *
    * This protected method is called automatically after any document opening operation.
    * If the document was successfully opened, it dispatches the documentActivated event,
    * sets up layout information, and zooms the view to fit the content.
-   * 
+   *
    * @param isSuccess - Whether the document was successfully opened
    * @protected
    */
@@ -431,11 +431,11 @@ export class AcApDocManager {
 
   /**
    * Sets up or validates database opening options.
-   * 
+   *
    * This private method ensures that the options object has a font loader configured.
    * If no options are provided, creates new options with the font loader.
    * If options are provided but missing a font loader, adds the font loader.
-   * 
+   *
    * @param options - Optional database opening options to validate/modify
    * @returns The validated options object with font loader configured
    * @private
@@ -451,10 +451,10 @@ export class AcApDocManager {
 
   /**
    * Configures layout information for the current view.
-   * 
+   *
    * This private method sets up the active layout block table record ID and
    * model space block table record ID based on the current document's space configuration.
-   * 
+   *
    * @private
    */
   private setLayoutInfo() {

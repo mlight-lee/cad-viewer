@@ -3,10 +3,10 @@ import { defaults } from 'lodash-es'
 
 /**
  * Font mappings for CAD text rendering.
- * 
+ *
  * Maps original font names to replacement font names when the original
  * font is not available in the system.
- * 
+ *
  * @example
  * ```typescript
  * const fontMapping: AcApFontMapping = {
@@ -19,7 +19,7 @@ export type AcApFontMapping = Record<string, string>
 
 /**
  * Configuration settings for the CAD application.
- * 
+ *
  * Contains various UI and rendering preferences that can be persisted
  * and modified during runtime.
  */
@@ -53,7 +53,7 @@ const SETTINGS_LS_KEY = 'settings'
 
 /**
  * Event arguments for settings modification events.
- * 
+ *
  * @template T - The settings type, defaults to AcApSettings
  */
 export interface AcApSettingManagerEventArgs<
@@ -67,31 +67,31 @@ export interface AcApSettingManagerEventArgs<
 
 /**
  * Singleton settings manager for the CAD application.
- * 
+ *
  * This class manages application-wide settings with:
  * - Persistent storage using localStorage
  * - Event notification when settings change
  * - Type-safe setting access
  * - Default value fallbacks
- * 
+ *
  * The settings are automatically saved to localStorage and restored on application start.
- * 
+ *
  * @template T - The settings interface type, defaults to AcApSettings
- * 
+ *
  * @example
  * ```typescript
  * // Get the singleton instance
  * const settings = AcApSettingManager.instance;
- * 
+ *
  * // Set a setting value
  * settings.set('isShowToolbar', false);
- * 
+ *
  * // Get a setting value
  * const showToolbar = settings.get('isShowToolbar');
- * 
+ *
  * // Toggle a boolean setting
  * settings.toggle('isDebug');
- * 
+ *
  * // Listen for setting changes
  * settings.events.modified.addEventListener(args => {
  *   console.log(`Setting ${args.key} changed to:`, args.value);
@@ -110,9 +110,9 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets the singleton instance of the settings manager.
-   * 
+   *
    * Creates a new instance if one doesn't exist yet.
-   * 
+   *
    * @returns The singleton settings manager instance
    */
   static get instance() {
@@ -124,13 +124,13 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets a setting value and persists it to localStorage.
-   * 
+   *
    * Fires a modified event after the setting is saved.
-   * 
+   *
    * @template K - The setting key type
    * @param key - The setting key to modify
    * @param value - The new value for the setting
-   * 
+   *
    * @example
    * ```typescript
    * settings.set('isShowToolbar', false);
@@ -149,13 +149,13 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets a setting value.
-   * 
+   *
    * Returns the stored value or the default value if not set.
-   * 
+   *
    * @template K - The setting key type
    * @param key - The setting key to retrieve
    * @returns The setting value
-   * 
+   *
    * @example
    * ```typescript
    * const isDebug = settings.get('isDebug');
@@ -168,12 +168,12 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Toggles a boolean setting value.
-   * 
+   *
    * Only works with boolean settings. The caller should ensure the setting is boolean.
-   * 
+   *
    * @template K - The setting key type
    * @param key - The boolean setting key to toggle
-   * 
+   *
    * @example
    * ```typescript
    * settings.toggle('isDebug');        // false -> true
@@ -188,7 +188,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets whether debug mode is enabled.
-   * 
+   *
    * @returns True if debug mode is enabled
    */
   get isDebug() {
@@ -197,7 +197,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets whether debug mode is enabled.
-   * 
+   *
    * @param value - True to enable debug mode
    */
   set isDebug(value: boolean) {
@@ -206,7 +206,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets whether the command line is visible.
-   * 
+   *
    * @returns True if command line should be shown
    */
   get isShowCommandLine() {
@@ -215,7 +215,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets whether the command line is visible.
-   * 
+   *
    * @param value - True to show the command line
    */
   set isShowCommandLine(value: boolean) {
@@ -224,7 +224,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets whether coordinate display is visible.
-   * 
+   *
    * @returns True if coordinates should be displayed
    */
   get isShowCoordinate() {
@@ -233,7 +233,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets whether coordinate display is visible.
-   * 
+   *
    * @param value - True to show coordinates
    */
   set isShowCoordinate(value: boolean) {
@@ -242,7 +242,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets whether the toolbar is visible.
-   * 
+   *
    * @returns True if toolbar should be shown
    */
   get isShowToolbar() {
@@ -251,7 +251,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets whether the toolbar is visible.
-   * 
+   *
    * @param value - True to show the toolbar
    */
   set isShowToolbar(value: boolean) {
@@ -260,7 +260,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets whether performance statistics are displayed.
-   * 
+   *
    * @returns True if stats should be shown
    */
   get isShowStats() {
@@ -269,7 +269,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets whether performance statistics are displayed.
-   * 
+   *
    * @param value - True to show stats
    */
   set isShowStats(value: boolean) {
@@ -278,7 +278,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets the font mapping configuration.
-   * 
+   *
    * @returns The current font mapping
    */
   get fontMapping() {
@@ -287,7 +287,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets the font mapping configuration.
-   * 
+   *
    * @param value - The new font mapping
    */
   set fontMapping(value: AcApFontMapping) {
@@ -296,7 +296,7 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Sets a single font mapping entry.
-   * 
+   *
    * @param originalFont - The original font name
    * @param mappedFont - The replacement font name
    */
@@ -308,9 +308,9 @@ export class AcApSettingManager<T extends AcApSettings = AcApSettings> {
 
   /**
    * Gets the current settings object.
-   * 
+   *
    * This method combines localStorage values with default values.
-   * 
+   *
    * @returns The current settings object
    */
   get settings() {

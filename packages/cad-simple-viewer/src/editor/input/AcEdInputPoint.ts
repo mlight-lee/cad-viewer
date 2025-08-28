@@ -5,27 +5,27 @@ import { AcEdBaseInput } from './AcEdBaseInput'
 
 /**
  * Class used to input one point from user interaction.
- * 
+ *
  * This class provides functionality for capturing a single point input from the user
  * by handling mouse click events. When the user clicks on the canvas, the click
  * coordinates are converted from screen coordinates to world coordinates and
  * returned as the result.
- * 
+ *
  * The input operation can be canceled by pressing the Escape key (handled by the base class).
- * 
+ *
  * @example
  * ```typescript
  * const pointInput = new AcEdInputPoint(view);
  * const point = await pointInput.start();
  * console.log(`User clicked at: ${point.x}, ${point.y}`);
  * ```
- * 
+ *
  * @internal
  */
 export class AcEdInputPoint extends AcEdBaseInput<AcGePoint2d> {
   /**
    * Creates a new point input instance.
-   * 
+   *
    * @param view - The view that will handle this point input operation
    */
   constructor(view: AcEdBaseView) {
@@ -56,7 +56,7 @@ export class AcEdInputPoint extends AcEdBaseInput<AcGePoint2d> {
    * Handles mouse click events to capture the selected point.
    * Converts the click coordinates from screen space to world coordinates
    * and resolves the input operation with the resulting point.
-   * 
+   *
    * @param event - The mouse click event containing the screen coordinates
    */
   private onClick = (event: MouseEvent) => {
