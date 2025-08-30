@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts" setup>
+import { AcDbProgressdEventArgs } from '@mlightcad/data-model'
 import {
   AcApDocManager,
-  AcEdOpenFileProgressEventArgs,
   eventBus
 } from '@mlightcad/cad-simple-viewer'
 import { ElLoading, ElProgress } from 'element-plus'
@@ -25,7 +25,7 @@ const { t } = useI18n()
 const percentage = ref(0)
 const visible = ref(false)
 
-const updateProgress = (data: AcEdOpenFileProgressEventArgs) => {
+const updateProgress = (data: AcDbProgressdEventArgs) => {
   if (data.stage === 'CONVERSION') {
     const loading = ElLoading.service({
       lock: true

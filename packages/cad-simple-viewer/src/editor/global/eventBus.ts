@@ -9,17 +9,6 @@ import mitt, { type Emitter } from 'mitt'
 export type AcEdMessageType = 'success' | 'warning' | 'info' | 'error'
 
 /**
- * Progress event arguments for database operations.
- *
- * This type represents the progress information for database operations
- * like opening files, excluding the database reference.
- */
-export type AcEdOpenFileProgressEventArgs = Omit<
-  AcDbProgressdEventArgs,
-  'database'
->
-
-/**
  * Type definition for all events that can be emitted through the global event bus.
  *
  * This type maps event names to their corresponding payload types, providing
@@ -34,7 +23,7 @@ export type AcEdEvents = {
   /** Emitted to request opening a file dialog */
   'open-file': {}
   /** Emitted during file opening to report progress */
-  'open-file-progress': AcEdOpenFileProgressEventArgs
+  'open-file-progress': AcDbProgressdEventArgs
   /** Emitted to display a message to the user */
   message: {
     /** The message text to display */

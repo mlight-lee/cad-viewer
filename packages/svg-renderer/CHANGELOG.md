@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.11
+
+### Patch Changes
+
+- feat: use extents value from AcDbDatabase to zoom to extents
+
 ## 0.0.10
 
 ### Patch Changes

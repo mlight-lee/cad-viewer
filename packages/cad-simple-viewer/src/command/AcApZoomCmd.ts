@@ -1,3 +1,4 @@
+import { AcGeBox2d } from '@mlightcad/data-model'
 import { AcApContext } from '../app'
 import { AcEdCommand } from '../command'
 
@@ -32,6 +33,7 @@ export class AcApZoomCmd extends AcEdCommand {
    * @param context - The current application context containing the view to zoom
    */
   execute(context: AcApContext) {
-    context.view.zoomToFit()
+    const db = context.doc.database
+    context.view.zoomTo(new AcGeBox2d(db.extmin, db.extmax), 1.1)
   }
 }

@@ -1,7 +1,8 @@
 import {
   AcCmEventManager,
   acdbHostApplicationServices,
-  AcDbOpenDatabaseOptions
+  AcDbOpenDatabaseOptions,
+  AcGeBox2d
 } from '@mlightcad/data-model'
 
 import {
@@ -71,6 +72,7 @@ export class AcApDocManager {
     const doc = new AcApDocument()
     doc.database.events.openProgress.addEventListener(args => {
       eventBus.emit('open-file-progress', {
+        database: doc.database,
         percentage: args.percentage,
         stage: args.stage,
         subStage: args.subStage,
@@ -421,11 +423,11 @@ export class AcApDocManager {
    */
   protected onAfterOpenDocument(isSuccess: boolean) {
     if (isSuccess) {
-      this.events.documentActivated.dispatch({
-        doc: this.context.doc
-      })
+      const doc = this.context.doc
+      this.events.documentActivated.dispatch({ doc })
       this.setLayoutInfo()
-      this.curView.zoomToFit()
+      const db = doc.database
+      this.curView.zoomTo(new AcGeBox2d(db.extmin, db.extmax))
     }
   }
 

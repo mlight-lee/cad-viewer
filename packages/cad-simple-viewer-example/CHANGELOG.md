@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.0.13
+
+### Patch Changes
+
+- feat: use extents value from AcDbDatabase to zoom to extents
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.13
+
 ## 1.0.12
 
 ### Patch Changes

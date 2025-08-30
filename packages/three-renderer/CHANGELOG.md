@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.11
+
+### Patch Changes
+
+- feat: use extents value from AcDbDatabase to zoom to extents
+
 ## 1.0.10
 
 ### Patch Changes

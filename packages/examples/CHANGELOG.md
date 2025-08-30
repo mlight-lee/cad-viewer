@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.10
+
+### Patch Changes
+
+- feat: use extents value from AcDbDatabase to zoom to extents
+
 ## 1.0.9
 
 ### Patch Changes
