@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AcDbProgressdEventArgs } from '@mlightcad/data-model'
 import {
   AcApDocManager,
   eventBus
 } from '@mlightcad/cad-simple-viewer'
+import { AcDbProgressdEventArgs } from '@mlightcad/data-model'
 import { ElLoading, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
