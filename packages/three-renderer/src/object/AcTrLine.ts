@@ -26,9 +26,9 @@ export class AcTrLine extends AcTrEntity {
     const maxVertexCount = points.length
     const vertices = new Float32Array(maxVertexCount * 3)
     const indices =
-      (maxVertexCount * 2) > 65535
-          ? new Uint32Array(maxVertexCount * 2)
-          : new Uint16Array(maxVertexCount * 2)
+      maxVertexCount * 2 > 65535
+        ? new Uint32Array(maxVertexCount * 2)
+        : new Uint16Array(maxVertexCount * 2)
 
     for (let i = 0, pos = 0; i < maxVertexCount; i++) {
       const point = points[i]
