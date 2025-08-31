@@ -23,20 +23,26 @@ export class AcTrLine extends AcTrEntity {
       material = new THREE.LineBasicMaterial({ color })
     }
 
-    const vertices = new Float32Array((points.length - 1) * 6)
-    for (let i = 0, pos = 0; i < points.length - 1; i++) {
-      let point = points[i]
-      vertices[pos] = point.x
-      vertices[pos + 1] = point.y
-      vertices[pos + 2] = point.z ?? 0
-      point = points[i + 1]
-      vertices[pos + 3] = point.x
-      vertices[pos + 4] = point.y
-      vertices[pos + 5] = point.z ?? 0
-      pos += 6
+    const maxVertexCount = points.length
+    const vertices = new Float32Array(maxVertexCount * 3)
+    const indices =
+      (maxVertexCount * 2) > 65535
+          ? new Uint32Array(maxVertexCount * 2)
+          : new Uint16Array(maxVertexCount * 2)
+
+    for (let i = 0, pos = 0; i < maxVertexCount; i++) {
+      const point = points[i]
+      vertices[pos++] = point.x
+      vertices[pos++] = point.y
+      vertices[pos++] = point.z ?? 0
+    }
+    for (let i = 0, pos = 0; i < maxVertexCount - 1; i++) {
+      indices[pos++] = i
+      indices[pos++] = i + 1
     }
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+    geometry.setIndex(new THREE.BufferAttribute(indices, 1))
     this.setBoundingBox(geometry)
     this.geometry = geometry
 
