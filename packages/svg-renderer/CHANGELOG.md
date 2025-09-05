@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.12
+
+### Patch Changes
+
+- feat: upgrade version of dependencies
+
 ## 0.0.11
 
 ### Patch Changes
