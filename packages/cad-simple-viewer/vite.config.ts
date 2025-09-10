@@ -21,6 +21,6 @@ export default defineConfig({
           dest: ''
         }
       ]
-    }) as any
+    })
   ]
 })

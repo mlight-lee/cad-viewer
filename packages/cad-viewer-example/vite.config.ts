@@ -48,12 +48,12 @@ export default defineConfig(({ command, mode }) => {
           dest: 'assets'
         }
       ]
-    }) as any
+    })
   ]
 
   // Add conditional plugins
   if (mode === 'analyze') {
-    plugins.push(visualizer() as any)
+    plugins.push(visualizer())
   }
 
   return {
@@ -71,6 +71,6 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     },
-    plugins: plugins as any
+    plugins: plugins
   }
 })

@@ -57,8 +57,6 @@ This example demonstrates:
   - `@mlightcad/cad-viewer`: Main viewer component
   - `@mlightcad/cad-simple-viewer`: Core viewer functionality
   - `@mlightcad/data-model`: CAD data model
-  - `@mlightcad/libredwg-converter`: DWG file converter
-  - `@mlightcad/libredwg-web`: WebAssembly DWG support
 
 ## Project Structure
 

@@ -44,8 +44,6 @@ Firstly, add the following dependencies into your package.json.
 
 - @mlightcad/cad-simple-viewer
 - @mlightcad/data-model
-- @mlightcad/libredwg-converter
-- @mlightcad/libredwg-web
 
 Secondly, add one canvas element in your html.
 
@@ -59,7 +57,10 @@ Thirdly, add the following code in the entry point of cad-simple-viewer integrat
 
 ```typescript
 import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
-import { AcDbDatabaseConverterManager, AcDbFileType } from '@mlightcad/data-model'
+import { AcDbDatabaseConverterManager, AcDbFileType, registerConverters } from '@mlightcad/data-model'
+
+// Register DXF and DWG converters
+registerConverters()
 
 // Get canvas DOM element by its id
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
@@ -89,116 +90,47 @@ const success = await AcApDocManager.instance.openDocument(
 ......
 ```
 
-### Register DWG Converter to Display Drawings in DWG Format
+Finally, copy web worker javascript file to `dist/assets` folder.
 
-By default, cad-simple-viewer registers DXF converter only and can view DXF file only. If you want to view DWG file, you need to register DWG converter. The following example code shows how to register DWG converter.
+Web worker are used to parser dxf/dwg file so that UI not blocked. You can copy the following web worker files to folder `dist/assets` manually.
 
-```typescript
-import {
-  AcDbDatabaseConverterManager,
-  AcDbFileType
-} from '@mlightcad/data-model'
-import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
+- `./node_modules/@mlightcad/data-model/dist/dxf-parser-worker.js`
+- `./node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js`
 
-const registerConverters = async () => {
-  try {
-    const isDev = import.meta.env.DEV
-    if (!isDev) {
-      // Production mode - use dynamic import with explicit chunk name
-      const instance = await import(
-        /* webpackChunkName: "libredwg-web" */ '@mlightcad/libredwg-web'
-      )
-      const converter = new AcDbLibreDwgConverter(await instance.createModule())
-      AcDbDatabaseConverterManager.instance.register(
-        AcDbFileType.DWG,
-        converter
-      )
-    }
-  } catch (error) {
-    console.error('Failed to load libredwg-web: ', error)
-  }
-}
-```
-
-However, the code above works in production mode only even if removing check on 'isDev'. So you still need to make additional changes in order to make it work in Vite dev mode.
-
-Firstly, update `vite.config.ts` to copy `libredwg-web.js` to folder `assets` using `vite-plugin-static-copy`. Do remember adding `vite-plugin-static-copy` as your package devDependencies.
+However, `vite-plugin-static-copy` is recommended to make your lefe easier.
 
 ```typescript
 import { resolve } from 'path'
-import { defineConfig, type ConfigEnv } from 'vite'
+import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-export default defineConfig(({ command }: ConfigEnv) => {
+export default defineConfig(() => {
   return {
-    server: {
-      port: 3000
-    },
+    base: './',
     build: {
-      target: 'es2020',
       modulePreload: false,
       rollupOptions: {
         // Main entry point for the app
         input: {
           main: resolve(__dirname, 'index.html')
-        },
-        output: {
-          manualChunks: id => {
-            if (id.includes('@mlightcad/libredwg-web')) {
-              return 'libredwg-web'
-            }
-          }
         }
       }
     },
     plugins: [
-      command === 'serve' ? viteStaticCopy({
+      viteStaticCopy({
         targets: [
           {
-            src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
+            src: './node_modules/@mlightcad/data-model/dist/dxf-parser-worker.js',
+            dest: 'assets'
+          },
+          {
+            src: './node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js',
             dest: 'assets'
           }
         ]
-      }) : undefined
+      })
     ]
   }
-})
-```
-
-Secondly, add the following code in your html page such as `index.html` to dynamically import `libredwg-web` and trigger one event `libredwg-ready` after loaded.
-
-```html
-<script type="module" defer>
-  if (import.meta.env.DEV) {
-    (async () => {
-      // Create a script element to load the module
-      const script = document.createElement("script");
-      script.type = "module";
-      script.src = "/assets/libredwg-web.js";
-      script.async = true;
-      
-      script.onload = async () => {
-        // Import dynamically after script is loaded
-        const actualModule = await import(/* @vite-ignore */script.src);
-        const libredwg = await actualModule.createModule();
-        window.dispatchEvent(new CustomEvent("libredwg-ready", { detail: libredwg }));
-      };
-  
-      document.body.appendChild(script);
-    })();
-  }
-</script>
-```
-
-Thirdly, listen event `libredwg-ready` to register DWG converter `AcDbLibreDwgConverter` after `libredwg-ready` loaded.
-
-```typescript
-// This is for development mode only. In production mode, the library is bundled
-window.addEventListener('libredwg-ready', event => {
-  // @ts-expect-error this is one custom event and you can get details in index.html
-  const instance = event.detail as LibreDwgEx
-  const converter = new AcDbLibreDwgConverter(instance)
-  AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
 })
 ```
 

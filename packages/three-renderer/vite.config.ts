@@ -1,5 +1,5 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
-import { defineConfig } from 'vite'
+import { defineConfig, PluginOption } from 'vite'
 
 export default defineConfig({
   build: {
@@ -10,5 +10,5 @@ export default defineConfig({
       fileName: 'index'
     }
   },
-  plugins: [peerDepsExternal()]
+  plugins: [peerDepsExternal() as PluginOption]
 })

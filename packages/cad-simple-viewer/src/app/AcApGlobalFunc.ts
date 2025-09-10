@@ -32,7 +32,7 @@ export async function registerConverters() {
   try {
     const converter = new AcDbDxfConverter({
       useWorker: true,
-      parserWorkerUrl: '/assets/dxf-parser-worker.js'
+      parserWorkerUrl: './assets/dxf-parser-worker.js'
     })
     AcDbDatabaseConverterManager.instance.register(AcDbFileType.DXF, converter)
   } catch (error) {
@@ -43,7 +43,7 @@ export async function registerConverters() {
   try {
     const converter = new AcDbLibreDwgConverter({
       useWorker: true,
-      parserWorkerUrl: '/assets/libredwg-parser-worker.js'
+      parserWorkerUrl: './assets/libredwg-parser-worker.js'
     })
     AcDbDatabaseConverterManager.instance.register(AcDbFileType.DWG, converter)
   } catch (error) {

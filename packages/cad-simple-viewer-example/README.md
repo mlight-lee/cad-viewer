@@ -82,10 +82,6 @@ This example demonstrates:
 
 - `@mlightcad/cad-simple-viewer`: Core CAD viewer functionality
 - `@mlightcad/data-model`: CAD data model and database
-- `@mlightcad/libredwg-converter`: DWG file converter
-- `@mlightcad/libredwg-web`: WebAssembly DWG support
-- `three`: 3D graphics library
-- `vite`: Build tool and development server
 
 ## Key Features
 

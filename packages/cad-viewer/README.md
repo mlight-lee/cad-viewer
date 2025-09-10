@@ -63,8 +63,6 @@ Firstly, add the following dependencies into your package.json.
 - @mlightcad/cad-simple-viewer
 - @mlightcad/cad-viewer
 - @mlightcad/data-model
-- @mlightcad/libredwg-converter
-- @mlightcad/libredwg-web
 - @vueuse/core
 - element-plus
 - vue

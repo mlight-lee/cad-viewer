@@ -26,7 +26,7 @@ export default defineConfig(() => {
             dest: 'assets'
           }
         ]
-      }) as any
+      })
     ]
   }
 })
