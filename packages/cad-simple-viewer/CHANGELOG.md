@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.15
+
+### Patch Changes
+
+- feat: simplify usage of cad-simple-viewer and cad-viewer by using web worker
+
 ## 1.0.14
 
 ### Patch Changes

@@ -1,5 +1,6 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
-import { defineConfig } from 'vite'
+import { defineConfig, PluginOption } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
   build: {
@@ -11,5 +12,15 @@ export default defineConfig({
     },
     minify: true
   },
-  plugins: [peerDepsExternal()]
+  plugins: [
+    peerDepsExternal() as PluginOption,
+    viteStaticCopy({
+      targets: [
+        {
+          src: './node_modules/@mlightcad/libredwg-converter/dist/libredwg-parser-worker.js',
+          dest: ''
+        }
+      ]
+    }) as any
+  ]
 })

@@ -37,25 +37,5 @@
     <div id="app"></div>
     <canvas id="canvas" class="canvas"></canvas>
     <script type="module" src="/src/main.ts"></script>
-    <script type="module" defer>
-      if (import.meta.env.DEV) {
-        (async () => {
-          // Create a script element to load the module
-          const script = document.createElement("script");
-          script.type = "module";
-          script.src = "/assets/libredwg-web.js";
-          script.async = true;
-          
-          script.onload = async () => {
-            // Import dynamically after script is loaded
-            const actualModule = await import(/* @vite-ignore */script.src);
-            const libredwg = await actualModule.createModule();
-            window.dispatchEvent(new CustomEvent("libredwg-ready", { detail: libredwg }));
-          };
-      
-          document.body.appendChild(script);
-        })();
-      }
-    </script>
   </body>
 </html> 

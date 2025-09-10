@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.13
+
+### Patch Changes
+
+- feat: simplify usage of cad-simple-viewer and cad-viewer by using web worker
+
 ## 1.0.12
 
 ### Patch Changes

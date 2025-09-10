@@ -1,10 +1,8 @@
-import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
 import {
-  AcDbDatabaseConverterManager,
-  AcDbFileType,
-  AcDbOpenDatabaseOptions
-} from '@mlightcad/data-model'
-import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
+  AcApDocManager,
+  registerConverters
+} from '@mlightcad/cad-simple-viewer'
+import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
 
 class CadViewerApp {
   private canvas: HTMLCanvasElement
@@ -19,7 +17,7 @@ class CadViewerApp {
     ) as HTMLInputElement
     this.loadingElement = document.getElementById('loading') as HTMLElement
 
-    this.registerDwgConverters()
+    registerConverters()
     this.initializeViewer()
     this.setupFileHandling()
   }
@@ -35,38 +33,6 @@ class CadViewerApp {
       console.error('Failed to initialize CAD viewer:', error)
       this.showMessage('Failed to initialize CAD viewer', 'error')
     }
-  }
-
-  private async registerDwgConverters() {
-    try {
-      const isDev = import.meta.env.DEV
-      if (!isDev) {
-        // Production mode - use dynamic import with explicit chunk name
-        const instance = await import(
-          /* webpackChunkName: "libredwg-web" */ '@mlightcad/libredwg-web'
-        )
-        const converter = new AcDbLibreDwgConverter(
-          await instance.createModule()
-        )
-        AcDbDatabaseConverterManager.instance.register(
-          AcDbFileType.DWG,
-          converter
-        )
-      }
-    } catch (error) {
-      console.error('Failed to load libredwg-web: ', error)
-    }
-
-    // This is for development mode only. In production mode, the library is bundled
-    window.addEventListener('libredwg-ready', event => {
-      // @ts-expect-error this is one custom event and you can get details in index.html
-      const instance = event.detail as LibreDwgEx
-      const converter = new AcDbLibreDwgConverter(instance)
-      AcDbDatabaseConverterManager.instance.register(
-        AcDbFileType.DWG,
-        converter
-      )
-    })
   }
 
   private setupFileHandling() {

@@ -36,25 +36,24 @@ export default defineConfig(({ command, mode }) => {
         })
       ],
       transformers: [transformerDirectives(), transformerVariantGroup()]
-    })
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: './node_modules/@mlightcad/data-model/dist/dxf-parser-worker.js',
+          dest: 'assets'
+        },
+        {
+          src: './node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js',
+          dest: 'assets'
+        }
+      ]
+    }) as any
   ]
 
   // Add conditional plugins
   if (mode === 'analyze') {
     plugins.push(visualizer() as any)
-  }
-
-  if (command === 'serve') {
-    plugins.push(
-      viteStaticCopy({
-        targets: [
-          {
-            src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
-            dest: 'assets'
-          }
-        ]
-      }) as any
-    )
   }
 
   return {
@@ -69,13 +68,6 @@ export default defineConfig(({ command, mode }) => {
         // Main entry point for the app
         input: {
           main: resolve(__dirname, 'index.html')
-        },
-        output: {
-          manualChunks: id => {
-            if (id.includes('@mlightcad/libredwg-web')) {
-              return 'libredwg-web'
-            }
-          }
         }
       }
     },
