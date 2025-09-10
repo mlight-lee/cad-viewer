@@ -70,12 +70,8 @@
  */
 
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
-import {
-  AcDbDatabaseConverterManager,
-  AcDbFileType,
-  AcDbOpenDatabaseOptions
-} from '@mlightcad/data-model'
-import { ElLoading, ElMessage } from 'element-plus'
+import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
+import { ElMessage } from 'element-plus'
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -103,77 +99,19 @@ interface Props {
   wait?: number
   /** Canvas element ID for the CAD viewer. This is required to specify which canvas element to use */
   canvasId: string
+  /** Background color as 24-bit hexadecimal RGB number (e.g., 0x000000) */
+  background?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   locale: 'default',
   url: undefined,
-  wait: 10
+  wait: 10,
+  background: undefined
 })
 
 // Initialize the CAD viewer with the specified canvas ID
 initializeCadViewer(props.canvasId)
-
-/**
- * Waits for the DWG converter (libredwg.js) to be loaded and registered
- * This is necessary because the DWG converter is loaded asynchronously
- * and we need to ensure it's available before attempting to open DWG files
- *
- * @returns Promise that resolves when converter is ready or timeout is reached
- */
-const waitForLibreDwg = () => {
-  // If wait is 0 or negative, proceed immediately without waiting
-  if (props.wait <= 0) {
-    return Promise.resolve()
-  }
-
-  return new Promise<void>(resolve => {
-    // Show loading service to indicate we're waiting for converter
-    const loading = ElLoading.service({
-      lock: true,
-      text: t('main.message.loadingDwgConverter')
-    })
-
-    // Check if DWG converter is already registered in the converter manager
-    const checkDwgConverter = () => {
-      const dwgConverter = AcDbDatabaseConverterManager.instance.get(
-        AcDbFileType.DWG
-      )
-      if (dwgConverter) {
-        loading.close()
-        resolve()
-        return true
-      }
-      return false
-    }
-
-    // Check immediately first in case converter is already loaded
-    if (checkDwgConverter()) {
-      return
-    }
-
-    // Poll every 0.5 seconds for up to the specified timeout
-    let attempts = 0
-    const maxAttempts = Math.floor(props.wait * 2) // Convert seconds to attempts (0.5 second intervals)
-    const pollInterval = setInterval(() => {
-      attempts++
-      if (checkDwgConverter()) {
-        clearInterval(pollInterval)
-        return
-      }
-
-      // If timeout reached, warn and proceed anyway
-      if (attempts >= maxAttempts) {
-        console.warn(
-          `DWG converter loading timeout after ${props.wait} seconds - proceeding anyway`
-        )
-        loading.close()
-        clearInterval(pollInterval)
-        resolve()
-      }
-    }, 500) // Check every 0.5 seconds
-  })
-}
 
 const { t } = useI18n()
 const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
@@ -225,21 +163,31 @@ watch(
   () => props.url,
   async newUrl => {
     if (newUrl) {
-      // Wait for libredwg.js to be loaded if wait prop is true
-      await waitForLibreDwg()
       openFileFromUrl(newUrl)
+    }
+  }
+)
+
+// Watch for background color changes and apply to the view
+watch(
+  () => props.background,
+  newBg => {
+    if (newBg != null) {
+      AcApDocManager.instance.curView.backgroundColor = newBg
     }
   }
 )
 
 // Component lifecycle: Initialize and load initial file if URL is provided
 onMounted(async () => {
-  // Wait for libredwg.js to be loaded if wait prop is true
-  await waitForLibreDwg()
-
   // If URL prop is provided, automatically load the file on mount
   if (props.url) {
     openFileFromUrl(props.url)
+  }
+
+  // Apply initial background color if provided
+  if (props.background != null) {
+    AcApDocManager.instance.curView.backgroundColor = props.background
   }
 })
 

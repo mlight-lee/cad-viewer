@@ -73,7 +73,7 @@ Then create one vue component as follows.
 ```vue
 <template>
   <div>
-    <MlCADViewer canvas-id="canvas" />
+    <MlCADViewer canvas-id="canvas" :background="0x808080" />
   </div>
 </template>
 
@@ -114,6 +114,7 @@ The `MlCadViewer` component accepts the following props:
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
 | `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
 | `canvasId` | `string` | **Required** | Canvas element ID for the CAD viewer. The component will automatically call `initializeCadViewer` with this ID during its mount lifecycle. |
+| `background` | `number` | `undefined` | Background color as 24-bit hexadecimal RGB (e.g., `0x000000` for black, `0x808080` for gray). |
 
 ### UI Settings
 

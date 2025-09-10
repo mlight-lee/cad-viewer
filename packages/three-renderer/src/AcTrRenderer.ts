@@ -82,6 +82,41 @@ export class AcTrRenderer implements AcGiRenderer<AcTrEntity> {
   }
 
   /**
+   * Sets the clear color used when clearing the canvas.
+   *
+   * @param color - Background color as 24-bit hexadecimal RGB number
+   * @param alpha - Optional alpha value (0.0 - 1.0)
+   */
+  setClearColor(color: number, alpha?: number) {
+    this._renderer.setClearColor(color, alpha)
+  }
+
+  /**
+   * Gets the current clear color as a 24-bit hexadecimal RGB number.
+   */
+  getClearColor() {
+    const color = new THREE.Color()
+    this._renderer.getClearColor(color)
+    return color.getHex()
+  }
+
+  /**
+   * Sets the clear alpha used when clearing the canvas.
+   *
+   * @param alpha - Alpha value (0.0 - 1.0)
+   */
+  setClearAlpha(alpha: number) {
+    this._renderer.setClearAlpha(alpha)
+  }
+
+  /**
+   * Gets the current clear alpha value.
+   */
+  getClearAlpha() {
+    return this._renderer.getClearAlpha()
+  }
+
+  /**
    * The internal THREE.js webgl renderer
    */
   get internalRenderer() {

@@ -355,6 +355,21 @@ export abstract class AcEdBaseView {
   abstract zoomToFit(): void
 
   /**
+   * Gets the background color of the view.
+   *
+   * The color is represented as a 24-bit hexadecimal RGB number, for example
+   * `0x000000` for black or `0xffffff` for white.
+   */
+  abstract get backgroundColor(): number
+
+  /**
+   * Sets the background color of the view.
+   *
+   * @param value - The background color as a 24-bit hexadecimal RGB number
+   */
+  abstract set backgroundColor(value: number)
+
+  /**
    * Search entities intersected or contained in the specified bounding box.
    * @param box Input the query bounding box
    * @returns Return query results

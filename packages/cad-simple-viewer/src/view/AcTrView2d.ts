@@ -119,7 +119,6 @@ export class AcTrView2d extends AcEdBaseView {
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(this.width, this.height)
-    renderer.setClearColor(mergedOptions.background || 0x000000)
 
     this._renderer = new AcTrRenderer(renderer)
     const fontMapping = AcApSettingManager.instance.fontMapping
@@ -132,6 +131,8 @@ export class AcTrView2d extends AcEdBaseView {
     })
 
     this._scene = this.createScene()
+    // Initialize background color via renderer clear color
+    this._renderer.setClearColor(mergedOptions.background || 0x000000)
     this._stats = this.createStats(AcApSettingManager.instance.isShowStats)
 
     AcApSettingManager.instance.events.modified.addEventListener(args => {
@@ -246,6 +247,26 @@ export class AcTrView2d extends AcEdBaseView {
   }
   set center(value: AcGePoint2d) {
     this.activeLayoutView.center = value
+  }
+
+  /**
+   * Gets the background color of the view.
+   *
+   * The color is represented as a 24-bit hexadecimal RGB number, e.g.,
+   * `0x000000` for black.
+   */
+  get backgroundColor() {
+    return this._renderer.getClearColor()
+  }
+
+  /**
+   * Sets the background color of the view.
+   *
+   * @param value - The background color as a 24-bit hexadecimal RGB number
+   */
+  set backgroundColor(value: number) {
+    this._renderer.setClearColor(value)
+    this._isDirty = true
   }
 
   /**
