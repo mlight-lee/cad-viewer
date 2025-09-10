@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.14
+
+### Patch Changes
+
+- feat: add new property 'background' for component MlCadViewer
+
 ## 1.0.13
 
 ### Patch Changes

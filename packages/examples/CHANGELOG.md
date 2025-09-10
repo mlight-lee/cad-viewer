@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.13
+
+### Patch Changes
+
+- feat: add new property 'background' for component MlCadViewer
+
 ## 1.0.12
 
 ### Patch Changes
