@@ -1,3 +1,5 @@
+import { AcDbLayout } from '@mlightcad/data-model'
+
 import { AcEdBaseView } from '../editor/view/AcEdBaseView'
 import { AcTrView2d } from '../view'
 import { AcApDocument } from './AcApDocument'
@@ -66,6 +68,12 @@ export class AcApContext {
     doc.database.events.headerSysVarChanged.addEventListener(args => {
       if (args.name == 'pdmode') {
         ;(this._view as AcTrView2d).rerenderPoints(args.database.pdmode)
+      }
+    })
+
+    doc.database.events.dictObjetSet.addEventListener(args => {
+      if (args.object instanceof AcDbLayout) {
+        this._view.addLayout(args.object as AcDbLayout)
       }
     })
 

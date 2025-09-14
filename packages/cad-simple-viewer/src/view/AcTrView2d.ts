@@ -1,6 +1,7 @@
 import {
   AcDbEntity,
   acdbHostApplicationServices,
+  AcDbLayout,
   AcDbObjectId,
   AcDbRasterImage,
   AcDbRay,
@@ -156,7 +157,7 @@ export class AcTrView2d extends AcEdBaseView {
     })
     acdbHostApplicationServices().layoutManager.events.layoutSwitched.addEventListener(
       args => {
-        this.activeLayoutBtrId = args.newLayout.blockTableRecordId
+        this.activeLayoutBtrId = args.layout.blockTableRecordId
       }
     )
 
@@ -420,9 +421,6 @@ export class AcTrView2d extends AcEdBaseView {
    * @inheritdoc
    */
   addEntity(entity: AcDbEntity) {
-    // Create the layout view of this entity if it doesn't exist yet
-    const layoutView = this.createLayoutViewIfNeeded(entity.ownerId)
-
     let threeEntity: AcTrEntity | null = entity.draw(
       this._renderer
     ) as AcTrEntity
@@ -447,12 +445,15 @@ export class AcTrView2d extends AcEdBaseView {
       // the bottom-most item. This viewport doesn't show any entities and is mainly for internal
       // AutoCAD purposes. The viewport id number of this system-defined "default" viewport is 1.
       if (entity.number > 1) {
-        const viewportView = new AcTrViewportView(
-          layoutView,
-          entity.toGiViewport(),
-          this._renderer
-        )
-        layoutView.addViewport(viewportView)
+        const layoutView = this._layoutViewManager.getAt(entity.ownerId)
+        if (layoutView) {
+          const viewportView = new AcTrViewportView(
+            layoutView,
+            entity.toGiViewport(),
+            this._renderer
+          )
+          layoutView.addViewport(viewportView)
+        }
       }
     } else if (entity instanceof AcDbRasterImage) {
       const fileName = entity.imageFileName
@@ -487,6 +488,14 @@ export class AcTrView2d extends AcEdBaseView {
       }, 100)
     }
     return threeEntity
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addLayout(layout: AcDbLayout) {
+    this._scene.addEmptyLayout(layout.blockTableRecordId)
+    this.createLayoutViewIfNeeded(layout.blockTableRecordId)
   }
 
   /**

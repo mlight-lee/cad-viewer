@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.14
+
+### Patch Changes
+
+- fix: fix issue on opening one empty dxf/dwg file
+
 ## 0.0.13
 
 ### Patch Changes

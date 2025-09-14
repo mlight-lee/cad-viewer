@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.17
+
+### Patch Changes
+
+- fix: fix issue on opening one empty dxf/dwg file
+
 ## 1.0.16
 
 ### Patch Changes

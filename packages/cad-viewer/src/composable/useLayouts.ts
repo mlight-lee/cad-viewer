@@ -39,7 +39,7 @@ export function useLayouts(editor: AcApDocManager) {
 
   acdbHostApplicationServices().layoutManager.events.layoutSwitched.addEventListener(
     args => {
-      const newLayout = args.newLayout
+      const newLayout = args.layout
       reactiveLayouts.forEach(layout => {
         if (layout.name == newLayout.layoutName) {
           layout.isActive = true

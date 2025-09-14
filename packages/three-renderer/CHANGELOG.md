@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.15
+
+### Patch Changes
+
+- fix: fix issue on opening one empty dxf/dwg file
+
 ## 1.0.14
 
 ### Patch Changes

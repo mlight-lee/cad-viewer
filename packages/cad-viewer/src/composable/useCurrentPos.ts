@@ -1,11 +1,23 @@
 import { AcEdBaseView, AcEdMouseEventArgs } from '@mlightcad/cad-simple-viewer'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'decimal',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
-})
+function formatNumberSmart(num: number, locale = 'en-US') {
+  // threshold can be adjusted
+  const ABS = Math.abs(num)
+  if (ABS !== 0 && (ABS < 1e-3 || ABS >= 1e6)) {
+    // use scientific notation
+    const [coefficient, exponent] = num.toExponential(3).split('e')
+    const formattedCoeff = new Intl.NumberFormat(locale, {
+      maximumFractionDigits: 3
+    }).format(Number(coefficient))
+    return `${formattedCoeff}e${exponent}`
+  } else {
+    // normal localized formatting
+    return new Intl.NumberFormat(locale, {
+      maximumFractionDigits: 6
+    }).format(num)
+  }
+}
 
 export function useCurrentPos(view: AcEdBaseView) {
   // state encapsulated and managed by the composable
@@ -24,7 +36,7 @@ export function useCurrentPos(view: AcEdBaseView) {
   onUnmounted(() => view.events.mouseMove.removeEventListener(update))
 
   const text = computed(() => {
-    return `${formatter.format(x.value)}, ${formatter.format(y.value)}`
+    return `${formatNumberSmart(x.value)}, ${formatNumberSmart(y.value)}`
   })
 
   // expose managed state as return value

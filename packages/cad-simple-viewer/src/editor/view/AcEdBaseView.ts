@@ -1,6 +1,7 @@
 import {
   AcCmEventManager,
   AcDbEntity,
+  AcDbLayout,
   AcDbObjectId,
   AcGeBox2d,
   AcGeBox3d,
@@ -416,6 +417,12 @@ export abstract class AcEdBaseView {
    * @param entity Input the entity to update
    */
   abstract updateEntity(entity: AcDbEntity): void
+
+  /**
+   * Add the specified layout in drawing database into the current scene
+   * @param layout Input the layout to add into the current scene
+   */
+  abstract addLayout(layout: AcDbLayout): void
 
   /**
    * Select the specified entities
