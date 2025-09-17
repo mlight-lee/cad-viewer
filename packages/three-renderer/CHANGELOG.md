@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.16
+
+### Patch Changes
+
+- feat: support batch append for entities
+
 ## 1.0.15
 
 ### Patch Changes

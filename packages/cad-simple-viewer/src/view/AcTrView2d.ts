@@ -420,44 +420,54 @@ export class AcTrView2d extends AcEdBaseView {
   /**
    * @inheritdoc
    */
-  addEntity(entity: AcDbEntity) {
-    let threeEntity: AcTrEntity | null = entity.draw(
-      this._renderer
-    ) as AcTrEntity
-    if (threeEntity) {
-      threeEntity.objectId = entity.objectId
-      threeEntity.ownerId = entity.ownerId
-      threeEntity.layerName = entity.layer
-      threeEntity.visible = entity.visibility
-      const extendBbox = !(
-        entity instanceof AcDbRay || entity instanceof AcDbXline
-      )
-      this._scene.addEntity(threeEntity, extendBbox)
-      this._isDirty = true
-
-      // Release memory occupied by this entity
-      threeEntity.dispose()
-      threeEntity = null
+  addEntity(entity: AcDbEntity | AcDbEntity[]) {
+    let entities: AcDbEntity[] = []
+    if (Array.isArray(entity)) {
+      entities = entity
+    } else {
+      entities.push(entity)
     }
 
-    if (entity instanceof AcDbViewport) {
-      // In paper space layouts, there is always a system-defined "default" viewport that exists as
-      // the bottom-most item. This viewport doesn't show any entities and is mainly for internal
-      // AutoCAD purposes. The viewport id number of this system-defined "default" viewport is 1.
-      if (entity.number > 1) {
-        const layoutView = this._layoutViewManager.getAt(entity.ownerId)
-        if (layoutView) {
-          const viewportView = new AcTrViewportView(
-            layoutView,
-            entity.toGiViewport(),
-            this._renderer
-          )
-          layoutView.addViewport(viewportView)
-        }
+    for (let i = 0; i < entities.length; ++i) {
+      const entity = entities[i]
+      let threeEntity: AcTrEntity | null = entity.draw(
+        this._renderer
+      ) as AcTrEntity
+      if (threeEntity) {
+        threeEntity.objectId = entity.objectId
+        threeEntity.ownerId = entity.ownerId
+        threeEntity.layerName = entity.layer
+        threeEntity.visible = entity.visibility
+        const extendBbox = !(
+          entity instanceof AcDbRay || entity instanceof AcDbXline
+        )
+        this._scene.addEntity(threeEntity, extendBbox)
+        this._isDirty = true
+  
+        // Release memory occupied by this entity
+        threeEntity.dispose()
+        threeEntity = null
       }
-    } else if (entity instanceof AcDbRasterImage) {
-      const fileName = entity.imageFileName
-      if (fileName) this._missedImages.set(entity.objectId, fileName)
+  
+      if (entity instanceof AcDbViewport) {
+        // In paper space layouts, there is always a system-defined "default" viewport that exists as
+        // the bottom-most item. This viewport doesn't show any entities and is mainly for internal
+        // AutoCAD purposes. The viewport id number of this system-defined "default" viewport is 1.
+        if (entity.number > 1) {
+          const layoutView = this._layoutViewManager.getAt(entity.ownerId)
+          if (layoutView) {
+            const viewportView = new AcTrViewportView(
+              layoutView,
+              entity.toGiViewport(),
+              this._renderer
+            )
+            layoutView.addViewport(viewportView)
+          }
+        }
+      } else if (entity instanceof AcDbRasterImage) {
+        const fileName = entity.imageFileName
+        if (fileName) this._missedImages.set(entity.objectId, fileName)
+      }
     }
   }
 
@@ -472,22 +482,31 @@ export class AcTrView2d extends AcEdBaseView {
   /**
    * @inheritdoc
    */
-  updateEntity(entity: AcDbEntity) {
-    const threeEntity = entity.draw(this._renderer) as AcTrEntity
-    if (threeEntity) {
-      threeEntity.objectId = entity.objectId
-      threeEntity.ownerId = entity.ownerId
-      threeEntity.layerName = entity.layer
-      threeEntity.visible = entity.visibility
-      this._scene.update(threeEntity)
-      this._isDirty = true
-      // Not sure why texture for image entity isn't updated even if 'isDirty' flag is already set to true.
-      // So add one timeout event to set 'isDirty' flag to true again to make it work
-      setTimeout(() => {
-        this._isDirty = true
-      }, 100)
+  updateEntity(entity: AcDbEntity | AcDbEntity[]) {
+    let entities: AcDbEntity[] = []
+    if (Array.isArray(entity)) {
+      entities = entity
+    } else {
+      entities.push(entity)
     }
-    return threeEntity
+
+    for (let i = 0; i < entities.length; ++i) {
+      const entity = entities[i]
+      const threeEntity = entity.draw(this._renderer) as AcTrEntity
+      if (threeEntity) {
+        threeEntity.objectId = entity.objectId
+        threeEntity.ownerId = entity.ownerId
+        threeEntity.layerName = entity.layer
+        threeEntity.visible = entity.visibility
+        this._scene.update(threeEntity)
+      }
+    }
+    this._isDirty = true
+    // Not sure why texture for image entity isn't updated even if 'isDirty' flag is already set to true.
+    // So add one timeout event to set 'isDirty' flag to true again to make it work
+    setTimeout(() => {
+      this._isDirty = true
+    }, 100)
   }
 
   /**

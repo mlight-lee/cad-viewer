@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.15
+
+### Patch Changes
+
+- feat: support batch append for entities
+
 ## 0.0.14
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.0.18
+
+### Patch Changes
+
+- feat: support batch append for entities
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.18
+  - @mlightcad/cad-viewer@1.0.18
+
 ## 1.0.17
 
 ### Patch Changes

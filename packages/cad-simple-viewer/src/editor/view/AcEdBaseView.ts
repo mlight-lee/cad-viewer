@@ -407,16 +407,17 @@ export abstract class AcEdBaseView {
   abstract clear(): void
 
   /**
-   * Add the specified entity in drawing database into the current scene and draw it
+   * Add the specified entity or entities in drawing database into the current scene
+   * and draw it or them
    * @param entity Input the entity to add into the current scene
    */
-  abstract addEntity(entity: AcDbEntity): void
+  abstract addEntity(entity: AcDbEntity | AcDbEntity[]): void
 
   /**
-   * Update the specified entity
-   * @param entity Input the entity to update
+   * Update the specified entity or entities
+   * @param entity Input the entity or entities to update
    */
-  abstract updateEntity(entity: AcDbEntity): void
+  abstract updateEntity(entity: AcDbEntity | AcDbEntity[]): void
 
   /**
    * Add the specified layout in drawing database into the current scene
