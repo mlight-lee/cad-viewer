@@ -49,9 +49,6 @@ pnpm preview
    - Click the file input area to browse for a DXF or DWG file
    - Or drag and drop a file directly onto the input area
 3. **View the Drawing**: The CAD file will be rendered on the canvas
-4. **Use Controls**: 
-   - Click "🔍 Fit" to zoom the drawing to fit the viewport
-   - Click "🏠 Reset" to reset the view to the default position
 
 ## Supported File Formats
 

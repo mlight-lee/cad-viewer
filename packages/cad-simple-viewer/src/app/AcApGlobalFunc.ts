@@ -57,5 +57,11 @@ export function registerConverters() {
  */
 export function registerWorkers() {
   registerConverters()
-  AcTrMTextRenderer.getInstance().initialize('/assets/mtext-renderer-worker.js')
+  const isDev = typeof window !== 'undefined' && !!window.location &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  if (isDev) {
+    AcTrMTextRenderer.getInstance().initialize('/assets/mtext-renderer-worker.js')
+  } else {
+    AcTrMTextRenderer.getInstance().initialize('./mtext-renderer-worker.js')
+  }
 }
