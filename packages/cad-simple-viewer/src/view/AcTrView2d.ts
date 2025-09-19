@@ -421,54 +421,8 @@ export class AcTrView2d extends AcEdBaseView {
    * @inheritdoc
    */
   addEntity(entity: AcDbEntity | AcDbEntity[]) {
-    let entities: AcDbEntity[] = []
-    if (Array.isArray(entity)) {
-      entities = entity
-    } else {
-      entities.push(entity)
-    }
-
-    for (let i = 0; i < entities.length; ++i) {
-      const entity = entities[i]
-      let threeEntity: AcTrEntity | null = entity.draw(
-        this._renderer
-      ) as AcTrEntity
-      if (threeEntity) {
-        threeEntity.objectId = entity.objectId
-        threeEntity.ownerId = entity.ownerId
-        threeEntity.layerName = entity.layer
-        threeEntity.visible = entity.visibility
-        const extendBbox = !(
-          entity instanceof AcDbRay || entity instanceof AcDbXline
-        )
-        this._scene.addEntity(threeEntity, extendBbox)
-        this._isDirty = true
-  
-        // Release memory occupied by this entity
-        threeEntity.dispose()
-        threeEntity = null
-      }
-  
-      if (entity instanceof AcDbViewport) {
-        // In paper space layouts, there is always a system-defined "default" viewport that exists as
-        // the bottom-most item. This viewport doesn't show any entities and is mainly for internal
-        // AutoCAD purposes. The viewport id number of this system-defined "default" viewport is 1.
-        if (entity.number > 1) {
-          const layoutView = this._layoutViewManager.getAt(entity.ownerId)
-          if (layoutView) {
-            const viewportView = new AcTrViewportView(
-              layoutView,
-              entity.toGiViewport(),
-              this._renderer
-            )
-            layoutView.addViewport(viewportView)
-          }
-        }
-      } else if (entity instanceof AcDbRasterImage) {
-        const fileName = entity.imageFileName
-        if (fileName) this._missedImages.set(entity.objectId, fileName)
-      }
-    }
+    const entities = Array.isArray(entity) ? entity : [entity]
+    this.batchConvert(entities)
   }
 
   /**
@@ -623,5 +577,57 @@ export class AcTrView2d extends AcEdBaseView {
     } else {
       stats.dom.style.display = 'none' // Hide the stats
     }
+  }
+
+  /**
+   * Converts the specified database entities to three entities
+   * @param entities - The database entities
+   * @returns The converted three entities
+   */
+  private batchConvert(entities: AcDbEntity[]) {
+    const threeEntities: { entity: AcTrEntity; isExtendBbox: boolean }[] = []
+    for (let i = 0; i < entities.length; ++i) {
+      const entity = entities[i]
+      const threeEntity: AcTrEntity | null = entity.draw(
+        this._renderer
+      ) as AcTrEntity
+      if (threeEntity) {
+        threeEntity.objectId = entity.objectId
+        threeEntity.ownerId = entity.ownerId
+        threeEntity.layerName = entity.layer
+        threeEntity.visible = entity.visibility
+        const isExtendBbox = !(
+          entity instanceof AcDbRay || entity instanceof AcDbXline
+        )
+
+        threeEntity.draw().then(() => {
+          this._scene.addEntity(threeEntity, isExtendBbox)
+          // Release memory occupied by this entity
+          threeEntity.dispose()
+          this._isDirty = true
+        })
+
+        if (entity instanceof AcDbViewport) {
+          // In paper space layouts, there is always a system-defined "default" viewport that exists as
+          // the bottom-most item. This viewport doesn't show any entities and is mainly for internal
+          // AutoCAD purposes. The viewport id number of this system-defined "default" viewport is 1.
+          if (entity.number > 1) {
+            const layoutView = this._layoutViewManager.getAt(entity.ownerId)
+            if (layoutView) {
+              const viewportView = new AcTrViewportView(
+                layoutView,
+                entity.toGiViewport(),
+                this._renderer
+              )
+              layoutView.addViewport(viewportView)
+            }
+          }
+        } else if (entity instanceof AcDbRasterImage) {
+          const fileName = entity.imageFileName
+          if (fileName) this._missedImages.set(entity.objectId, fileName)
+        }
+      }
+    }
+    return threeEntities
   }
 }

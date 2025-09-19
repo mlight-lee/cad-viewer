@@ -57,18 +57,14 @@ Thirdly, add the following code in the entry point of cad-simple-viewer integrat
 
 ```typescript
 import { AcApDocManager } from '@mlightcad/cad-simple-viewer'
-import { AcDbDatabaseConverterManager, AcDbFileType, registerConverters } from '@mlightcad/data-model'
+import { AcDbDatabaseConverterManager, AcDbFileType, registerWorkers } from '@mlightcad/data-model'
 
-// Register DXF and DWG converters
-registerConverters()
+// Initializes background workers used by the viewer runtime.
+registerWorkers()
 
 // Get canvas DOM element by its id
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
 AcApDocManager.createInstance(canvas)
-
-// Although it is optional, it is better to call this method to load the default fonts.
-// The default fonts are used if fonts used in drawing are not found.
-await AcApDocManager.instance.loadDefaultFonts()
 
 // Read the file content
 const fileContent = await this.readFile(file)
@@ -90,14 +86,15 @@ const success = await AcApDocManager.instance.openDocument(
 ......
 ```
 
-Finally, copy web worker javascript file to `dist/assets` folder.
+Finally, copy web worker javascript files to `dist/assets` folder.
 
-Web worker are used to parser dxf/dwg file so that UI not blocked. You can copy the following web worker files to folder `dist/assets` manually.
+Web worker are used to parser dxf/dwg file and render mtext entities so that UI not blocked. You can copy the following web worker files to folder `dist/assets` manually.
 
 - `./node_modules/@mlightcad/data-model/dist/dxf-parser-worker.js`
 - `./node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js`
+- `./node_modules/@mlightcad/cad-simple-viewer/dist/mtext-renderer-worker.js`
 
-However, `vite-plugin-static-copy` is recommended to make your lefe easier.
+However, `vite-plugin-static-copy` is recommended to make your life easier.
 
 ```typescript
 import { resolve } from 'path'
@@ -125,6 +122,10 @@ export default defineConfig(() => {
           },
           {
             src: './node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js',
+            dest: 'assets'
+          },
+          {
+            src: './node_modules/@mlightcad/cad-simple-viewer/dist/mtext-renderer-worker.js',
             dest: 'assets'
           }
         ]

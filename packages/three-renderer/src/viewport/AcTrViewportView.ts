@@ -1,7 +1,7 @@
 import { AcGeBox2d, AcGiViewport } from '@mlightcad/data-model'
 import * as THREE from 'three'
 
-import { AcTrRenderer } from '../AcTrRenderer'
+import { AcTrRenderer } from '../renderer'
 import { AcTrBaseView } from './AcTrBaseView'
 
 /**

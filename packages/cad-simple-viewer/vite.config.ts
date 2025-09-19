@@ -19,6 +19,10 @@ export default defineConfig({
         {
           src: './node_modules/@mlightcad/libredwg-converter/dist/libredwg-parser-worker.js',
           dest: ''
+        },
+        {
+          src: './node_modules/@mlightcad/mtext-renderer/dist/mtext-renderer-worker.js',
+          dest: ''
         }
       ]
     })

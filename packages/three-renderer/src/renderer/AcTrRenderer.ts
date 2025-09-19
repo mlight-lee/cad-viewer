@@ -27,9 +27,9 @@ import {
   AcTrObject,
   AcTrPoint,
   AcTrPolygon
-} from './object'
-import { AcTrStyleManager } from './style/AcTrStyleManager'
-import { AcTrCamera } from './viewport'
+} from '../object'
+import { AcTrStyleManager } from '../style/AcTrStyleManager'
+import { AcTrCamera } from '../viewport'
 
 export class AcTrRenderer implements AcGiRenderer<AcTrEntity> {
   private _styleManager: AcTrStyleManager
@@ -124,7 +124,7 @@ export class AcTrRenderer implements AcGiRenderer<AcTrEntity> {
   }
 
   async loadFonts(urls: string[]) {
-    return await FontManager.instance.loadFonts(urls)
+    return await FontManager.instance.loadFontsByUrls(urls)
   }
 
   /**

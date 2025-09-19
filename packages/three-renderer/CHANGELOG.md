@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.17
+
+### Patch Changes
+
+- feat: render mtexts in web worker
+
 ## 1.0.16
 
 ### Patch Changes

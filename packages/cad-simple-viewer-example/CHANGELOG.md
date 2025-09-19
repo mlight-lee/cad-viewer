@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.0.19
+
+### Patch Changes
+
+- feat: render mtexts in web worker
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.19
+
 ## 1.0.18
 
 ### Patch Changes

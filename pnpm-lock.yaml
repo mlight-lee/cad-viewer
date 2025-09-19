@@ -103,11 +103,14 @@ importers:
   packages/cad-simple-viewer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
       '@mlightcad/libredwg-converter':
-        specifier: 3.0.8
-        version: 3.0.8(@mlightcad/data-model@1.2.7)(@mlightcad/libredwg-web@0.2.1)
+        specifier: 3.0.9
+        version: 3.0.9(@mlightcad/data-model@1.2.8)(@mlightcad/libredwg-web@0.2.1)
+      '@mlightcad/mtext-renderer':
+        specifier: 0.5.0
+        version: 0.5.0(three@0.172.0)
       lodash-es:
         specifier: 4.17.21
         version: 4.17.21
@@ -146,8 +149,8 @@ importers:
         specifier: workspace:*
         version: link:../cad-simple-viewer
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
 
   packages/cad-viewer:
     dependencies:
@@ -158,8 +161,8 @@ importers:
         specifier: workspace:*
         version: link:../cad-simple-viewer
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.3.0(vue@3.5.18(typescript@5.8.3))
@@ -228,8 +231,8 @@ importers:
         specifier: workspace:*
         version: link:../cad-viewer
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.3.0(vue@3.5.18(typescript@5.8.3))
@@ -298,30 +301,24 @@ importers:
   packages/svg-renderer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
 
   packages/three-renderer:
     dependencies:
       '@mlightcad/data-model':
-        specifier: 1.2.7
-        version: 1.2.7
+        specifier: 1.2.8
+        version: 1.2.8
       '@mlightcad/mtext-renderer':
-        specifier: 0.4.5
-        version: 0.4.5(three@0.172.0)
+        specifier: 0.5.0
+        version: 0.5.0(three@0.172.0)
       '@velipso/polybool':
         specifier: ^1.1.1
         version: 1.1.1
-      opentype.js:
-        specifier: ^1.3.4
-        version: 1.3.4
       three:
         specifier: ^0.172.0
         version: 0.172.0
     devDependencies:
-      '@types/opentype.js':
-        specifier: ^1.3.8
-        version: 1.3.8
       '@types/three':
         specifier: ^0.172.0
         version: 0.172.0
@@ -1556,8 +1553,8 @@ packages:
   '@mlightcad/common@1.2.0':
     resolution: {integrity: sha512-aWdCxSTxg/qyXZc/5g8qCzR1I0npqQ5CHSssn5B7dFqeVh8qPsoCgMn88RDkBT2+JlbDnhxZLKQO+NOWqHKidA==}
 
-  '@mlightcad/data-model@1.2.7':
-    resolution: {integrity: sha512-nbVOCLiPgmFKpEMnCE4ukfIdYEUel1xjPwQmZpCVANiog5Adz0di3j6wrgHItR0b7gkQjbsWj2Qk/qrn7jyf9Q==}
+  '@mlightcad/data-model@1.2.8':
+    resolution: {integrity: sha512-yM/IMn5QIgGE67j6xavVYvyo0Seutck9vSqK8mh0CZvuUgSEjdq+jDy1nedyhdWyGLzQ9bkjpKN/utJ2FKf+6Q==}
 
   '@mlightcad/dxf-json@1.0.8':
     resolution: {integrity: sha512-NOLt3LcyOti+Ero9PMbvZaYWvn2IwVL7ysty0aYxTdeYc3gs1+Xnj+VjaCEL6ACMXLlmQd8pFQjMdRsuIIUd2A==}
@@ -1572,10 +1569,10 @@ packages:
     peerDependencies:
       '@mlightcad/geometry-engine': 3.0.0
 
-  '@mlightcad/libredwg-converter@3.0.8':
-    resolution: {integrity: sha512-B5SmzzuVi4uazm1K0y3z/Tb4sa1kMdAUze0CnXAHnbCWlvyA4sjkggYVfaObTDfCgUG8A0DhY1QoERB1hh0BEg==}
+  '@mlightcad/libredwg-converter@3.0.9':
+    resolution: {integrity: sha512-VutJqvgeatp1E5b/xstqJOY5gvMFd5xndIP9orbEnjxj6qX54lABrrx56mvsbBK+796HLqP3qCJiRDniWkm5MA==}
     peerDependencies:
-      '@mlightcad/data-model': 1.2.7
+      '@mlightcad/data-model': 1.2.8
       '@mlightcad/libredwg-web': 0.2.1
 
   '@mlightcad/libredwg-web@0.2.1':
@@ -1584,8 +1581,8 @@ packages:
   '@mlightcad/mtext-parser@1.2.0':
     resolution: {integrity: sha512-ecAJZWIgxeCHMbf8r5bYVos0k9/6whQy2Y6v1y1Ku7RAOrP+vxN/BJF+88u4k3+2cGGn6/xRasCpK7B+hvYsgw==}
 
-  '@mlightcad/mtext-renderer@0.4.5':
-    resolution: {integrity: sha512-Tw2DqQrH7treMxviqgfEVe+y1fMnBmJWDgA7HQX0DInCyWmZaBZGhnx9S0r7W44IuBzdX1gLDNPbfOpUeCbpOA==}
+  '@mlightcad/mtext-renderer@0.5.0':
+    resolution: {integrity: sha512-3aru1guJb2Q0vjC7+3gIyYPV3vTRfgkMNnoSencSfcJkVa2GMZlQ0bhtAtf/e1Owvsj59KzRCC0sNuzUyj1euQ==}
     peerDependencies:
       three: ^0.172.0
 
@@ -2031,9 +2028,6 @@ packages:
 
   '@types/node@20.19.9':
     resolution: {integrity: sha512-cuVNgarYWZqxRJDQHEB58GEONhOK79QVR/qYx4S7kcUObQvUwvFnYxJuuHUKm2aieN9X3yZB4LZsuYNU1Qphsw==}
-
-  '@types/opentype.js@1.3.8':
-    resolution: {integrity: sha512-H6qeTp03jrknklSn4bpT1/9+1xCAEIU2CnjcWPkicJy8A1SKuthanbvoHYMiv79/2W3Xn1XE4gfSJFzt2U3JSw==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -6615,7 +6609,7 @@ snapshots:
     dependencies:
       loglevel: 1.9.2
 
-  '@mlightcad/data-model@1.2.7':
+  '@mlightcad/data-model@1.2.8':
     dependencies:
       '@mlightcad/dxf-json': 1.0.8
       uid: 2.0.2
@@ -6633,16 +6627,16 @@ snapshots:
     dependencies:
       '@mlightcad/geometry-engine': 3.0.0(@mlightcad/common@1.2.0)
 
-  '@mlightcad/libredwg-converter@3.0.8(@mlightcad/data-model@1.2.7)(@mlightcad/libredwg-web@0.2.1)':
+  '@mlightcad/libredwg-converter@3.0.9(@mlightcad/data-model@1.2.8)(@mlightcad/libredwg-web@0.2.1)':
     dependencies:
-      '@mlightcad/data-model': 1.2.7
+      '@mlightcad/data-model': 1.2.8
       '@mlightcad/libredwg-web': 0.2.1
 
   '@mlightcad/libredwg-web@0.2.1': {}
 
   '@mlightcad/mtext-parser@1.2.0': {}
 
-  '@mlightcad/mtext-renderer@0.4.5(three@0.172.0)':
+  '@mlightcad/mtext-renderer@0.5.0(three@0.172.0)':
     dependencies:
       '@mlightcad/mtext-parser': 1.2.0
       '@mlightcad/shx-parser': 1.0.5
@@ -7090,8 +7084,6 @@ snapshots:
   '@types/node@20.19.9':
     dependencies:
       undici-types: 6.21.0
-
-  '@types/opentype.js@1.3.8': {}
 
   '@types/parse-json@4.0.2': {}
 

@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.15
+
+### Patch Changes
+
+- feat: render mtexts in web worker
+
 ## 1.0.14
 
 ### Patch Changes

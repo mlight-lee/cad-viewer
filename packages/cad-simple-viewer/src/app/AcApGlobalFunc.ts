@@ -4,6 +4,7 @@ import {
   AcDbFileType
 } from '@mlightcad/data-model'
 import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
+import { AcTrMTextRenderer } from '@mlightcad/three-renderer'
 
 /**
  * Registers file format converters for CAD file processing.
@@ -15,22 +16,12 @@ import { AcDbLibreDwgConverter } from '@mlightcad/libredwg-converter'
  * The function handles registration errors gracefully by logging them to the console
  * without throwing exceptions, ensuring that the application can continue to function
  * even if one or more converters fail to register.
- *
- * @async
- * @function registerConverters
- * @returns {Promise<void>} A promise that resolves when all converters have been
- *                          registered (or failed to register)
- *
- * @example
- * ```typescript
- * // Register all available converters
- * await registerConverters();
- * ```
  */
-export async function registerConverters() {
+export function registerConverters() {
   // Register DXF converter
   try {
     const converter = new AcDbDxfConverter({
+      convertByEntityType: false,
       useWorker: true,
       parserWorkerUrl: './assets/dxf-parser-worker.js'
     })
@@ -42,6 +33,7 @@ export async function registerConverters() {
   // Register DWG converter
   try {
     const converter = new AcDbLibreDwgConverter({
+      convertByEntityType: false,
       useWorker: true,
       parserWorkerUrl: './assets/libredwg-parser-worker.js'
     })
@@ -49,4 +41,21 @@ export async function registerConverters() {
   } catch (error) {
     console.error('Failed to register dwg converter: ', error)
   }
+}
+
+/**
+ * Initializes background workers used by the viewer runtime.
+ *
+ * This function performs two tasks:
+ * - Ensures DXF/DWG converters are registered with worker-based parsers for
+ *   off-main-thread file processing.
+ * - Initializes the MText renderer by pointing it to its dedicated Web Worker
+ *   script for text layout and shaping.
+ *
+ * The function is safe to call during application startup. Errors during
+ * initialization are handled inside the respective registration routines.
+ */
+export function registerWorkers() {
+  registerConverters()
+  AcTrMTextRenderer.getInstance().initialize('/assets/mtext-renderer-worker.js')
 }

@@ -64,6 +64,10 @@ export class AcTrEntity extends AcTrObject implements AcGiEntity {
     this._layerName = value
   }
 
+  async draw() {
+    // Do nothing for now
+  }
+
   /**
    * @inheritdoc
    */

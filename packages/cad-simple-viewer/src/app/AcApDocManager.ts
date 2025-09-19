@@ -250,7 +250,6 @@ export class AcApDocManager {
    */
   createExampleDoc() {
     setTimeout(async () => {
-      await this.loadDefaultFonts()
       AcApDocCreator.instance.createExampleDoc2(this.curDocument.database)
       this.setLayoutInfo()
       this.curView.zoomToFit()

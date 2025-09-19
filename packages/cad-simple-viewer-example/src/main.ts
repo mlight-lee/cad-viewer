@@ -1,7 +1,4 @@
-import {
-  AcApDocManager,
-  registerConverters
-} from '@mlightcad/cad-simple-viewer'
+import { AcApDocManager, registerWorkers } from '@mlightcad/cad-simple-viewer'
 import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
 
 class CadViewerApp {
@@ -17,7 +14,7 @@ class CadViewerApp {
     ) as HTMLInputElement
     this.loadingElement = document.getElementById('loading') as HTMLElement
 
-    registerConverters()
+    registerWorkers()
     this.initializeViewer()
     this.setupFileHandling()
   }
@@ -26,9 +23,6 @@ class CadViewerApp {
     try {
       // Initialize the document manager with the canvas
       AcApDocManager.createInstance(this.canvas)
-      // Load default fonts
-      await AcApDocManager.instance.loadDefaultFonts()
-      console.log('CAD Simple Viewer initialized successfully')
     } catch (error) {
       console.error('Failed to initialize CAD viewer:', error)
       this.showMessage('Failed to initialize CAD viewer', 'error')

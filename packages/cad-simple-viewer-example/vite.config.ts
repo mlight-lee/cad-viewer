@@ -22,7 +22,7 @@ export default defineConfig(() => {
             dest: 'assets'
           },
           {
-            src: './node_modules/@mlightcad/cad-simple-viewer/dist/libredwg-parser-worker.js',
+            src: './node_modules/@mlightcad/cad-simple-viewer/dist/*-worker.js',
             dest: 'assets'
           }
         ]

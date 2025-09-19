@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.16
+
+### Patch Changes
+
+- feat: render mtexts in web worker
+
 ## 0.0.15
 
 ### Patch Changes
