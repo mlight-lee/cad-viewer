@@ -57,10 +57,15 @@ export function registerConverters() {
  */
 export function registerWorkers() {
   registerConverters()
-  const isDev = typeof window !== 'undefined' && !!window.location &&
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  const isDev =
+    typeof window !== 'undefined' &&
+    !!window.location &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1')
   if (isDev) {
-    AcTrMTextRenderer.getInstance().initialize('/assets/mtext-renderer-worker.js')
+    AcTrMTextRenderer.getInstance().initialize(
+      '/assets/mtext-renderer-worker.js'
+    )
   } else {
     AcTrMTextRenderer.getInstance().initialize('./mtext-renderer-worker.js')
   }
