@@ -20,18 +20,19 @@ The THREE.js renderer employs cutting-edge rendering technologies for exceptiona
 - **Buffer Geometry Optimization**: Efficient memory management and geometry merging for reduced GPU overhead
 - **Material Caching**: Reuses materials across similar entities to minimize state changes
 - **WebGL Optimization**: Leverages modern WebGL features for hardware-accelerated rendering
+- **Rendering MText in Web Workers**: Renders mtext entities in multiple web workers
 
 ## Directory Structure (partial)
-- `src/AcTrRenderer.ts` – Main high-performance THREE.js renderer
 - `src/batch/` – Advanced batched geometry and group rendering optimizations
 - `src/geometry/` – Optimized geometry helpers (arrows, points, etc.)
 - `src/object/` – Efficient THREE.js object wrappers for CAD entities
+- `src/renderer/` – High-performance THREE.js renderer
 - `src/style/` – High-performance style and shader management
 - `src/viewport/` – Optimized view and camera management
 - `src/util/` – Performance-focused utility functions
 
 ## Usage
-Import and use `AcTrRenderer` from `src/AcTrRenderer.ts` to render entities using optimized THREE.js rendering with exceptional performance.
+Import and use `AcTrRenderer` to render entities using optimized THREE.js rendering with exceptional performance.
 
 ## Role in MLightCAD
 This package provides the **high-performance** 2D/3D rendering backend for the main application, enabling smooth interactive graphics and advanced visualization for large CAD files.

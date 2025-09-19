@@ -175,7 +175,7 @@ For more details, see the [cad-viewer README](packages/cad-viewer/README.md) and
 ## Examples
 
 - [`packages/cad-simple-viewer-example/`](packages/cad-simple-viewer-example/): Example application demonstrating how to use the `cad-simple-viewer` component in a real project.
-- [`packages/cad-viewer-example/`](packages/cad-viewer-example/): Example application demonstrating how to use the `cad-viewer` component in a real project.
+- [`cad-viewer-example`](https://github.com/mlight-lee/cad-viewer-example): Example application demonstrating how to use the `cad-viewer` component in a real project.
 
 ## Contributing
 
