@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.21
+
+### Patch Changes
+
+- feat: refine logic to addEntity in viewer to reduce memory cost
+
 ## 1.0.20
 
 ### Patch Changes

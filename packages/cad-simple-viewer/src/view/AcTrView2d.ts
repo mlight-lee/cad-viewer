@@ -422,7 +422,9 @@ export class AcTrView2d extends AcEdBaseView {
    */
   addEntity(entity: AcDbEntity | AcDbEntity[]) {
     const entities = Array.isArray(entity) ? entity : [entity]
-    this.batchConvert(entities)
+    setTimeout(async () => {
+      await this.batchConvert(entities)
+    })
   }
 
   /**
@@ -584,8 +586,7 @@ export class AcTrView2d extends AcEdBaseView {
    * @param entities - The database entities
    * @returns The converted three entities
    */
-  private batchConvert(entities: AcDbEntity[]) {
-    const threeEntities: { entity: AcTrEntity; isExtendBbox: boolean }[] = []
+  private async batchConvert(entities: AcDbEntity[]) {
     for (let i = 0; i < entities.length; ++i) {
       const entity = entities[i]
       const threeEntity: AcTrEntity | null = entity.draw(
@@ -600,7 +601,7 @@ export class AcTrView2d extends AcEdBaseView {
           entity instanceof AcDbRay || entity instanceof AcDbXline
         )
 
-        threeEntity.draw().then(() => {
+        await threeEntity.draw().then(() => {
           this._scene.addEntity(threeEntity, isExtendBbox)
           // Release memory occupied by this entity
           threeEntity.dispose()
@@ -628,6 +629,5 @@ export class AcTrView2d extends AcEdBaseView {
         }
       }
     }
-    return threeEntities
   }
 }
