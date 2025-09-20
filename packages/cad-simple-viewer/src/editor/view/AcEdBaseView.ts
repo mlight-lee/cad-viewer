@@ -352,7 +352,32 @@ export abstract class AcEdBaseView {
    */
   abstract wcs2Cwcs(point: AcGePoint2dLike): AcGePoint2d
 
+  /**
+   * Zooms the view to fit the specified bounding box with optional margin.
+   *
+   * This method adjusts the view's center and zoom level so that the entire
+   * specified bounding box is visible within the viewport. The margin parameter
+   * adds extra space around the bounding box to provide visual padding.
+   *
+   * @param box - The bounding box to zoom to, in world coordinates
+   * @param margin - Additional margin around the bounding box (in world units)
+   */
   abstract zoomTo(box: AcGeBox2d, margin: number): void
+
+  /**
+   * Zooms the view to fit all visible entities in the current scene.
+   *
+   * This method automatically calculates the bounding box of all entities
+   * currently displayed in the view and adjusts the view's center and zoom
+   * level to show the entire scene. This is useful for getting an overview
+   * of the entire drawing or after loading new content.
+   *
+   * @important **Progressive Rendering Consideration**: This function takes effect
+   * only if the current view has finished rendering all entities. When opening
+   * a file, progressive Rendering is used to render entities incrementally.
+   * Before all entities are rendered, calling this method may zoom to incorrect
+   * extents based on only the partially rendered content.
+   */
   abstract zoomToFit(): void
 
   /**
