@@ -9,7 +9,7 @@
   MlCadViewer with locale="en", url="path/to/file.dwg", wait="15"
   
   FEATURES:
-  - File loading from local files or URLs
+  - File loading from local files (drag & drop or file dialog) or remote URLs
   - Layer management and visibility control
   - Command line interface for CAD operations
   - Toolbars with common CAD tools (zoom, pan, select, etc.)
@@ -24,7 +24,7 @@
   - Layer manager for controlling entity visibility
   - Command line for text-based commands
   - Status bar with various controls
-  - File reader for local file uploads
+  - File reader for local file uploads (supports drag & drop and file dialog)
   - Entity info panel for object details
   
   EVENTS HANDLED:
@@ -50,11 +50,25 @@
  *
  * @example
  * ```vue
- * // Basic usage
+ * // Basic usage with remote file
  * <MlCadViewer
  *   :locale="'en'"
  *   :url="'https://example.com/drawing.dwg'"
  *   :wait="15"
+ *   canvas-id="my-canvas"
+ * />
+ *
+ * // Basic usage with local file (File object)
+ * <MlCadViewer
+ *   :locale="'en'"
+ *   :local-file="selectedFile"
+ *   canvas-id="my-canvas"
+ * />
+ *
+ * // Basic usage for manual file loading (no URL or localFile needed)
+ * <MlCadViewer
+ *   :locale="'en'"
+ *   canvas-id="my-canvas"
  * />
  *
  * // Import statement
@@ -95,6 +109,8 @@ interface Props {
   locale?: LocaleProp
   /** Optional URL to automatically load a CAD file on component mount */
   url?: string
+  /** Optional local File object to automatically load a CAD file on component mount */
+  localFile?: File
   /** Timeout in seconds to wait for DWG converter (libredwg.js) to load before proceeding */
   wait?: number
   /** Canvas element ID for the CAD viewer. This is required to specify which canvas element to use */
@@ -106,6 +122,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   locale: 'default',
   url: undefined,
+  localFile: undefined,
   wait: 10,
   background: undefined
 })
@@ -120,8 +137,13 @@ const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
  * Handles file read events from the file reader component
  * Opens the file content using the document manager
  *
+ * This function is called when a user selects a local file through:
+ * - The main menu "Open" option (triggers file dialog)
+ * - Drag and drop functionality (if implemented)
+ * - Any other local file selection method
+ *
  * @param fileName - Name of the uploaded file
- * @param fileContent - File content as string or ArrayBuffer
+ * @param fileContent - File content as string (DXF) or ArrayBuffer (DWG)
  */
 const handleFileRead = async (
   fileName: string,
@@ -157,6 +179,56 @@ const openFileFromUrl = async (url: string) => {
   }
 }
 
+/**
+ * Opens a local CAD file from a File object
+ * Used when the localFile prop is provided to automatically load files
+ *
+ * @param file - Local File object containing the CAD file
+ */
+const openLocalFile = async (file: File) => {
+  try {
+    const fileExtension = file.name.split('.').pop()?.toLowerCase()
+    const reader = new FileReader()
+
+    // Read file content based on file type
+    if (fileExtension === 'dxf') {
+      reader.readAsText(file)
+    } else if (fileExtension === 'dwg') {
+      reader.readAsArrayBuffer(file)
+    } else {
+      throw new Error(`Unsupported file type: ${fileExtension}`)
+    }
+
+    // Wait for file reading to complete
+    const fileContent = await new Promise<string | ArrayBuffer>(
+      (resolve, reject) => {
+        reader.onload = event => {
+          const result = event.target?.result
+          if (result) {
+            resolve(result)
+          } else {
+            reject(new Error('Failed to read file content'))
+          }
+        }
+        reader.onerror = () => reject(new Error('Failed to read file'))
+      }
+    )
+
+    // Open the file using the document manager
+    const options: AcDbOpenDatabaseOptions = { minimumChunkSize: 1000 }
+    await AcApDocManager.instance.openDocument(file.name, fileContent, options)
+    store.fileName = file.name
+  } catch (error) {
+    console.error('Failed to open local file:', error)
+    ElMessage({
+      message: t('main.message.failedToOpenFile', { fileName: file.name }),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  }
+}
+
 // Watch for URL changes and automatically open new files
 // This allows dynamic loading of different CAD files without component remounting
 watch(
@@ -164,6 +236,17 @@ watch(
   async newUrl => {
     if (newUrl) {
       openFileFromUrl(newUrl)
+    }
+  }
+)
+
+// Watch for local file changes and automatically open new files
+// This allows dynamic loading of different local CAD files without component remounting
+watch(
+  () => props.localFile,
+  async newFile => {
+    if (newFile) {
+      openLocalFile(newFile)
     }
   }
 )
@@ -178,11 +261,15 @@ watch(
   }
 )
 
-// Component lifecycle: Initialize and load initial file if URL is provided
+// Component lifecycle: Initialize and load initial file if URL or localFile is provided
 onMounted(async () => {
   // If URL prop is provided, automatically load the file on mount
   if (props.url) {
     openFileFromUrl(props.url)
+  }
+  // If localFile prop is provided, automatically load the file on mount
+  else if (props.localFile) {
+    openLocalFile(props.localFile)
   }
 
   // Apply initial background color if provided
@@ -242,7 +329,7 @@ registerDialogs()
 
 <template>
   <!-- Main CAD viewer container with complete UI layout -->
-  <div>
+  <div style="position: relative; z-index: 2; pointer-events: auto">
     <!-- Element Plus configuration provider for internationalization -->
     <el-config-provider :locale="elementPlusLocale">
       <!-- Header section with main menu and language selector -->
@@ -296,5 +383,7 @@ registerDialogs()
   text-align: center;
   width: 100%;
   margin-top: 20px;
+  pointer-events: none; /* Allow mouse events to pass through to canvas */
+  z-index: 1; /* Ensure it's above canvas but doesn't block events */
 }
 </style>

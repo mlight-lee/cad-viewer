@@ -9,11 +9,15 @@ html {
 }
 
 .canvas {
+  position: absolute;
   top: 0px;
+  left: 0px;
   height: calc(100vh - var(--ml-status-bar-height)); /* Adjusts for menu and status bar */
   width: 100%;
   display: block;
   outline: none;
+  z-index: 1; /* Canvas above background but below UI */
+  pointer-events: auto; /* Ensure canvas can receive mouse events */
 }
 
 .el-dialog {

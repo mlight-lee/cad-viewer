@@ -7,6 +7,8 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 - **High-performance** CAD editing and viewing with smooth 60+ FPS rendering
 - **No backend required** - Files are parsed and processed entirely in the browser
 - **Enhanced data security** - Files never leave your device, ensuring complete privacy
+- **Local file support** - Load DWG/DXF files directly from your computer via file dialog or drag & drop
+- **Remote file support** - Load CAD files from URLs automatically
 - **Easy integration** - No server setup or backend infrastructure needed for third-party integration
 - **Customizable UI** - Control visibility of toolbars, command line, coordinates, and performance stats
 - Modern UI optimized for large CAD file handling
@@ -20,6 +22,7 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 Use `cad-viewer` if you want a **ready-to-use Vue 3 component** for viewing and editing CAD files with a modern UI, dialogs, toolbars, and state management. This package is ideal if:
 
 - You want to quickly embed a high-performance CAD viewer/editor into your Vue application with minimal setup.
+- You need support for both local file loading (from user's computer) and remote file loading (from URLs).
 - You need a solution that handles file loading, rendering, layer/entity management, and user interactions out of the box.
 - You want seamless integration with optimized SVG and THREE.js renderers, internationalization, and theming.
 - You do **not** want to build your own UI from scratch.
@@ -31,10 +34,61 @@ Use `cad-viewer` if you want a **ready-to-use Vue 3 component** for viewing and 
 This Vue 3 component operates entirely in the browser with **no backend dependencies**. DWG/DXF files are parsed and processed locally using WebAssembly and JavaScript, providing:
 
 - **Zero server requirements** - Deploy the component anywhere with just static file hosting
-- **Complete data privacy** - CAD files never leave the user's device
+- **Complete data privacy** - CAD files never leave the user's device, whether loaded locally or from URLs
+- **Local file support** - Users can load files directly from their computer using the built-in file dialog
+- **Remote file support** - Automatically load files from URLs when provided
 - **Instant integration** - No complex backend setup or API configuration needed
 - **Offline capability** - Works without internet connectivity once loaded
 - **Third-party friendly** - Easy to embed in any Vue 3 application without server-side concerns
+
+## File Loading Methods
+
+The MlCadViewer component supports multiple ways to load CAD files:
+
+### 1. Local File Loading
+Users can load files directly from their computer:
+- **File Dialog**: Click the main menu (☰) and select "Open" to browse and select local DWG/DXF files
+- **Drag & Drop**: Drag and drop CAD files directly onto the viewer (if implemented in your application)
+- **File Input**: Use the built-in file reader component for programmatic file selection
+- **Component Prop**: Pass a File object directly to the `localFile` prop for automatic loading
+
+#### Example: Using localFile prop with file input
+```vue
+<template>
+  <div>
+    <input 
+      type="file" 
+      accept=".dwg,.dxf" 
+      @change="handleFileSelect"
+    />
+    <MlCadViewer 
+      canvas-id="canvas" 
+      :local-file="selectedFile" 
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MlCadViewer } from '@mlightcad/cad-viewer'
+
+const selectedFile = ref<File | undefined>()
+
+const handleFileSelect = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  selectedFile.value = target.files?.[0]
+}
+</script>
+```
+
+### 2. Remote File Loading
+Automatically load files from URLs:
+- **URL Prop**: Provide a `url` prop to automatically load a file when the component mounts
+- **Dynamic Loading**: Change the `url` prop to load different files without remounting the component
+
+### 3. Supported File Formats
+- **DWG files**: Binary AutoCAD drawing format (read as ArrayBuffer)
+- **DXF files**: ASCII/binary AutoCAD drawing exchange format (read as text)
 
 ## Directory Structure (partial)
 
@@ -73,7 +127,22 @@ Then create one vue component as follows.
 ```vue
 <template>
   <div>
+    <!-- For local file loading (users can open files via menu) -->
     <MlCADViewer canvas-id="canvas" :background="0x808080" />
+    
+    <!-- For remote file loading (automatically loads from URL) -->
+    <!-- <MlCADViewer 
+      canvas-id="canvas" 
+      :background="0x808080" 
+      :url="'https://example.com/drawing.dwg'" 
+    /> -->
+    
+    <!-- For local file loading (automatically loads from File object) -->
+    <!-- <MlCADViewer 
+      canvas-id="canvas" 
+      :background="0x808080" 
+      :local-file="selectedFile" 
+    /> -->
   </div>
 </template>
 
@@ -111,7 +180,8 @@ The `MlCadViewer` component accepts the following props:
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
-| `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. |
+| `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. **Note**: If not provided, users can still load local files using the main menu "Open" option. |
+| `localFile` | `File` | `undefined` | Optional local File object to automatically load a CAD file when the component mounts. The file will be read and opened automatically. **Note**: This takes precedence over the `url` prop if both are provided. |
 | `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
 | `canvasId` | `string` | **Required** | Canvas element ID for the CAD viewer. The component will automatically call `initializeCadViewer` with this ID during its mount lifecycle. |
 | `background` | `number` | `undefined` | Background color as 24-bit hexadecimal RGB (e.g., `0x000000` for black, `0x808080` for gray). |
@@ -130,10 +200,23 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
 #### Example (recommended)
 ```vue
 <template>
+  <!-- Local file loading - users can open files via main menu -->
   <MlCadViewer locale="en" canvas-id="canvas" />
-  <!-- Or provide url/wait props as needed -->
-  <!-- <MlCadViewer :wait="10" canvas-id="my-canvas" url="https://example.com/drawing.dwg" /> -->
   
+  <!-- Remote file loading - automatically loads from URL -->
+  <!-- <MlCadViewer 
+    locale="en" 
+    canvas-id="canvas" 
+    :url="'https://example.com/drawing.dwg'" 
+    :wait="10" 
+  /> -->
+  
+  <!-- Local file loading - automatically loads from File object -->
+  <!-- <MlCadViewer 
+    locale="en" 
+    canvas-id="canvas" 
+    :local-file="selectedFile" 
+  /> -->
 </template>
 
 <script setup lang="ts">
@@ -158,13 +241,13 @@ AcApSettingManager.instance.isShowCommandLine = false
 
 The `MlCadViewer` component includes:
 
-- **Main Menu** - File operations, view controls, and settings
+- **Main Menu** - File operations (including local file opening), view controls, and settings
 - **Toolbars** - Drawing tools, zoom controls, and selection tools
 - **Layer Manager** - Layer visibility and property management
 - **Command Line** - AutoCAD-style command input
 - **Status Bar** - Current position, zoom level, and system status
 - **Dialog Manager** - Modal dialogs for various operations
-- **File Reader** - Drag-and-drop file loading
+- **File Reader** - Local file loading via file dialog and drag-and-drop support
 - **Entity Info** - Detailed information about selected entities
 - **Language Selector** - UI language switching
 - **Theme Support** - Dark/light mode toggle
@@ -173,7 +256,7 @@ The `MlCadViewer` component includes:
 
 The component automatically handles various events:
 
-- **File Loading** - Supports drag-and-drop and URL-based file loading
+- **File Loading** - Supports local file loading (via file dialog), drag-and-drop, and URL-based file loading
 - **Error Messages** - Displays user-friendly error messages for failed operations
 - **Font Loading** - Handles missing fonts with appropriate notifications
 - **System Messages** - Shows status updates and operation feedback
