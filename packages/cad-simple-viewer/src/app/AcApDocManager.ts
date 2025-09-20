@@ -18,7 +18,6 @@ import {
 import { AcEdCalculateSizeCallback, eventBus } from '../editor'
 import { AcTrView2d } from '../view'
 import { AcApContext } from './AcApContext'
-import { AcApDocCreator } from './AcApDocCreator'
 import { AcApDocument } from './AcApDocument'
 import { AcApFontLoader } from './AcApFontLoader'
 
@@ -242,21 +241,6 @@ export class AcApDocManager {
   }
 
   /**
-   * Creates an example CAD document with sample content.
-   *
-   * This method asynchronously loads default fonts, creates example drawing content,
-   * sets up layout information, and zooms the view to fit the content.
-   * The creation is performed after a short delay to ensure proper initialization.
-   */
-  createExampleDoc() {
-    setTimeout(async () => {
-      AcApDocCreator.instance.createExampleDoc2(this.curDocument.database)
-      this.setLayoutInfo()
-      this.curView.zoomToFit()
-    })
-  }
-
-  /**
    * Opens a CAD document from a URL.
    *
    * This method loads a document from the specified URL and replaces the current document.
@@ -399,6 +383,18 @@ export class AcApDocManager {
   }
 
   /**
+   * Configures layout information for the current view.
+   *
+   * Sets up the active layout block table record ID and model space block table
+   * record ID based on the current document's space configuration.
+   */
+  setActiveLayout() {
+    const currentView = this.curView as AcTrView2d
+    currentView.activeLayoutBtrId = this.curDocument.database.currentSpaceId
+    currentView.modelSpaceBtrId = this.curDocument.database.currentSpaceId
+  }
+
+  /**
    * Performs cleanup operations before opening a new document.
    *
    * This protected method is called automatically before any document opening operation.
@@ -424,7 +420,7 @@ export class AcApDocManager {
     if (isSuccess) {
       const doc = this.context.doc
       this.events.documentActivated.dispatch({ doc })
-      this.setLayoutInfo()
+      this.setActiveLayout()
       const db = doc.database
       this.curView.zoomTo(new AcGeBox2d(db.extmin, db.extmax))
     }
@@ -448,19 +444,5 @@ export class AcApDocManager {
       options.fontLoader = this._fontLoader
     }
     return options
-  }
-
-  /**
-   * Configures layout information for the current view.
-   *
-   * This private method sets up the active layout block table record ID and
-   * model space block table record ID based on the current document's space configuration.
-   *
-   * @private
-   */
-  private setLayoutInfo() {
-    const currentView = this.curView as AcTrView2d
-    currentView.activeLayoutBtrId = this.curDocument.database.currentSpaceId
-    currentView.modelSpaceBtrId = this.curDocument.database.currentSpaceId
   }
 }

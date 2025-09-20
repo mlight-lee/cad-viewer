@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.0.22
+
+### Patch Changes
+
+- feat: move some logic to repo cad-simple-viewer-example
+
 ## 1.0.21
 
 ### Patch Changes
