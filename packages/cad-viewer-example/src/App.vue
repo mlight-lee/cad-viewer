@@ -38,14 +38,7 @@ const handleFileSelect = (file: File) => {
 <style scoped>
 #app-root {
   height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2; /* Above canvas but allow events to pass through */
-  pointer-events: none; /* Allow events to pass through to canvas */
 }
 
 .upload-screen {

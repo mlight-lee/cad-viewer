@@ -402,6 +402,7 @@ eventBus.on('failed-to-open-file', params => {
 /* Main CAD viewer container styling */
 .ml-cad-viewer-container {
   position: relative;
+  width: 100vw;
   z-index: 2;
   pointer-events: auto;
 }

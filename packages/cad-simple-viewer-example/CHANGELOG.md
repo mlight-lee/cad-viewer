@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.1.0
+
+### Patch Changes
+
+- feat: simplify styles of cad-viewer component
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.24
+
 ## 1.0.23
 
 ### Patch Changes
