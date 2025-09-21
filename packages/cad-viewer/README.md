@@ -62,7 +62,6 @@ Users can load files directly from their computer:
       @change="handleFileSelect"
     />
     <MlCadViewer 
-      canvas-id="canvas" 
       :local-file="selectedFile" 
     />
   </div>
@@ -128,18 +127,16 @@ Then create one vue component as follows.
 <template>
   <div>
     <!-- For local file loading (users can open files via menu) -->
-    <MlCADViewer canvas-id="canvas" :background="0x808080" />
+    <MlCADViewer :background="0x808080" />
     
     <!-- For remote file loading (automatically loads from URL) -->
     <!-- <MlCADViewer 
-      canvas-id="canvas" 
       :background="0x808080" 
       :url="'https://example.com/drawing.dwg'" 
     /> -->
     
     <!-- For local file loading (automatically loads from File object) -->
     <!-- <MlCADViewer 
-      canvas-id="canvas" 
       :background="0x808080" 
       :local-file="selectedFile" 
     /> -->
@@ -183,7 +180,6 @@ The `MlCadViewer` component accepts the following props:
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. **Note**: If not provided, users can still load local files using the main menu "Open" option. |
 | `localFile` | `File` | `undefined` | Optional local File object to automatically load a CAD file when the component mounts. The file will be read and opened automatically. **Note**: This takes precedence over the `url` prop if both are provided. |
 | `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
-| `canvasId` | `string` | **Required** | Canvas element ID for the CAD viewer. The component will automatically call `initializeCadViewer` with this ID during its mount lifecycle. |
 | `background` | `number` | `undefined` | Background color as 24-bit hexadecimal RGB (e.g., `0x000000` for black, `0x808080` for gray). |
 
 ### UI Settings
@@ -201,12 +197,11 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
 ```vue
 <template>
   <!-- Local file loading - users can open files via main menu -->
-  <MlCadViewer locale="en" canvas-id="canvas" />
+  <MlCadViewer locale="en" />
   
   <!-- Remote file loading - automatically loads from URL -->
   <!-- <MlCadViewer 
     locale="en" 
-    canvas-id="canvas" 
     :url="'https://example.com/drawing.dwg'" 
     :wait="10" 
   /> -->
@@ -214,7 +209,6 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
   <!-- Local file loading - automatically loads from File object -->
   <!-- <MlCadViewer 
     locale="en" 
-    canvas-id="canvas" 
     :local-file="selectedFile" 
   /> -->
 </template>

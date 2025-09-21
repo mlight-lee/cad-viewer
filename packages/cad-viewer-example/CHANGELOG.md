@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.0.23
+
+### Patch Changes
+
+- feat: remove property 'canvasId' and add property 'localFile' for cad-viewer component
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.0.23
+  - @mlightcad/cad-viewer@1.0.23
+
 ## 1.0.22
 
 ### Patch Changes

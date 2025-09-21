@@ -6,8 +6,7 @@ import { AcApDocManager, registerWorkers } from '@mlightcad/cad-simple-viewer'
 
 import { registerCmds } from './register'
 
-export const initializeCadViewer = (elementId: string) => {
-  const canvas = document.getElementById(elementId) as HTMLCanvasElement
+export const initializeCadViewer = (canvas: HTMLCanvasElement) => {
   AcApDocManager.createInstance(canvas)
   registerWorkers()
   registerCmds()

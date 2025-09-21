@@ -10,8 +10,6 @@ import {
 import { MlPointStyleDlg, MlReplacementDlg } from '../component'
 import { useDialogManager } from '../composable'
 
-const { registerDialog } = useDialogManager()
-
 export const registerCmds = () => {
   AcEdCommandStack.instance.addCommand(
     AcEdCommandStack.SYSTEMT_COMMAND_GROUP_NAME,
@@ -40,6 +38,7 @@ export const registerCmds = () => {
 }
 
 export const registerDialogs = () => {
+  const { registerDialog } = useDialogManager()
   registerDialog({
     name: 'ReplacementDlg',
     component: markRaw(MlReplacementDlg),
