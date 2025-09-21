@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.1.1
+
+### Patch Changes
+
+- feat: upgrade dependencies to fix bug on rendering shx fonts
+
 ## 1.1.0
 
 ### Patch Changes

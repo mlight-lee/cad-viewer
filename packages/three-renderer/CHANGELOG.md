@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.18
+
+### Patch Changes
+
+- feat: upgrade dependencies to fix bug on rendering shx fonts
+
 ## 1.0.17
 
 ### Patch Changes
