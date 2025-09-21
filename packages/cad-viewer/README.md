@@ -179,7 +179,6 @@ The `MlCadViewer` component accepts the following props:
 | `locale` | `'en' \| 'zh' \| 'default'` | `'default'` | Sets the language for the component interface. Use `'en'` for English, `'zh'` for Chinese, or `'default'` to use the browser's default language. |
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. **Note**: If not provided, users can still load local files using the main menu "Open" option. |
 | `localFile` | `File` | `undefined` | Optional local File object to automatically load a CAD file when the component mounts. The file will be read and opened automatically. **Note**: This takes precedence over the `url` prop if both are provided. |
-| `wait` | `number` | `10` | When set to a positive number, the component will wait for DWG converter ready to use for the specified number of seconds before initializing. This is useful when you need to ensure DWG file support is available before the component becomes interactive. Set to `0` or negative value to disable waiting. |
 | `background` | `number` | `undefined` | Background color as 24-bit hexadecimal RGB (e.g., `0x000000` for black, `0x808080` for gray). |
 
 ### UI Settings
@@ -203,7 +202,6 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
   <!-- <MlCadViewer 
     locale="en" 
     :url="'https://example.com/drawing.dwg'" 
-    :wait="10" 
   /> -->
   
   <!-- Local file loading - automatically loads from File object -->

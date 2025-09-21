@@ -6,7 +6,7 @@
   command execution, and various viewing tools.
   
   USAGE EXAMPLE:
-  MlCadViewer with locale="en", url="path/to/file.dwg", wait="15"
+  MlCadViewer with locale="en", url="path/to/file.dwg"
   
   FEATURES:
   - File loading from local files (drag & drop or file dialog) or remote URLs
@@ -54,7 +54,6 @@
  * <MlCadViewer
  *   :locale="'en'"
  *   :url="'https://example.com/drawing.dwg'"
- *   :wait="15"
  * />
  *
  * // Basic usage with local file (File object)
@@ -108,8 +107,6 @@ interface Props {
   url?: string
   /** Optional local File object to automatically load a CAD file on component mount */
   localFile?: File
-  /** Timeout in seconds to wait for DWG converter (libredwg.js) to load before proceeding */
-  wait?: number
   /** Background color as 24-bit hexadecimal RGB number (e.g., 0x000000) */
   background?: number
 }
@@ -118,7 +115,6 @@ const props = withDefaults(defineProps<Props>(), {
   locale: 'default',
   url: undefined,
   localFile: undefined,
-  wait: 10,
   background: undefined
 })
 
