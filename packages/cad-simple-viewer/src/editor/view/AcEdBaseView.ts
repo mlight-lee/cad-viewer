@@ -1,6 +1,7 @@
 import {
   AcCmEventManager,
   AcDbEntity,
+  AcDbLayerTableRecord,
   AcDbLayout,
   AcDbObjectId,
   AcGeBox2d,
@@ -432,6 +433,18 @@ export abstract class AcEdBaseView {
   abstract clear(): void
 
   /**
+   * Add the specified layer in drawing database into the current scene
+   * @param layer Input the layer to add into the current scene
+   */
+  abstract addLayer(layer: AcDbLayerTableRecord): void
+
+  /**
+   * Update the specified layer in the current scene
+   * @param layer Input the layer to update
+   */
+  abstract updateLayer(layer: AcDbLayerTableRecord): void
+
+  /**
    * Add the specified entity or entities in drawing database into the current scene
    * and draw it or them
    * @param entity Input the entity to add into the current scene
@@ -458,13 +471,6 @@ export abstract class AcEdBaseView {
    * Unhighlight the specified entities
    */
   abstract unhighlight(ids: AcDbObjectId[]): void
-
-  /**
-   * Set layer's visibility
-   * @param layerName Input layer name
-   * @param visible Input visibility of the layer
-   */
-  abstract setLayerVisibility(layerName: string, visible: boolean): void
 
   /**
    * Called when hovering the specified entity

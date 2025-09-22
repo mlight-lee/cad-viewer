@@ -1,6 +1,7 @@
 import {
   AcDbEntity,
   acdbHostApplicationServices,
+  AcDbLayerTableRecord,
   AcDbLayout,
   AcDbObjectId,
   AcDbRasterImage,
@@ -415,6 +416,28 @@ export class AcTrView2d extends AcEdBaseView {
     const results = this._scene.search(box)
     results.forEach(item => idsAdded.push(item.id))
     this.selectionSet.add(idsAdded)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addLayer(layer: AcDbLayerTableRecord) {
+    this._scene.addLayer({
+      name: layer.name,
+      isFrozen: layer.isFrozen,
+      isOff: layer.isOff
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  updateLayer(layer: AcDbLayerTableRecord) {
+    this._scene.updateLayer({
+      name: layer.name,
+      isFrozen: layer.isFrozen,
+      isOff: layer.isOff
+    })
   }
 
   /**

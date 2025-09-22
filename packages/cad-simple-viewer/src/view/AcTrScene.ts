@@ -1,5 +1,6 @@
 import { AcDbObjectId, AcGeBox2d, AcGeBox3d } from '@mlightcad/data-model'
 import { AcTrEntity, AcTrObject } from '@mlightcad/three-renderer'
+import { AcEdLayerInfo } from 'editor'
 import * as THREE from 'three'
 
 import { AcTrLayout, AcTrLayoutStats } from './AcTrLayout'
@@ -49,6 +50,8 @@ export class AcTrScene {
   /** The underlying Three.js scene object */
   private _scene: THREE.Scene
   /** Map of layout ID to layout object */
+  private _layers: Map<string, AcEdLayerInfo>
+  /** Map of layout ID to layout object */
   private _layouts: Map<AcDbObjectId, AcTrLayout>
   /** ID of the currently active layout */
   private _activeLayoutBtrId: AcDbObjectId
@@ -62,9 +65,17 @@ export class AcTrScene {
    */
   constructor() {
     this._scene = new THREE.Scene()
+    this._layers = new Map()
     this._layouts = new Map()
     this._activeLayoutBtrId = ''
     this._modelSpaceBtrId = ''
+  }
+
+  /**
+   * The layers in this scene
+   */
+  get layers() {
+    return this._layers
   }
 
   /**
@@ -246,6 +257,14 @@ export class AcTrScene {
   search(box: AcGeBox2d | AcGeBox3d) {
     const activeLayout = this.activeLayout
     return activeLayout ? activeLayout?.search(box) : []
+  }
+
+  addLayer(layer: AcEdLayerInfo) {
+    this._layers.set(layer.name, layer)
+  }
+
+  updateLayer(layer: AcEdLayerInfo) {
+    this._layers.set(layer.name, layer)
   }
 
   /**
