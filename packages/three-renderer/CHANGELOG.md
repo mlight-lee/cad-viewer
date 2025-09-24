@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.19
+
+### Patch Changes
+
+- fix: fix regression issue #60
+
 ## 1.0.18
 
 ### Patch Changes

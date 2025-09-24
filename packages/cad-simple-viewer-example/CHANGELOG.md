@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.1.2
+
+### Patch Changes
+
+- fix: fix regression issue #60
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.16
+
+### Patch Changes
+
+- fix: fix regression issue #60
+
 ## 1.0.15
 
 ### Patch Changes

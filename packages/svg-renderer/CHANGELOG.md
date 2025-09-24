@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.17
+
+### Patch Changes
+
+- fix: fix regression issue #60
+
 ## 0.0.16
 
 ### Patch Changes
