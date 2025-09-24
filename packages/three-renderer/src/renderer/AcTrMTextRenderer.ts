@@ -28,9 +28,9 @@ export class AcTrMTextRenderer {
   }
 
   /**
-   * Get the WebWorkerRenderer instance
+   * Render MText using the current mode asynchronously
    */
-  async renderMText(
+  async asyncRenderMText(
     mtextContent: MTextData,
     textStyle: TextStyle,
     colorSettings: ColorSettings = {
@@ -41,11 +41,40 @@ export class AcTrMTextRenderer {
     if (!this._renderer) {
       throw new Error('AcTrMTextRenderer not initialized!')
     }
-    return await this._renderer!.renderMText(
+    const mode = this._renderer.getMode()
+    this._renderer.switchMode('main')
+    const mtext = await this._renderer!.asyncRenderMText(
       mtextContent,
       textStyle,
       colorSettings
     )
+    this._renderer.switchMode(mode)
+    return mtext
+  }
+
+  /**
+   * Render MText using the current mode synchronously
+   */
+  syncRenderMText(
+    mtextContent: MTextData,
+    textStyle: TextStyle,
+    colorSettings: ColorSettings = {
+      byLayerColor: 0xffffff,
+      byBlockColor: 0xffffff
+    }
+  ): MTextObject {
+    if (!this._renderer) {
+      throw new Error('AcTrMTextRenderer not initialized!')
+    }
+    const mode = this._renderer.getMode()
+    this._renderer.switchMode('main')
+    const mtext = this._renderer.syncRenderMText(
+      mtextContent,
+      textStyle,
+      colorSettings
+    )
+    this._renderer.switchMode(mode)
+    return mtext
   }
 
   /**
@@ -53,7 +82,7 @@ export class AcTrMTextRenderer {
    * @param workerUrl - URL to the worker script
    */
   public initialize(workerUrl: string): void {
-    this._renderer = new UnifiedRenderer('worker', { workerUrl })
+    this._renderer = new UnifiedRenderer('main', { workerUrl })
   }
 
   /**

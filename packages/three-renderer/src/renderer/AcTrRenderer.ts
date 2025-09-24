@@ -228,8 +228,8 @@ export class AcTrRenderer implements AcGiRenderer<AcTrEntity> {
   /**
    * @inheritdoc
    */
-  mtext(mtext: AcGiMTextData, style: AcGiTextStyle) {
-    return new AcTrMText(mtext, style, this._styleManager)
+  mtext(mtext: AcGiMTextData, style: AcGiTextStyle, delay?: boolean) {
+    return new AcTrMText(mtext, style, this._styleManager, delay)
   }
 
   /**

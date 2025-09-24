@@ -103,7 +103,7 @@ export class AcSvgRenderer implements AcGiRenderer<AcSvgEntity> {
   /**
    * @inheritdoc
    */
-  mtext(_mtext: AcGiMTextData, _style: AcGiTextStyle) {
+  mtext(_mtext: AcGiMTextData, _style: AcGiTextStyle, _delay: boolean) {
     // TODO: Implement it
     return _tempEntity
   }
