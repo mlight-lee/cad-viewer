@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.0.20
+
+### Patch Changes
+
+- feat: enable progressive rendering again
+
 ## 1.0.19
 
 ### Patch Changes

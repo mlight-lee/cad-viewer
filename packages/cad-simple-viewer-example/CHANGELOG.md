@@ -1,5 +1,12 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.1.4
+
 ## 1.1.3
 
 ### Patch Changes

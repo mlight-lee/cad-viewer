@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.1.4
+
+### Patch Changes
+
+- feat: enable progressive rendering again
+
 ## 1.1.3
 
 ### Patch Changes
