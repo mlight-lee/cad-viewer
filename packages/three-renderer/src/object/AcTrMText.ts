@@ -59,8 +59,7 @@ export class AcTrMText extends AcTrEntity {
       const style = this._style
 
       // @ts-expect-error AcGiTextData and MTextData are compatible
-      this._mtext = await mtextRenderer
-        .asyncRenderMText(this._text, style, {
+      this._mtext = await mtextRenderer.asyncRenderMText(this._text, style, {
           byLayerColor: style.byLayerColor,
           byBlockColor: style.byBlockColor
         })
