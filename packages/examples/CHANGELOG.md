@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.17
+
+### Patch Changes
+
+- fix: add logic to load default font back due to some bugs on rendering texts in blocks
+
 ## 1.0.16
 
 ### Patch Changes

@@ -108,9 +108,6 @@ importers:
       '@mlightcad/libredwg-converter':
         specifier: 3.0.12
         version: 3.0.12(@mlightcad/data-model@1.2.12)(@mlightcad/libredwg-web@0.2.1)
-      '@mlightcad/mtext-renderer':
-        specifier: 0.6.1
-        version: 0.6.1(three@0.172.0)
       lodash-es:
         specifier: 4.17.21
         version: 4.17.21
@@ -124,6 +121,9 @@ importers:
         specifier: ^0.172.0
         version: 0.172.0
     devDependencies:
+      '@mlightcad/mtext-renderer':
+        specifier: 0.6.1
+        version: 0.6.1(three@0.172.0)
       '@mlightcad/svg-renderer':
         specifier: workspace:*
         version: link:../svg-renderer

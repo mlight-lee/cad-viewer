@@ -10,4 +10,5 @@ export const initializeCadViewer = (canvas: HTMLCanvasElement) => {
   AcApDocManager.createInstance(canvas)
   registerWorkers()
   registerCmds()
+  AcApDocManager.instance.loadDefaultFonts()
 }

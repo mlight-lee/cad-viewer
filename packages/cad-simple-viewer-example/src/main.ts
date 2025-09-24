@@ -23,6 +23,8 @@ class CadViewerApp {
     try {
       // Initialize the document manager with the canvas
       AcApDocManager.createInstance(this.canvas)
+      // Load default fonts
+      await AcApDocManager.instance.loadDefaultFonts()
     } catch (error) {
       console.error('Failed to initialize CAD viewer:', error)
       this.showMessage('Failed to initialize CAD viewer', 'error')

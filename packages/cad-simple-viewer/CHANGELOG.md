@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.1.3
+
+### Patch Changes
+
+- fix: add logic to load default font back due to some bugs on rendering texts in blocks
+
 ## 1.1.2
 
 ### Patch Changes
