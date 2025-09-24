@@ -41,14 +41,12 @@ export class AcTrMTextRenderer {
     if (!this._renderer) {
       throw new Error('AcTrMTextRenderer not initialized!')
     }
-    const mode = this._renderer.getMode()
-    this._renderer.switchMode('main')
     const mtext = await this._renderer!.asyncRenderMText(
       mtextContent,
       textStyle,
-      colorSettings
+      colorSettings,
+      'worker'
     )
-    this._renderer.switchMode(mode)
     return mtext
   }
 
@@ -66,14 +64,11 @@ export class AcTrMTextRenderer {
     if (!this._renderer) {
       throw new Error('AcTrMTextRenderer not initialized!')
     }
-    const mode = this._renderer.getMode()
-    this._renderer.switchMode('main')
     const mtext = this._renderer.syncRenderMText(
       mtextContent,
       textStyle,
       colorSettings
     )
-    this._renderer.switchMode(mode)
     return mtext
   }
 

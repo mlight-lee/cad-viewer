@@ -613,7 +613,8 @@ export class AcTrView2d extends AcEdBaseView {
     for (let i = 0; i < entities.length; ++i) {
       const entity = entities[i]
       const threeEntity: AcTrEntity | null = entity.draw(
-        this._renderer
+        this._renderer,
+        true
       ) as AcTrEntity
       if (threeEntity) {
         threeEntity.objectId = entity.objectId
