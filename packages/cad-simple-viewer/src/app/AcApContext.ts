@@ -60,6 +60,11 @@ export class AcApContext {
     })
 
     // Set layer visibility
+    doc.database.events.layerAppended.addEventListener(args => {
+      this._view.addLayer(args.layer)
+    })
+
+    // Update layer information such as visibility
     doc.database.events.layerModified.addEventListener(args => {
       this._view.updateLayer(args.layer)
     })

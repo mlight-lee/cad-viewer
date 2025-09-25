@@ -168,6 +168,10 @@ export class AcTrScene {
     this._layouts.set(ownerId, layout)
     this._scene.add(layout.internalObject)
     layout.visible = ownerId == this._activeLayoutBtrId
+
+    this._layers.forEach(layer => {
+      layout.addLayer(layer)
+    })
     return layout
   }
 
@@ -181,24 +185,9 @@ export class AcTrScene {
       layout.clear()
     })
     this._layouts.clear()
+    this._layers.clear()
     this._scene.clear()
     return this
-  }
-
-  /**
-   * Set layer's visibility
-   * @param layerName Input layer name
-   * @param visible Input visibility of the layer
-   */
-  setLayerVisibility(layerName: string, visible: boolean) {
-    let isDirty = false
-    this.activeLayout?.layers.forEach(layer => {
-      if (layer.name === layerName) {
-        layer.visible = visible
-        isDirty = true
-      }
-    })
-    return isDirty
   }
 
   /**
@@ -261,10 +250,16 @@ export class AcTrScene {
 
   addLayer(layer: AcEdLayerInfo) {
     this._layers.set(layer.name, layer)
+    this._layouts.forEach(layout => {
+      layout.addLayer(layer)
+    })
   }
 
   updateLayer(layer: AcEdLayerInfo) {
     this._layers.set(layer.name, layer)
+    this._layouts.forEach(layout => {
+      layout.updateLayer(layer)
+    })
   }
 
   /**
@@ -309,7 +304,7 @@ export class AcTrScene {
    */
   update(entity: AcTrEntity) {
     for (const [_, layout] of this._layouts) {
-      if (layout.update(entity)) return true
+      if (layout.updateEntity(entity)) return true
     }
     return false
   }

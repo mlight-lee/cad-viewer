@@ -3,7 +3,7 @@ import { AcTrEntity, AcTrObject } from '@mlightcad/three-renderer'
 import RBush from 'rbush'
 import * as THREE from 'three'
 
-import { AcEdSpatialQueryResultItem } from '../editor'
+import { AcEdLayerInfo, AcEdSpatialQueryResultItem } from '../editor'
 import { AcTrLayer, AcTrLayerStats } from './AcTrLayer'
 
 /**
@@ -218,28 +218,31 @@ export class AcTrLayout {
    */
   addEntity(entity: AcTrEntity, extendBbox: boolean = true) {
     if (!entity.objectId) {
-      throw new Error('[AcTrEntity] Object id is required to add one entity!')
+      throw new Error('Object id is required to add one entity!')
     }
     if (!entity.layerName) {
-      throw new Error('[AcTrEntity] Layer name is required to add one entity!')
+      throw new Error('Layer name is required to add one entity!')
     }
 
-    const layer = this.getLayer(entity.layerName, true)
-    if (layer) {
-      layer.addEntity(entity)
-
-      const box = entity.box
-      // For infinitive line such as ray and xline
-      if (extendBbox) this._box.union(box)
-
-      this._indexTree.insert({
-        minX: box.min.x,
-        minY: box.min.y,
-        maxX: box.max.x,
-        maxY: box.max.y,
-        id: entity.objectId
-      })
+    const layer = this._layers.get(entity.layerName)
+    if (!layer) {
+      throw new Error(`layer '${entity.layerName}' doesn't exist!`)
     }
+
+    layer.addEntity(entity)
+
+    const box = entity.box
+    // For infinitive line such as ray and xline
+    if (extendBbox) this._box.union(box)
+
+    this._indexTree.insert({
+      minX: box.min.x,
+      minY: box.min.y,
+      maxX: box.max.x,
+      maxY: box.max.y,
+      id: entity.objectId
+    })
+
     return this
   }
 
@@ -262,11 +265,43 @@ export class AcTrLayout {
    * @param entity - Input the entity to update
    * @returns Return true if update the specified entity successfully. Otherwise, return false.
    */
-  update(entity: AcTrEntity) {
+  updateEntity(entity: AcTrEntity) {
     for (const [_, layer] of this._layers) {
       if (layer.update(entity)) return true
     }
     return false
+  }
+
+  /**
+   * Adds layer group into this layout. If the layer already exist, do nothing.
+   *
+   * @param name - Input layer name
+   * @returns Return added layer group or the existing layer group in this layout if one layer
+   * group already exists in this layout.
+   */
+  addLayer(layer: AcEdLayerInfo) {
+    const name = layer.name
+    let layerGroup = this._layers.get(name)
+    if (layerGroup === undefined) {
+      layerGroup = new AcTrLayer(name)
+      layerGroup.visible = !(layer.isFrozen || layer.isOff)
+      this._layers.set(name, layerGroup)
+      this._group.add(layerGroup.internalObject)
+    }
+    return layer
+  }
+
+  /**
+   * Updates layer group information (such as visibility). If the layer doesn't exist, do nothing.
+   * @param layerName Input layer information
+   * @returns Returns the updated layer group.
+   */
+  updateLayer(layer: AcEdLayerInfo) {
+    const layerGroup = this._layers.get(layer.name)
+    if (layerGroup) {
+      layerGroup.visible = !(layer.isFrozen || layer.isOff)
+    }
+    return layerGroup
   }
 
   /**
@@ -371,23 +406,5 @@ export class AcTrLayout {
       if (layer.hasEntity(objectId)) return layer
     }
     return undefined
-  }
-
-  /**
-   * Get layer group by name. If the layer doesn't exist, create one layer group into this layout.
-   *
-   * @param name - Input layer name
-   * @param createIfNotExist - Input one flag to indicate whether to create layer group if it doesn't exist in
-   * this layout. Defaults to true.
-   * @returns Return matched layer, or undefined if not found and createIfNotExist is false
-   */
-  private getLayer(name: string, createIfNotExist: boolean = true) {
-    let layer = this._layers.get(name)
-    if (layer === undefined && createIfNotExist) {
-      layer = new AcTrLayer(name)
-      this._layers.set(name, layer)
-      this._group.add(layer.internalObject)
-    }
-    return layer
   }
 }

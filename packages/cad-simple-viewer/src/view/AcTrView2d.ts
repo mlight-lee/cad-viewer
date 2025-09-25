@@ -427,6 +427,7 @@ export class AcTrView2d extends AcEdBaseView {
       isFrozen: layer.isFrozen,
       isOff: layer.isOff
     })
+    this._isDirty = true
   }
 
   /**
@@ -438,6 +439,7 @@ export class AcTrView2d extends AcEdBaseView {
       isFrozen: layer.isFrozen,
       isOff: layer.isOff
     })
+    this._isDirty = true
   }
 
   /**
@@ -471,7 +473,7 @@ export class AcTrView2d extends AcEdBaseView {
 
     for (let i = 0; i < entities.length; ++i) {
       const entity = entities[i]
-      const threeEntity = entity.draw(this._renderer, true) as AcTrEntity
+      const threeEntity = entity.draw(this._renderer) as AcTrEntity
       if (threeEntity) {
         threeEntity.objectId = entity.objectId
         threeEntity.ownerId = entity.ownerId
@@ -494,6 +496,7 @@ export class AcTrView2d extends AcEdBaseView {
   addLayout(layout: AcDbLayout) {
     this._scene.addEmptyLayout(layout.blockTableRecordId)
     this.createLayoutViewIfNeeded(layout.blockTableRecordId)
+    this._isDirty = true
   }
 
   /**
@@ -518,13 +521,6 @@ export class AcTrView2d extends AcEdBaseView {
    */
   unhighlight(ids: AcDbObjectId[]) {
     this._isDirty = this._scene.unselect(ids)
-  }
-
-  /**
-   * @inheritdoc
-   */
-  setLayerVisibility(layerName: string, visible: boolean) {
-    this._isDirty = this._scene.setLayerVisibility(layerName, visible)
   }
 
   /**
