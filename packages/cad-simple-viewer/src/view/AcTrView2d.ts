@@ -673,6 +673,7 @@ export class AcTrView2d extends AcEdBaseView {
     const styleManager = group.styleManager
     const groupObjectId = group.objectId
     const groupLayerName = group.layerName
+    const groupBox = group.box
     objectsGroupByLayer.forEach((objects, layerName) => {
       const entity = new AcTrEntity(styleManager)
       entity.applyMatrix4(group.matrix)
@@ -681,6 +682,7 @@ export class AcTrView2d extends AcEdBaseView {
       // Here one group represents one block reference. If the layer name of entities in block
       // definition is '0', it should be put on layer where the group exist.
       entity.layerName = layerName === '0' ? groupLayerName : layerName
+      entity.box = groupBox
       entity.add(...objects)
       this._scene.addEntity(entity, true)
       entity.dispose()
