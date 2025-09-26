@@ -1,10 +1,11 @@
+import * as THREE from 'three'
+
 import { AcTrStyleManager } from '../style/AcTrStyleManager'
-import { AcTrBaseObject } from './AcTrBaseObject'
 
 /**
  * Base class for all drawable object
  */
-export class AcTrObject extends AcTrBaseObject {
+export class AcTrObject extends THREE.Object3D {
   private _styleManager: AcTrStyleManager
 
   constructor(styleManager: AcTrStyleManager) {

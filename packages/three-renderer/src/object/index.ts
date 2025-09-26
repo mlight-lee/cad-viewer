@@ -1,4 +1,3 @@
-export * from './AcTrBaseObject'
 export * from './AcTrEntity'
 export * from './AcTrGroup'
 export * from './AcTrImage'

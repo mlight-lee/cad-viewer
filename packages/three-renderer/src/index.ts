@@ -1,4 +1,3 @@
-export * from './object/AcTrBaseObject'
 export * from './batch/AcTrBatchedGroup'
 export * from './object/AcTrObject'
 export * from './object/AcTrEntity'

@@ -15,6 +15,7 @@ import {
 } from '@mlightcad/data-model'
 import {
   AcTrEntity,
+  AcTrGroup,
   AcTrRenderer,
   AcTrViewportView
 } from '@mlightcad/three-renderer'
@@ -617,16 +618,23 @@ export class AcTrView2d extends AcEdBaseView {
         threeEntity.ownerId = entity.ownerId
         threeEntity.layerName = entity.layer
         threeEntity.visible = entity.visibility
-        const isExtendBbox = !(
-          entity instanceof AcDbRay || entity instanceof AcDbXline
-        )
+        if (
+          threeEntity instanceof AcTrGroup &&
+          !(threeEntity as AcTrGroup).isOnTheSameLayer
+        ) {
+          this.handleGroup(threeEntity as AcTrGroup)
+        } else {
+          const isExtendBbox = !(
+            entity instanceof AcDbRay || entity instanceof AcDbXline
+          )
 
-        await threeEntity.draw().then(() => {
-          this._scene.addEntity(threeEntity, isExtendBbox)
-          // Release memory occupied by this entity
-          threeEntity.dispose()
-          this._isDirty = true
-        })
+          await threeEntity.draw().then(() => {
+            this._scene.addEntity(threeEntity, isExtendBbox)
+            // Release memory occupied by this entity
+            threeEntity.dispose()
+            this._isDirty = true
+          })
+        }
 
         if (entity instanceof AcDbViewport) {
           // In paper space layouts, there is always a system-defined "default" viewport that exists as
@@ -649,5 +657,34 @@ export class AcTrView2d extends AcEdBaseView {
         }
       }
     }
+  }
+
+  private handleGroup(group: AcTrGroup) {
+    const children = group.children
+    const objectsGroupByLayer: Map<string, THREE.Object3D[]> = new Map()
+    children.forEach(child => {
+      const layerName = child.userData.layerName
+      if (!objectsGroupByLayer.has(layerName)) {
+        objectsGroupByLayer.set(layerName, [])
+      }
+      objectsGroupByLayer.get(layerName)?.push(child)
+    })
+
+    const styleManager = group.styleManager
+    const groupObjectId = group.objectId
+    const groupLayerName = group.layerName
+    objectsGroupByLayer.forEach((objects, layerName) => {
+      const entity = new AcTrEntity(styleManager)
+      entity.applyMatrix4(group.matrix)
+      entity.objectId = groupObjectId
+      entity.ownerId = group.ownerId
+      // Here one group represents one block reference. If the layer name of entities in block
+      // definition is '0', it should be put on layer where the group exist.
+      entity.layerName = layerName === '0' ? groupLayerName : layerName
+      entity.add(...objects)
+      this._scene.addEntity(entity, true)
+      entity.dispose()
+    })
+    this._isDirty = true
   }
 }
