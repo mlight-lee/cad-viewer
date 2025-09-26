@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.1.5
+
+### Patch Changes
+
+- feat: fix bugs on rendering insert (block reference) entity which contains entities in different layers
+
 ## 1.1.4
 
 ### Patch Changes
