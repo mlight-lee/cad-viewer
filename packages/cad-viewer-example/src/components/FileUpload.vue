@@ -12,9 +12,9 @@
         <UploadFilled />
       </el-icon>
       <div class="el-upload__text">
-        <h2 class="upload-title">Upload CAD File</h2>
+        <h2 class="upload-title">Select CAD File to View</h2>
         <p class="upload-description">
-          Drop file here or <em>click to upload</em>
+          Drop file here or <em>click to select</em>
         </p>
       </div>
       <template #tip>

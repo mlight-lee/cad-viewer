@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.18
+
+### Patch Changes
+
+- fix: upgrade dependencies to fix issue on parsing entity color when its color is byBlock
+
 ## 0.0.17
 
 ### Patch Changes

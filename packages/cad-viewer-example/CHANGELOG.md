@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.1.6
+
+### Patch Changes
+
+- fix: upgrade dependencies to fix issue on parsing entity color when its color is byBlock
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.1.6
+  - @mlightcad/cad-viewer@1.1.6
+
 ## 1.1.5
 
 ### Patch Changes
