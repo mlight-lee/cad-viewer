@@ -10,8 +10,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
-import { AcDbParsingTaskStats, AcDbProgressdEventArgs } from '@mlightcad/data-model'
+import { eventBus } from '@mlightcad/cad-simple-viewer'
+import {
+  AcDbParsingTaskStats,
+  AcDbProgressdEventArgs
+} from '@mlightcad/data-model'
 import { ElLoading, ElMessage, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -31,14 +34,20 @@ const updateProgress = (data: AcDbProgressdEventArgs) => {
       const stageName = conversionSubStageName(data.subStage)
       loading.setText(stageName)
 
-      if (data.subStage === 'PARSE' && data.subStageStatus === 'END' && data.data) {
+      if (
+        data.subStage === 'PARSE' &&
+        data.subStageStatus === 'END' &&
+        data.data
+      ) {
         const stats = data.data as AcDbParsingTaskStats
         if (stats.unknownEntityCount > 0) {
           ElMessage({
             showClose: true,
-            message: t('main.message.unknownEntities', { count: stats.unknownEntityCount }),
+            message: t('main.message.unknownEntities', {
+              count: stats.unknownEntityCount
+            }),
             grouping: true,
-            type: 'warning',
+            type: 'warning'
           })
         }
       }
@@ -50,7 +59,6 @@ const updateProgress = (data: AcDbProgressdEventArgs) => {
     } else {
       visible.value = false
       loading.close()
-      AcApDocManager.instance.curView.zoomToFit()
     }
   } else if (data.stage === 'FETCH_FILE') {
     const loading = ElLoading.service({

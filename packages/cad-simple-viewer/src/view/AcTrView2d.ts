@@ -26,6 +26,7 @@ import { AcApSettingManager } from '../app'
 import {
   AcEdBaseView,
   AcEdCalculateSizeCallback,
+  AcEdConditionWaiter,
   AcEdCorsorType,
   AcEdViewMode,
   eventBus
@@ -94,6 +95,8 @@ export class AcTrView2d extends AcEdBaseView {
   private _stats: Stats
   /** Map of missing raster images during rendering */
   private _missedImages: Map<AcDbObjectId, string>
+  /** The number of entities waiting for processing */
+  private _numOfEntitiesToProcess: number
 
   /**
    * Creates a new 2D CAD viewer instance.
@@ -169,6 +172,7 @@ export class AcTrView2d extends AcEdBaseView {
     this.onWindowResize()
     this.animate()
     this._isDirty = true
+    this._numOfEntitiesToProcess = 0
   }
 
   /**
@@ -361,11 +365,19 @@ export class AcTrView2d extends AcEdBaseView {
    * @inheritdoc
    */
   zoomToFit() {
-    if (this._scene.box) {
-      const box = AcTrGeometryUtil.threeBox3dToGeBox2d(this._scene.box)
-      this.zoomTo(box)
-      this._isDirty = true
-    }
+    const waiter = new AcEdConditionWaiter(
+      () => this._numOfEntitiesToProcess <= 0,
+      () => {
+        if (this._scene.box) {
+          const box = AcTrGeometryUtil.threeBox3dToGeBox2d(this._scene.box)
+          this.zoomTo(box)
+          this._isDirty = true
+        }
+      },
+      500,   // check every 500 ms
+      10000  // timeout after 10 s
+    )
+    waiter.start()
   }
 
   /**
@@ -448,6 +460,7 @@ export class AcTrView2d extends AcEdBaseView {
    */
   addEntity(entity: AcDbEntity | AcDbEntity[]) {
     const entities = Array.isArray(entity) ? entity : [entity]
+    this._numOfEntitiesToProcess += entities.length
     setTimeout(async () => {
       await this.batchConvert(entities)
     })
@@ -623,6 +636,7 @@ export class AcTrView2d extends AcEdBaseView {
           !(threeEntity as AcTrGroup).isOnTheSameLayer
         ) {
           this.handleGroup(threeEntity as AcTrGroup)
+          this.decreaseNumOfEntitiesToProcess()
         } else {
           const isExtendBbox = !(
             entity instanceof AcDbRay || entity instanceof AcDbXline
@@ -633,6 +647,8 @@ export class AcTrView2d extends AcEdBaseView {
             // Release memory occupied by this entity
             threeEntity.dispose()
             this._isDirty = true
+          }).finally(() => {
+            this.decreaseNumOfEntitiesToProcess()
           })
         }
 
@@ -655,6 +671,8 @@ export class AcTrView2d extends AcEdBaseView {
           const fileName = entity.imageFileName
           if (fileName) this._missedImages.set(entity.objectId, fileName)
         }
+      } else {
+        this.decreaseNumOfEntitiesToProcess()
       }
     }
   }
@@ -688,5 +706,13 @@ export class AcTrView2d extends AcEdBaseView {
       entity.dispose()
     })
     this._isDirty = true
+  }
+
+  private decreaseNumOfEntitiesToProcess() {
+    this._numOfEntitiesToProcess--
+    if (this._numOfEntitiesToProcess < 0) {
+      this._numOfEntitiesToProcess = 0
+      console.warn('Something wrong! The number of entities to process should not be less than 0.')
+    }
   }
 }
