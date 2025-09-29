@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.19
+
+### Patch Changes
+
+- feat: show warning message if found some unknown entities after parsed drawing
+
 ## 1.0.18
 
 ### Patch Changes

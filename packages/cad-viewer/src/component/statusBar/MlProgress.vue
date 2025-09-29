@@ -11,8 +11,8 @@
 
 <script lang="ts" setup>
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
-import { AcDbProgressdEventArgs } from '@mlightcad/data-model'
-import { ElLoading, ElProgress } from 'element-plus'
+import { AcDbParsingTaskStats, AcDbProgressdEventArgs } from '@mlightcad/data-model'
+import { ElLoading, ElMessage, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -30,6 +30,18 @@ const updateProgress = (data: AcDbProgressdEventArgs) => {
     if (data.subStage) {
       const stageName = conversionSubStageName(data.subStage)
       loading.setText(stageName)
+
+      if (data.subStage === 'PARSE' && data.subStageStatus === 'END' && data.data) {
+        const stats = data.data as AcDbParsingTaskStats
+        if (stats.unknownEntityCount > 0) {
+          ElMessage({
+            showClose: true,
+            message: t('main.message.unknownEntities', { count: stats.unknownEntityCount }),
+            grouping: true,
+            type: 'warning',
+          })
+        }
+      }
     }
 
     percentage.value = data.percentage

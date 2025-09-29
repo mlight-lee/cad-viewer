@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.1.7
+
+### Patch Changes
+
+- feat: show warning message if found some unknown entities after parsed drawing
+
 ## 1.1.6
 
 ### Patch Changes

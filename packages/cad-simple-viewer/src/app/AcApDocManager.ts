@@ -75,7 +75,8 @@ export class AcApDocManager {
         percentage: args.percentage,
         stage: args.stage,
         subStage: args.subStage,
-        stageStatus: args.stageStatus
+        subStageStatus: args.subStageStatus,
+        data: args.data
       })
     })
     const callback: AcEdCalculateSizeCallback = () => {

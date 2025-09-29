@@ -1,5 +1,13 @@
 # @mlightcad/cad-simple-viewer-example
 
+## 1.1.7
+
+### Patch Changes
+
+- feat: show warning message if found some unknown entities after parsed drawing
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.1.7
+
 ## 1.1.6
 
 ### Patch Changes
