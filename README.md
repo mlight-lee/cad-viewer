@@ -127,6 +127,9 @@ Rendering DXF/DWG files poses several challenges:
 
 For high-performance rendering of large drawings, the key is to merge points, lines, and faces to reduce **Draw Calls**. THREE.js offers a partial solution through the [BatchedMesh](https://threejs.org/docs/index.html?q=Mesh#api/en/objects/BatchedMesh) class for merging triangle meshes. However, it doesn’t support merging points and lines, and even its face merging doesn’t fully meet our needs. Therefore, we implemented several classes inspired by `BatchedMesh` to merge points, lines, and faces. You can check the [code here](https://github.com/mlight-lee/cad-viewer/tree/main/packages/three-renderer/src/batch).
 
+I also wrote one article to introduce how batched geometry works.
+- [Building a High-Performance Web-Based CAD Viewer with Batched Geometry System](https://medium.com/@mlight.lee/building-a-high-performance-web-based-cad-viewer-with-batched-geometry-system-a8859bbb0a3a)
+
 ### Text Rendering
 
 AutoCAD uses the [`MText`](https://ezdxf.mozman.at/docs/dxfinternals/entities/mtext.html) format for rich text and a special [SHX](https://help.autodesk.com/view/OARX/2023/ENU/?guid=GUID-DE941DB5-7044-433C-AA68-2A9AE98A5713) font (a stroke-based font drawn only with lines) for faster rendering. The main challenges are:

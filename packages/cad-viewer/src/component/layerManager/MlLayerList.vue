@@ -5,11 +5,10 @@
     class="ml-layer-list"
     @selection-change="handleSelectionChange"
   >
-    <el-table-column type="selection" width="40" />
     <el-table-column
       property="name"
       :label="t('main.toolPalette.layerManager.layerList.name')"
-      width="120"
+      min-width="120"
       sortable
       show-overflow-tooltip
     />

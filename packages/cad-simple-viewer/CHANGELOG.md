@@ -1,5 +1,11 @@
 # @mlightcad/cad-simple-viewer
 
+## 1.1.9
+
+### Patch Changes
+
+- fix: fix UI bugs on layer manager
+
 ## 1.1.8
 
 ### Patch Changes
