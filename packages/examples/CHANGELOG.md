@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.20
+
+### Patch Changes
+
+- feat: fix bug on zoomToFit
+
 ## 1.0.19
 
 ### Patch Changes

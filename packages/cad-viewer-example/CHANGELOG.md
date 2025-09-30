@@ -1,5 +1,14 @@
 # @mlightcad/cad-viewer-example
 
+## 1.1.8
+
+### Patch Changes
+
+- feat: fix bug on zoomToFit
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.1.8
+  - @mlightcad/cad-viewer@1.1.8
+
 ## 1.1.7
 
 ### Patch Changes

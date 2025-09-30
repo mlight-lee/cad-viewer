@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.20
+
+### Patch Changes
+
+- feat: fix bug on zoomToFit
+
 ## 0.0.19
 
 ### Patch Changes
