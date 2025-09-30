@@ -373,13 +373,15 @@ export abstract class AcEdBaseView {
    * level to show the entire scene. This is useful for getting an overview
    * of the entire drawing or after loading new content.
    *
-   * @important **Progressive Rendering Consideration**: This function takes effect
-   * only if the current view has finished rendering all entities. When opening
-   * a file, progressive Rendering is used to render entities incrementally.
-   * Before all entities are rendered, calling this method may zoom to incorrect
-   * extents based on only the partially rendered content.
+   * This function takes effect only if the current view has finished rendering
+   * all entities. When opening a file, progressive Rendering is used to render
+   * entities incrementally. So this function will wait until all of entities
+   * rendered or a timeout occurs.
+   *
+   * @param timeout - Maximum time (ms) to wait before executing zoom to fit
+   * action. Default: 0 (no timeout).
    */
-  abstract zoomToFit(): void
+  abstract zoomToFit(timeout: number): void
 
   /**
    * Gets the background color of the view.

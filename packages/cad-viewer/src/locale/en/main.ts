@@ -91,6 +91,7 @@ export default {
     failedToGetAvaiableFonts: 'Failed to get avaiable fonts from "{url}"!',
     failedToOpenFile: 'Failed to open file "{fileName}"!',
     fetchingDrawingFile: 'Fetching file ...',
-    unknownEntities: 'This drawing contains {count} unknown or unsupported entities! Those entities will not be shown.'
+    unknownEntities:
+      'This drawing contains {count} unknown or unsupported entities! Those entities will not be shown.'
   }
 }

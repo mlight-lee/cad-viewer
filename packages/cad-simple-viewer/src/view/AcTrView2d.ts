@@ -364,7 +364,7 @@ export class AcTrView2d extends AcEdBaseView {
   /**
    * @inheritdoc
    */
-  zoomToFit() {
+  zoomToFit(timeout: number = 0) {
     const waiter = new AcEdConditionWaiter(
       () => this._numOfEntitiesToProcess <= 0,
       () => {
@@ -374,8 +374,8 @@ export class AcTrView2d extends AcEdBaseView {
           this._isDirty = true
         }
       },
-      500,   // check every 500 ms
-      10000  // timeout after 10 s
+      300, // check every 200 ms
+      timeout
     )
     waiter.start()
   }
@@ -642,14 +642,17 @@ export class AcTrView2d extends AcEdBaseView {
             entity instanceof AcDbRay || entity instanceof AcDbXline
           )
 
-          await threeEntity.draw().then(() => {
-            this._scene.addEntity(threeEntity, isExtendBbox)
-            // Release memory occupied by this entity
-            threeEntity.dispose()
-            this._isDirty = true
-          }).finally(() => {
-            this.decreaseNumOfEntitiesToProcess()
-          })
+          await threeEntity
+            .draw()
+            .then(() => {
+              this._scene.addEntity(threeEntity, isExtendBbox)
+              // Release memory occupied by this entity
+              threeEntity.dispose()
+              this._isDirty = true
+            })
+            .finally(() => {
+              this.decreaseNumOfEntitiesToProcess()
+            })
         }
 
         if (entity instanceof AcDbViewport) {
@@ -712,7 +715,9 @@ export class AcTrView2d extends AcEdBaseView {
     this._numOfEntitiesToProcess--
     if (this._numOfEntitiesToProcess < 0) {
       this._numOfEntitiesToProcess = 0
-      console.warn('Something wrong! The number of entities to process should not be less than 0.')
+      console.warn(
+        'Something wrong! The number of entities to process should not be less than 0.'
+      )
     }
   }
 }

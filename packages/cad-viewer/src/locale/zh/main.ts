@@ -90,6 +90,7 @@ export default {
     failedToGetAvaiableFonts: '无法从"{url}"获取可用的字体信息！',
     failedToOpenFile: '无法打开文件"{fileName}"！',
     fetchingDrawingFile: '正在加载图纸文件...',
-    unknownEntities: '这张图纸中包含了{count}个未知或不支持的实体，这些实体将无法显示！'
+    unknownEntities:
+      '这张图纸中包含了{count}个未知或不支持的实体，这些实体将无法显示！'
   }
 }
